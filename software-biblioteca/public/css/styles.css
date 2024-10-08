@@ -1,0 +1,69 @@
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+   background-color: #fff;
+    margin: 10% auto; /* Centrar verticalmente */
+    padding: 20px;
+    border-radius: 8px; /* Bordes redondeados */
+    max-width: 500px; /* Ancho máximo */
+    width: 80%; /* Ancho relativo para adaptarse a pantallas pequeñas */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modal-content>h2{
+        text-align: center;
+        margin-bottom: 20px;
+}
+.modal-content>label{
+    margin-bottom: 5px;
+    font-weight: bold;
+    
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input{
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.reserSub{
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+.reserSub:hover{
+    background-color: #0056b3;
+}
