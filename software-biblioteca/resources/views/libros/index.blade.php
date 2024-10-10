@@ -24,6 +24,25 @@
                     <a href="{{ route('libros.show', $libro->ID) }}" class="btn">Ver más</a>
                 </div>
             @endforeach
+
+            @if (Auth::check())
+            <div class="user-info" .user-info {
+                position: absolute; /* o fixed dependiendo de donde lo quieras */
+                top: 10px;
+                right: 10px;
+                background-color: #f8f9fa; /* Color de fondo */
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }>
+                Bienvenido, {{ Auth::user()->nombre }} | <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf <!-- Este token es necesario para la protección CSRF -->
+                    <button type="submit" class="btn btn-link">Cerrar sesión</button>
+                </form>
+            </div>
+        @endif
+
+        
         </div>
     </div>
 </body>

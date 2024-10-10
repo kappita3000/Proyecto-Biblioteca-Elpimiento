@@ -22,9 +22,15 @@
         <h6 class="alert alert-success">{{ session('success') }}</h6>
         @endif
 
-        @error('correo')
-        <h6 class="alert alert-danger">{{ $message }}</h6>
-        @enderror
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <div class="mb-3">
           <label for="correo" class="form-label">Correo electronico</label>
