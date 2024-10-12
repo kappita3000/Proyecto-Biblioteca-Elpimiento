@@ -3,6 +3,19 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GesLibroController;
+
+Route::get('/glibros', [GesLibroController::class, 'librosindex'])->name('libros.librosindex');
+Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.store');
+Route::put('/libros/{libro}', [GesLibroController::class, 'update'])->name('libros.update');
+Route::delete('/libros/{libro}', [GesLibroController::class, 'destroy'])->name('libros.destroy');
+Route::get('/glibros/{libro}/edit', [GesLibroController::class, 'edit'])->name('libros.edit');
+
+
+
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
