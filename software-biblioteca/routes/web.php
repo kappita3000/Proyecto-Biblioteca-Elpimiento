@@ -4,6 +4,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GesLibroController;
+use App\Http\Controllers\NewAdminController;
+use App\Http\Controllers\ReservaController;
+use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/glibros', [GesLibroController::class, 'librosindex'])->name('libros.librosindex');
 Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.store');
@@ -22,7 +27,7 @@ Route::get('/', function () {
 });
 
 
-use App\Http\Controllers\ReservaController;
+
 
 Route::get('/libros', function () {
     return view('libros');
@@ -45,4 +50,27 @@ route::post('/signin', [UsuarioController::class, 'store'])->name('usuario');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::post('/logout', function (Request $request) {
+    Auth::guard('admin')->logout(); // Cerrar sesión de admin
+    Auth::guard('web')->logout(); // Cerrar sesión de usuario normal
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/login')->with('success', 'Sesión cerrada correctamente.');
+})->name('logout');
+
+
+Route::aliasMiddleware('role', RoleMiddleware::class);
+
+Route::group(['middleware' => 'auth:admin'], function () {
+    Route::get('/probando', function () {
+        return view('probando');
+    })->middleware('role:superadmin,moderador');
+});
+
+
+Route::get('/newAdmin', function () {
+    return view('newAdmin');
+})->name('newAdmin');
+
+route::post('/newAdmin', [NewAdminController::class, 'store'])->name('newAdmin');
