@@ -138,24 +138,62 @@
                     <span class="close">&times;</span>
                     <h2>Reservar Libro</h2>
                     <!-- Asegúrate de que el formulario esté aquí -->
-                    
-                        @csrf
-                        <!-- Campos del formulario -->
-                        <input type="hidden" name="libro_id" value="{{ $libro->ID }}">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" required>
+                    <div class="modal-body">
+                        <!-- Verificamos si el usuario está autenticado -->
+                        @auth
+            <form action="{{ route('reservar.libro') }}" method="POST">
+              @csrf
+              <!-- ID del libro -->
+            <input type="hidden" name="id_libro" value="{{ $libro->id }}">
 
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" id="apellido" name="apellido" required>
-
-                        <label for="correo">Correo:</label>
-                        <input type="email" id="correo" name="correo" required>
-
-                        <label for="fecha">Fecha de Recogida:</label>
-                        <input type="date" id="fecha" name="fecha" required>
-
-                        <button type="submit" class="btn-reservar">Reservar</button>
-                    </form>
+              <div class="mb-3">
+                <label for="nombreUsuario" class="form-label">Nombre del usuario</label>
+                <!-- Mostrar el nombre del usuario autenticado -->
+                <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" value="{{ Auth::user()->nombre }}" readonly>
+              </div>
+                  
+                              <div class="mb-3">
+                                <label for="correoUsuario" class="form-label">Correo electrónico</label>
+                                <!-- Mostrar el correo del usuario autenticado -->
+                                <input type="email" class="form-control" id="correoUsuario" name="correoUsuario" value="{{ Auth::user()->correo }}" readonly>
+                              </div>
+                            <div class="mb-3">
+                              <label for="fechaRecojo" class="form-label">Fecha de recojo</label>
+                              <input type="date" class="form-control" id="fechaRecojo" name="fecha_recoLibro" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Reservar</button>
+                          </form>
+                        @endauth
+                        @guest
+            <!-- Si el usuario no está autenticado, mostramos un formulario para ingresar sus datos -->
+            <form action="{{ route('reservar.libro') }}" method="POST">
+              @csrf
+              <input type="hidden" name="id_libro" value="{{ $libro->id }}">
+              <div class="mb-3">
+                <label for="nombreUsuario" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Ingresa tu nombre" required>
+              </div>
+  
+              <div class="mb-3">
+                <label for="apellidoUsuario" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="apellidoUsuario" name="apellidoUsuario" placeholder="Ingresa tu apellido" required>
+              </div>
+  
+              <div class="mb-3">
+                <label for="correoUsuario" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="correoUsuario" name="correoUsuario" placeholder="Ingresa tu correo electrónico" required>
+              </div>
+  <!-- Campo oculto para el tipo de usuario no registrado -->
+        <input type="hidden" name="tipo_usuario" value="No Registrado">
+              <div class="mb-3">
+                <label for="fechaRecojo" class="form-label">Fecha de recojo</label>
+                <input type="date" class="form-control" id="fechaRecojo" name="fecha_recoLibro" required>
+              </div>
+  
+              <button type="submit" class="btn btn-primary">Reservar</button>
+            </form>
+          @endguest
+                      </div>
                 </div>
             </div>
 

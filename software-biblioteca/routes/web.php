@@ -32,7 +32,10 @@ Route::get('/libros', [ReservaController::class, 'index'])->name('libros.index')
 Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.show'); // Muestra un libro específico
 
 Route::get('/buscar', [ReservaController::class, 'search'])->name('libros.search');
+Route::post('/reservar-libro', [ReservaController::class, 'reservar'])->name('reservar.libro');
 
+Route::post('/reservar-libro', [ReservaController::class, 'reservarLibro'])->name('reservar.libro');
+Route::post('/reservar-libro', [ReservaController::class, 'reservarLibro_noregis'])->name('reservar.libro');
 
 
 
