@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
     protected $primaryKey = 'ID';
-    protected $table = 'categoria';
+    protected $table = 'categorias';
     // Relación inversa con Libro
     public function libros()
     {
-        return $this->hasMany(Libro::class, 'ID_Categoria');
+        return $this->hasMany(Libro::class, 'id_categoria');
     }
 }

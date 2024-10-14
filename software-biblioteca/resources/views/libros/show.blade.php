@@ -1,7 +1,7 @@
-@extends('app')
+@extends('layouts.lib')
 
 
-@section('contenent')
+@section('content')
     <!DOCTYPE html>
     <html lang="es">
 
@@ -28,7 +28,7 @@
                 /* Centrar el contenedor */
             }
 
-            .descripcion-libro {
+            .card-text {
                 font-family: 'Arial', sans-serif;
                 font-size: 14px;
                 line-height: 1.5;
@@ -110,24 +110,22 @@
             <img src="{{ asset('img/atras.png') }}" alt="Volver a la lista"
                 style="width: 55px; height: auto; border: 2px solid #ccc; padding: 10px; border-radius: 5px; cursor: pointer;">
         </a>
-        <div class="space-card">
+        <div class="portada">
 
             <div class="container">
-
-                <h2>{{ $libro->Titulo }}</h2>
-                <p class="descripcion-libro">{{ $libro->Descripcion }}</p>
-                <p><strong>Autor:</strong> {{ $libro->autor->Nombre }} {{ $libro->autor->Apellido }}</p>
-                <p><strong>Género:</strong> {{ $libro->genero->Nombre }}</p>
-                <p><strong>Categoría:</strong> {{ $libro->categoria->Nombre }}</p>
-                <p><strong>Repisa:</strong> {{ $libro->repisa->Numero }} - {{ $libro->repisa->Ubicacion }}</p>
-                <p><strong>Disponible:</strong> {{ $libro->Disponible ? 'Sí' : 'No' }}</p>
-            </div>
-            <div class="portada">
-                <img src="{{ asset('img/papelucho_portada.jpg') }}" alt="Portada del libro">
-            </div>
-
-
-        </div>
+                <div class="space-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $libro->titulo }}</h5>
+                        <p class="card-text">{{ $libro->descripcion }}</p>
+                        <p><strong>Autor:</strong> {{ $libro->autor?->Nombre ?? 'Desconocido' }}</p>
+                        <p><strong>Editorial:</strong> {{ $libro->editorial?->nombre ?? 'Desconocida' }}</p>
+                        <p><strong>Género:</strong> {{ $libro->genero?->nombre ?? 'Desconocido' }} {{$libro->categoria?->nombre ?? 'Desconocido'}}</p>
+                        <p><strong>Repisa:</strong> {{ $libro->repisa?->nombre ?? 'Desconocida' }}</p>
+                        <p><strong>Cantidad:</strong> {{ $libro->cantidad }}</p>
+                        <p><strong>Disponible:</strong> {{ $libro->disponible ? 'Sí' : 'No' }}</p>
+                        
+                    </div>
+                </div>
 
 
         <!-- Botón para abrir el modal -->
@@ -140,7 +138,7 @@
                     <span class="close">&times;</span>
                     <h2>Reservar Libro</h2>
                     <!-- Asegúrate de que el formulario esté aquí -->
-                    <form id="reservationForm" action="{{ route('reservar.libro') }}" method="POST">
+                    
                         @csrf
                         <!-- Campos del formulario -->
                         <input type="hidden" name="libro_id" value="{{ $libro->ID }}">

@@ -1,29 +1,50 @@
-@extends('app')
+@extends('layouts.lib')
 
 
-@section('contenent')
+@section('content')
 
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Libros</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> <!-- Ruta al CSS -->
     <script src="{{ asset('js/script.js') }}" defer></script> <!-- Ruta al JS -->
+    <style>
+   
+
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Libros Disponibles</h1>
-        
-        <div class="cards">
-            @foreach ($libros as $libro)
-                <div class="card">
-                    <h3>{{ $libro->Titulo }}</h3>
-                    <a href="{{ route('libros.show', $libro->ID) }}" class="btn">Ver más</a>
+
+    
+    
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Libros</h1>
+        <div class="row">
+            @foreach($libros as $libro)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ $libro->titulo }}</h4>
+                            <a href="{{ route('libros.show', $libro->id) }}" class="btn btn-primary mt-3">Ver más</a>
+                        </div>
+                    </div>
                 </div>
             @endforeach
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-center mt-3">
+        {{ $libros->links('pagination::bootstrap-4') }}
+    </div>
 
             @if (Auth::check())
             <div class="user-info" .user-info {
