@@ -23,7 +23,7 @@ class UsuarioController extends Controller
             'nombre' => 'required|min:3',
             'apellido' => 'required|min:3',
             'correo' => 'required|email|unique:usuarios,correo|min:10', // Validación de correo único
-            'contraseña' => 'required|min:10|confirmed', // Se requiere confirmación de la contraseña
+            'contraseña' => 'required|min:8|confirmed', // Se requiere confirmación de la contraseña
         ]);
 
         // Buscar si el usuario ya existe con el correo y es no registrado

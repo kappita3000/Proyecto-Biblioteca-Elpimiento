@@ -46,23 +46,54 @@
         {{ $libros->links('pagination::bootstrap-4') }}
     </div>
 
-            @if (Auth::check())
-            <div class="user-info" .user-info {
-                position: absolute; /* o fixed dependiendo de donde lo quieras */
-                top: 10px;
-                right: 10px;
-                background-color: #f8f9fa; /* Color de fondo */
-                padding: 10px;
-                border-radius: 5px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            }>
-                Bienvenido, {{ Auth::user()->nombre }} | <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                    @csrf <!-- Este token es necesario para la protección CSRF -->
-                    <button type="submit" class="btn btn-link">Cerrar sesión</button>
-                </form>
-            </div>
-        @endif
+            @if (Auth::guard('admin')->check())
+                <div class="user-info" style="
+                    position: absolute; 
+                    top: 10px;
+                    right: 10px;
+                    background-color: #f8f9fa;
+                    padding: 10px;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                ">
+                    @php
+                        $admin = Auth::guard('admin')->user();
+                    @endphp
 
+                    @if ($admin->rol === 'superadmin')
+                        Bienvenido, {{ $admin->nombre }} (Superadmin) |
+                    @elseif ($admin->rol === 'moderador')
+                        Bienvenido, {{ $admin->nombre }} (Moderador) |
+                    @endif
+
+                    <!-- Botón para cerrar sesión -->
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-link">Cerrar sesión</button>
+                    </form>
+                </div>
+            @elseif (Auth::guard('web')->check())
+                <div class="user-info" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background-color: #f8f9fa;
+                    padding: 10px;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                ">
+                    @php
+                        $usuario = Auth::guard('web')->user();
+                    @endphp
+                    Bienvenido, {{ $usuario->nombre }} |
+
+                    <!-- Botón para cerrar sesión -->
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-link">Cerrar sesión</button>
+                    </form>
+                </div>
+            @endif
         
         </div>
     </div>
