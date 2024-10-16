@@ -1,7 +1,7 @@
-@extends('app')
+@extends('layouts.lib')
 
 
-@section('contenent')
+@section('content')
     <!DOCTYPE html>
     <html lang="es">
 
@@ -28,7 +28,7 @@
                 /* Centrar el contenedor */
             }
 
-            .descripcion-libro {
+            .card-text {
                 font-family: 'Arial', sans-serif;
                 font-size: 14px;
                 line-height: 1.5;
@@ -110,24 +110,22 @@
             <img src="{{ asset('img/atras.png') }}" alt="Volver a la lista"
                 style="width: 55px; height: auto; border: 2px solid #ccc; padding: 10px; border-radius: 5px; cursor: pointer;">
         </a>
-        <div class="space-card">
+        <div class="portada">
 
             <div class="container">
-
-                <h2>{{ $libro->Titulo }}</h2>
-                <p class="descripcion-libro">{{ $libro->Descripcion }}</p>
-                <p><strong>Autor:</strong> {{ $libro->autor->Nombre }} {{ $libro->autor->Apellido }}</p>
-                <p><strong>Género:</strong> {{ $libro->genero->Nombre }}</p>
-                <p><strong>Categoría:</strong> {{ $libro->categoria->Nombre }}</p>
-                <p><strong>Repisa:</strong> {{ $libro->repisa->Numero }} - {{ $libro->repisa->Ubicacion }}</p>
-                <p><strong>Disponible:</strong> {{ $libro->Disponible ? 'Sí' : 'No' }}</p>
-            </div>
-            <div class="portada">
-                <img src="{{ asset('img/papelucho_portada.jpg') }}" alt="Portada del libro">
-            </div>
-
-
-        </div>
+                <div class="space-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $libro->titulo }}</h5>
+                        <p class="card-text">{{ $libro->descripcion }}</p>
+                        <p><strong>Autor:</strong> {{ $libro->autor?->Nombre ?? 'Desconocido' }}</p>
+                        <p><strong>Editorial:</strong> {{ $libro->editorial?->nombre ?? 'Desconocida' }}</p>
+                        <p><strong>Género:</strong> {{ $libro->genero?->nombre ?? 'Desconocido' }} {{$libro->categoria?->nombre ?? 'Desconocido'}}</p>
+                        <p><strong>Repisa:</strong> {{ $libro->repisa?->nombre ?? 'Desconocida' }}</p>
+                        <p><strong>Cantidad:</strong> {{ $libro->cantidad }}</p>
+                        <p><strong>Disponible:</strong> {{ $libro->disponible ? 'Sí' : 'No' }}</p>
+                        
+                    </div>
+                </div>
 
 
         <!-- Botón para abrir el modal -->
@@ -140,24 +138,62 @@
                     <span class="close">&times;</span>
                     <h2>Reservar Libro</h2>
                     <!-- Asegúrate de que el formulario esté aquí -->
-                    <form id="reservationForm" action="{{ route('reservar.libro') }}" method="POST">
-                        @csrf
-                        <!-- Campos del formulario -->
-                        <input type="hidden" name="libro_id" value="{{ $libro->ID }}">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" required>
+                    <div class="modal-body">
+                        <!-- Verificamos si el usuario está autenticado -->
+                        @auth
+            <form action="{{ route('reservar.libro') }}" method="POST">
+              @csrf
+              <!-- ID del libro -->
+            <input type="hidden" name="id_libro" value="{{ $libro->id }}">
 
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" id="apellido" name="apellido" required>
-
-                        <label for="correo">Correo:</label>
-                        <input type="email" id="correo" name="correo" required>
-
-                        <label for="fecha">Fecha de Recogida:</label>
-                        <input type="date" id="fecha" name="fecha" required>
-
-                        <button type="submit" class="btn-reservar">Reservar</button>
-                    </form>
+              <div class="mb-3">
+                <label for="nombreUsuario" class="form-label">Nombre del usuario</label>
+                <!-- Mostrar el nombre del usuario autenticado -->
+                <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" value="{{ Auth::user()->nombre }}" readonly>
+              </div>
+                  
+                              <div class="mb-3">
+                                <label for="correoUsuario" class="form-label">Correo electrónico</label>
+                                <!-- Mostrar el correo del usuario autenticado -->
+                                <input type="email" class="form-control" id="correoUsuario" name="correoUsuario" value="{{ Auth::user()->correo }}" readonly>
+                              </div>
+                            <div class="mb-3">
+                              <label for="fechaRecojo" class="form-label">Fecha de recojo</label>
+                              <input type="date" class="form-control" id="fechaRecojo" name="fecha_recoLibro" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Reservar</button>
+                          </form>
+                        @endauth
+                        @guest
+            <!-- Si el usuario no está autenticado, mostramos un formulario para ingresar sus datos -->
+            <form action="{{ route('reservar.libro') }}" method="POST">
+              @csrf
+              <input type="hidden" name="id_libro" value="{{ $libro->id }}">
+              <div class="mb-3">
+                <label for="nombreUsuario" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Ingresa tu nombre" required>
+              </div>
+  
+              <div class="mb-3">
+                <label for="apellidoUsuario" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="apellidoUsuario" name="apellidoUsuario" placeholder="Ingresa tu apellido" required>
+              </div>
+  
+              <div class="mb-3">
+                <label for="correoUsuario" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="correoUsuario" name="correoUsuario" placeholder="Ingresa tu correo electrónico" required>
+              </div>
+  <!-- Campo oculto para el tipo de usuario no registrado -->
+        <input type="hidden" name="tipo_usuario" value="No Registrado">
+              <div class="mb-3">
+                <label for="fechaRecojo" class="form-label">Fecha de recojo</label>
+                <input type="date" class="form-control" id="fechaRecojo" name="fecha_recoLibro" required>
+              </div>
+  
+              <button type="submit" class="btn btn-primary">Reservar</button>
+            </form>
+          @endguest
+                      </div>
                 </div>
             </div>
 

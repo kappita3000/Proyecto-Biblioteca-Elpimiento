@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Editorial extends Model
 {
+    protected $table = 'editoriales'; // Indicar que la tabla es 'autores'
     use HasFactory;
+    public function libros()
+    {
+        return $this->hasMany(Libro::class, 'id_editorial');
+    }
 }

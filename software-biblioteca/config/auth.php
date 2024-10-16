@@ -59,12 +59,29 @@ return [
     |
     */
 
-    'providers' => [
-    'users' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Usuario::class, // Cambiar a tu modelo Usuario
-        ],
+    'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'usuarios',
     ],
+
+    'admin' => [
+        'driver' => 'session',
+        'provider' => 'admins',
+    ],
+],
+
+'providers' => [
+    'usuarios' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Usuario::class,
+    ],
+
+    'admins' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\admin::class,
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------
