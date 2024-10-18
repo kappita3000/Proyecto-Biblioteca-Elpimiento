@@ -22,25 +22,35 @@
     </style>
 </head>
 <body>
-
+    <h3>Libros</h3>
     
     
-
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Libros</h1>
-        <div class="row">
-            @foreach($libros as $libro)
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ $libro->titulo }}</h4>
-                            <a href="{{ route('libros.show', $libro->id) }}" class="btn btn-primary mt-3">Ver más</a>
-                        </div>
+    
+    <!-- Mostrar los libros filtrados -->
+    <div class="row">
+        @forelse($libros as $libro)
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $libro->titulo }}</h5>
+                        <p class="card-text"><strong>Género:</strong> {{ $libro->genero->nombre }}</p>
+                        <p class="card-text"><strong>Disponibilidad:</strong> 
+                            @if($libro->disponible)
+                                <span class="badge bg-success">Disponible</span>
+                            @else
+                                <span class="badge bg-danger">No Disponible</span>
+                            @endif
+                        </p>
+                        <a href="{{ route('libros.show', $libro->id) }}" class="btn btn-info">Ver más</a>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @empty
+            <p>No se encontraron libros con ese nombre.</p>
+        @endforelse
     </div>
+
+    
     
     <div class="d-flex justify-content-center mt-3">
         {{ $libros->links('pagination::bootstrap-4') }}

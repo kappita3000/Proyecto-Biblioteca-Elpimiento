@@ -110,6 +110,16 @@
             <img src="{{ asset('img/atras.png') }}" alt="Volver a la lista"
                 style="width: 55px; height: auto; border: 2px solid #ccc; padding: 10px; border-radius: 5px; cursor: pointer;">
         </a>
+        @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
         <div class="portada">
 
             <div class="container">
@@ -122,8 +132,14 @@
                         <p><strong>Género:</strong> {{ $libro->genero?->nombre ?? 'Desconocido' }} {{$libro->categoria?->nombre ?? 'Desconocido'}}</p>
                         <p><strong>Repisa:</strong> {{ $libro->repisa?->nombre ?? 'Desconocida' }}</p>
                         <p><strong>Cantidad:</strong> {{ $libro->cantidad }}</p>
-                        <p><strong>Disponible:</strong> {{ $libro->disponible ? 'Sí' : 'No' }}</p>
-                        
+                        <p>
+                          <strong>Disponibilidad:</strong> 
+                          @if($libro->disponible)
+                              <span class="text-success">Disponible</span>
+                          @else
+                              <span class="text-danger">No Disponible</span>
+                          @endif
+                      </p>
                     </div>
                 </div>
 
@@ -193,6 +209,7 @@
               <button type="submit" class="btn btn-primary">Reservar</button>
             </form>
           @endguest
+          
                       </div>
                 </div>
             </div>
