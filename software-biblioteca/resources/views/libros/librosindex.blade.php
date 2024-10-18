@@ -22,19 +22,21 @@
     </div>
 
     <div class="mb-3">
-        <label for="id_autor" class="form-label">Autor</label>
-        <input type="number" name="id_autor" class="form-control" value="{{ $libro->id_autor ?? old('id_autor') }}" required>
+    <label for="autor" class="form-label">Autor</label>
+    <input type="text" name="autor" class="form-control" value="{{ $libro->autor->nombre ?? old('autor') }}" required>
     </div>
 
     <div class="mb-3">
-        <label for="id_genero" class="form-label">Género</label>
-        <input type="number" name="id_genero" class="form-control" value="{{ $libro->id_genero ?? old('id_genero') }}" required>
+    <label for="genero" class="form-label">Género</label>
+    <input type="text" name="genero" class="form-control" value="{{ $libro->genero->nombre ?? old('genero') }}" required>
     </div>
 
     <div class="mb-3">
-        <label for="id_categoria" class="form-label">Categoría</label>
-        <input type="number" name="id_categoria" class="form-control" value="{{ $libro->id_categoria ?? old('id_categoria') }}" required>
+    <label for="categoria" class="form-label">Categoría</label>
+    <input type="text" name="categoria" class="form-control" value="{{ $libro->Categoria->nombre ?? old('categoria') }}" required>
     </div>
+
+
 
     <div class="mb-3">
         <label for="id_repisa" class="form-label">Repisa</label>
@@ -73,14 +75,6 @@
 <div class="container"></div>
 <h2>Lista de Libros</h2>
 @if($libros->isNotEmpty())
-
-
-
-    <!-- Mensaje de éxito -->
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <!-- Tabla de libros -->
     <table class="table table-striped">
         <thead>
@@ -96,7 +90,9 @@
             @foreach($libros as $libro)
             <tr>
                 <td>{{ $libro->titulo }}</td>
-                <!-- Otros campos aquí -->
+                <td>{{ $libro->autor->nombre }}</td>
+                <td>{{ $libro->genero->nombre }}</td> 
+                <td>{{ $libro->Categoria->nombre }}</td>
                 <td>
                     <!-- Botón para abrir modal de editar -->
                     <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
@@ -204,6 +200,7 @@
 @endif
 
 @endsection
+
 
 
 <!-- Formulario para crear o editar un libro 

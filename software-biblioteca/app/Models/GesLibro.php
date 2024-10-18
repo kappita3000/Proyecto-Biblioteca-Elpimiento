@@ -15,4 +15,20 @@ class GesLibro extends Model
         'titulo', 'id_autor', 'id_genero', 'id_categoria', 'id_repisa', 
         'id_editorial', 'fecha_publicacion', 'disponible', 'cantidad', 'descripcion'
     ];
+        // Relación con el modelo Autor
+    public function autor()
+    {
+        return $this->belongsTo(Autor::class, 'id_autor');
+    }
+    // Relación con el modelo Genero
+    public function genero()
+    {
+        return $this->belongsTo(Genero::class, 'id_genero');
+    }
+    
+    // Relación con el modelo Categoria
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'id_categoria');
+    }
 }

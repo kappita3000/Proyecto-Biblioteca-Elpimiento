@@ -14,4 +14,5 @@ class Autor extends Model
     {
         return $this->hasMany(Libro::class, 'id_autor');
     }
+    
 }

@@ -3,14 +3,24 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GesLibro;
+use App\Models\Categoria;
+use App\Models\Autor;
+use App\Models\Genero;
 
 class GesLibroController extends Controller
 {
 
     public function librosindex()
     {
-        $libros = GesLibro::all();
-        return view('libros.librosindex', compact('libros'));
+            // Cargar autores, géneros y categorías
+    $autores = Autor::all();
+    $generos = Genero::all();
+    $categorias = Categoria::all();
+
+    // Cargar libros junto con los autores, géneros y categorías
+
+    $libros = GesLibro::with(['autor', 'genero', 'categoria'])->get();
+    return view('libros.librosindex', compact('libros', 'autores', 'generos', 'categorias'));
     }
 
 public function edit($id)
@@ -23,19 +33,39 @@ public function edit($id)
 
     public function store(Request $request)
     {
-        $libro = new GesLibro();
-        $libro->titulo = $request->input('titulo');
-        $libro->id_autor = $request->input('id_autor');
-        $libro->id_genero = $request->input('id_genero');
-        $libro->id_categoria = $request->input('id_categoria');
-        $libro->id_repisa = $request->input('id_repisa');
-        $libro->id_editorial = $request->input('id_editorial');
-        $libro->fecha_publicacion = $request->input('fecha_publicacion');
-        $libro->disponible = $request->input('disponible') ? 1 : 0;
-        $libro->cantidad = $request->input('cantidad');
-        $libro->descripcion = $request->input('descripcion');
-        
-        $libro->save();
+    // Validación de los datos
+    $request->validate([
+        'titulo' => 'required|string|max:255',
+        'autor' => 'required|string',  // Aquí usamos el nombre del autor, no el ID
+        'genero' => 'required|string',
+        'categoria' => 'required|string',
+        'id_repisa' => 'required|integer',
+        'cantidad' => 'required|integer|min:1',
+        'disponible' => 'boolean',
+    ]);
+
+    // Buscar el autor por nombre, o crearlo si no existe
+    $autor = Autor::firstOrCreate(['nombre' => $request->autor]);
+
+    // Buscar el género por nombre, o crearlo si no existe
+    $genero = Genero::firstOrCreate(['nombre' => $request->genero]);
+
+    // Buscar la categoría por nombre, o crearla si no existe
+    $categoria = Categoria::firstOrCreate(['nombre' => $request->categoria]);
+
+    // Crear el libro con los IDs correspondientes
+    GesLibro::create([
+        'titulo' => $request->titulo,
+        'id_autor' => $autor->id,  // Guardar el ID del autor
+        'id_genero' => $genero->id,  // Guardar el ID del género
+        'id_categoria' => $categoria->id,  // Guardar el ID de la categoría
+        'id_repisa' => $request->id_repisa,
+        'cantidad' => $request->cantidad,
+        'disponible' => $request->disponible ?? 1,
+        'descripcion' => $request->descripcion,
+        'fecha_publicacion' => $request->fecha_publicacion,
+        'id_editorial' => $request->id_editorial,
+    ]);
 
         return redirect()->route('libros.librosindex')->with('success', 'Libro creado exitosamente');
     }
