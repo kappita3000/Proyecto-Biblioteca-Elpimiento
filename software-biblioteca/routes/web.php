@@ -10,7 +10,6 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-Route::resource('libros', GesLibroController::class);
 Route::get('/glibros', [GesLibroController::class, 'librosindex'])->name('libros.librosindex');
 Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.store');
 Route::put('glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');

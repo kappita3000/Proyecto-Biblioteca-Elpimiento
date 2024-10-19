@@ -1,4 +1,4 @@
-@extends('layouts.lib')
+@extends('layouts.aa')
 
 @section('title', 'Gestión de Libros')
 
@@ -15,33 +15,67 @@
     @if (isset($libro))
         @method('PUT')
     @endif
+    <div class="row g-3">
+        <div class="col">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" name="titulo" class="form-control" value="{{ $libro->titulo ?? old('titulo') }}" required>
+        </div>
 
-    <div class="mb-3">
-        <label for="titulo" class="form-label">Título</label>
-        <input type="text" name="titulo" class="form-control" value="{{ $libro->titulo ?? old('titulo') }}" required>
+        <!-- Select para Autor -->
+        <div class="col">
+            <label for="autor" class="form-label">Autor</label>
+                <select name="id_autor" class="form-control" required>
+                    @foreach($autores as $autor)
+                    <option value="{{ $autor->id }}" {{ isset($libro) && $libro->id_autor == $autor->id ? 'selected' : '' }}>
+                        {{ $autor->nombre }}
+                    </option>
+                    @endforeach
+                </select>
+        </div>
     </div>
+<br>
+    <div class="row g-3">
+            <!-- Select para Género -->
+        <div class="col">
+            <label for="genero" class="form-label">Género</label>
+                <select name="id_genero" class="form-control" required>
+                    @foreach($generos as $genero)
+                    <option value="{{ $genero->id }}" {{ isset($libro) && $libro->id_genero == $genero->id ? 'selected' : '' }}>
+                        {{ $genero->nombre }}
+                    </option>
+                    @endforeach
+                </select>
+        </div>
 
-    <div class="mb-3">
-    <label for="autor" class="form-label">Autor</label>
-    <input type="text" name="autor" class="form-control" value="{{ $libro->autor->nombre ?? old('autor') }}" required>
-    </div>
+            <!-- Select para Categoría -->
+        <div class="col">
+            <label for="categoria" class="form-label">Categoría</label>
+                <select name="id_categoria" class="form-control" required>
+                    @foreach($categorias as $categoria)
+                    <option value="{{ $categoria->id }}" {{ isset($libro) && $libro->id_categoria == $categoria->id ? 'selected' : '' }}>
+                        {{ $categoria->nombre }}
+                    </option>
+                    @endforeach
+                </select>
+        </div>
 
-    <div class="mb-3">
-    <label for="genero" class="form-label">Género</label>
-    <input type="text" name="genero" class="form-control" value="{{ $libro->genero->nombre ?? old('genero') }}" required>
-    </div>
+            <!-- Select para Repisa -->
+        <div class="col">
+            <label for="repisa" class="form-label">Repisa</label>
+                <select name="id_repisa" class="form-control" required>
+                    @foreach($repisas as $repisa)
+                    <option value="{{ $repisa->id }}" {{ isset($libro) && $libro->id_repisa == $repisa->id ? 'selected' : '' }}>
+                        {{ $repisa->numero }}
+                    </option>
+                    @endforeach
+                </select>
+        </div>
 
-    <div class="mb-3">
-    <label for="categoria" class="form-label">Categoría</label>
-    <input type="text" name="categoria" class="form-control" value="{{ $libro->Categoria->nombre ?? old('categoria') }}" required>
-    </div>
+</div>
 
 
 
-    <div class="mb-3">
-        <label for="id_repisa" class="form-label">Repisa</label>
-        <input type="number" name="id_repisa" class="form-control" value="{{ $libro->id_repisa ?? old('id_repisa') }}" required>
-    </div>
+
 
     <div class="mb-3">
         <label for="id_editorial" class="form-label">Editorial (opcional)</label>

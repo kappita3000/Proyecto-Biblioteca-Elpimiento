@@ -6,6 +6,7 @@ use App\Models\GesLibro;
 use App\Models\Categoria;
 use App\Models\Autor;
 use App\Models\Genero;
+use App\Models\Repisa;
 
 class GesLibroController extends Controller
 {
@@ -13,22 +14,30 @@ class GesLibroController extends Controller
     public function librosindex()
     {
             // Cargar autores, géneros y categorías
-    $autores = Autor::all();
-    $generos = Genero::all();
-    $categorias = Categoria::all();
-
-    // Cargar libros junto con los autores, géneros y categorías
-
-    $libros = GesLibro::with(['autor', 'genero', 'categoria'])->get();
-    return view('libros.librosindex', compact('libros', 'autores', 'generos', 'categorias'));
-    }
-
-public function edit($id)
-{
-    $libros = GesLibro::all(); // Obtener todos los libros
-    $libro = GesLibro::findOrFail($id); // Buscar el libro por su ID
-    return view('libros.librosindex', compact('libros', 'libro')); // Pasar tanto $libros como $libro a la vista
-}
+            $autores = Autor::all();
+            $generos = Genero::all();
+            $categorias = Categoria::all();
+            $repisas = Repisa::all(); // Cargar las repisas, incluyendo el número de la repisa
+        
+            $libros = GesLibro::with(['autor', 'genero', 'categoria'])->get();
+        
+            return view('libros.librosindex', compact('libros', 'autores', 'generos', 'categorias', 'repisas'));
+        }
+        public function edit($id)
+        {
+            // Obtener el libro por ID
+            $libro = GesLibro::findOrFail($id);
+        
+            // Cargar autores, géneros, categorías y repisas
+            $autores = Autor::all();
+            $generos = Genero::all();
+            $categorias = Categoria::all();
+            $repisas = Repisa::all();
+        
+            // Pasar los datos a la vista para ser usados en los select
+            return view('libros.librosindex', compact('libro', 'autores', 'generos', 'categorias', 'repisas'));
+        }
+        
 
 
     public function store(Request $request)
@@ -56,9 +65,9 @@ public function edit($id)
     // Crear el libro con los IDs correspondientes
     GesLibro::create([
         'titulo' => $request->titulo,
-        'id_autor' => $autor->id,  // Guardar el ID del autor
-        'id_genero' => $genero->id,  // Guardar el ID del género
-        'id_categoria' => $categoria->id,  // Guardar el ID de la categoría
+        'id_autor' => $request->autor,  // Aquí guardamos directamente el ID del autor
+        'id_genero' => $request->genero,
+        'id_categoria' => $request->categoria,
         'id_repisa' => $request->id_repisa,
         'cantidad' => $request->cantidad,
         'disponible' => $request->disponible ?? 1,

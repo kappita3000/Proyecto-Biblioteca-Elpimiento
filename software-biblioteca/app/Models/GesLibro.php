@@ -31,4 +31,9 @@ class GesLibro extends Model
     {
         return $this->belongsTo(Categoria::class, 'id_categoria');
     }
+    public function repisa()
+    {
+    return $this->belongsTo(Repisa::class, 'id_repisa');
+    }
+
 }
