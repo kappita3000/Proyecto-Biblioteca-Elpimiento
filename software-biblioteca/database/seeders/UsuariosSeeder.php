@@ -9,7 +9,7 @@ class UsuariosSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('Usuario')->insert([
+        DB::table('usuarios')->insert([
             ['Nombre' => 'Carlos', 'Apellido' => 'Pérez', 'Correo' => 'carlos@example.com', 'Contraseña' => bcrypt('password'), 'Tipo_Usuario' => 'Registrado', 'Solicitudes' => 0],
             ['Nombre' => 'María', 'Apellido' => 'García', 'Correo' => 'maria@example.com', 'Contraseña' => bcrypt('password'), 'Tipo_Usuario' => 'No Registrado', 'Solicitudes' => 0],
         ]);

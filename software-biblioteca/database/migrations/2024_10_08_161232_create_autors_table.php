@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('autores', function (Blueprint $table) {
             $table->id(); // Autoincremental
             $table->string('nombre');
-            $table->string('apellido');
             $table->string('nacionalidad')->nullable();
             $table->timestamps(); // created_at, updated_at
         });

@@ -73,10 +73,6 @@
 
 </div>
 
-
-
-
-
     <div class="mb-3">
         <label for="id_editorial" class="form-label">Editorial (opcional)</label>
         <input type="number" name="id_editorial" class="form-control" value="{{ $libro->id_editorial ?? old('id_editorial') }}">
@@ -149,7 +145,7 @@
     </table>
 </div>
 
-<!-- Modal Editar Libro -->
+
 <div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="editBookLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -161,73 +157,139 @@
         @csrf
         @method('PUT')
         <div class="modal-body">
-          <input type="hidden" id="editBookId">
+          <input type="hidden" id="editBookId" name="id">
+          
+          <!-- Título -->
           <div class="mb-3">
-            <label for="titulo" class="form-label">Título</label>
+            <label for="editTitulo" class="form-label">Título</label>
             <input type="text" class="form-control" id="editTitulo" name="titulo" required>
           </div>
-          <!-- Agrega aquí los demás campos: autor, género, categoría, etc. -->
+
+          <!-- Autor -->
+          <div class="mb-3">
+            <label for="editAutor" class="form-label">Autor</label>
+            <select class="form-select" id="editAutor" name="id_autor" required>
+              <option value="" disabled>Seleccione un autor</option>
+              @foreach($autores as $autor)
+                <option value="{{ $autor->id }}">{{ $autor->nombre }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <!-- Género -->
+          <div class="mb-3">
+            <label for="editGenero" class="form-label">Género</label>
+            <select class="form-select" id="editGenero" name="id_genero" required>
+              <option value="" disabled>Seleccione un género</option>
+              @foreach($generos as $genero)
+                <option value="{{ $genero->id }}">{{ $genero->nombre }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <!-- Categoría -->
+          <div class="mb-3">
+            <label for="editCategoria" class="form-label">Categoría</label>
+            <select class="form-select" id="editCategoria" name="id_categoria" required>
+              <option value="" disabled>Seleccione una categoría</option>
+              @foreach($categorias as $categoria)
+                <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <!-- Repisa -->
+          <div class="mb-3">
+            <label for="editRepisa" class="form-label">Repisa</label>
+            <select class="form-select" id="editRepisa" name="id_repisa" required>
+              <option value="" disabled>Seleccione una repisa</option>
+              @foreach($repisas as $repisa)
+                <option value="{{ $repisa->id }}">{{ $repisa->numero }}</option>
+              @endforeach
+            </select>
+          </div>
+          
+          <!-- Otros campos -->
+          <div class="mb-3">
+            <label for="editCantidad" class="form-label">Cantidad</label>
+            <input type="number" class="form-control" id="editCantidad" name="cantidad" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="editDisponible" class="form-label">Disponible</label>
+            <input type="checkbox" class="form-check-input" id="editDisponible" name="disponible">
+          </div>
+
+          <div class="mb-3">
+            <label for="editDescripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="editDescripcion" name="descripcion"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="editFechaPublicacion" class="form-label">Fecha de Publicación</label>
+            <input type="date" class="form-control" id="editFechaPublicacion" name="fecha_publicacion">
+          </div>
+
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<!-- Modal Eliminar Libro -->
+
+<!-- Modal para eliminar libro -->
 <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-labelledby="deleteBookLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteBookLabel">Confirmar Eliminación</h5>
+        <h5 class="modal-title" id="deleteBookLabel">Eliminar Libro</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar este libro?
-      </div>
-      <div class="modal-footer">
-        <form id="deleteBookForm" method="POST">
-          @csrf
-          @method('DELETE')
+      <form id="deleteBookForm" method="POST">
+        @csrf
+        @method('DELETE')
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas eliminar este libro?</p>
+        </div>
+        <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
-<!-- Script para los modales -->
 <script>
-    // Rellenar el modal de edición con los datos correctos
+    // Script para manejar la edición de libros
     const editBookModal = document.getElementById('editBookModal');
     editBookModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
         const id = button.getAttribute('data-id');
         const titulo = button.getAttribute('data-titulo');
         
-        const modalTitle = editBookModal.querySelector('.modal-title');
-        const modalBodyInput = editBookModal.querySelector('#editTitulo');
         const modalForm = editBookModal.querySelector('#editBookForm');
-
-        modalTitle.textContent = `Editar Libro: ${titulo}`;
-        modalBodyInput.value = titulo;
-        modalForm.action = `/libros/${id}`;
+        
+        modalForm.action = `/glibros/${id}`;
+        modalForm.querySelector('#editTitulo').value = titulo;
+        // Rellenar el resto de campos con atributos data-
     });
 
-    // Rellenar el modal de eliminación con el ID correcto
+    // Script para manejar la eliminación de libros
     const deleteBookModal = document.getElementById('deleteBookModal');
     deleteBookModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
         const id = button.getAttribute('data-id');
-        
+
         const modalForm = deleteBookModal.querySelector('#deleteBookForm');
-        modalForm.action = `/libros/${id}`;
+        modalForm.action = `/glibros/${id}`;
     });
 </script>
+
 
 @else
     <p>No hay libros disponibles.</p>
