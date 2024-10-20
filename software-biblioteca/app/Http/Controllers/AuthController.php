@@ -32,7 +32,7 @@ class AuthController extends Controller
             Auth::guard('admin')->login($admin);  // Forzar la autenticación manual del admin
     
             // Verificar si se autenticó correctamente
-            return redirect('probando')->with('success', 'Login exitoso como ' . $admin->rol);
+            return redirect('admin')->with('success', 'Login exitoso como ' . $admin->rol);
         }
     
         // Intentar autenticar como usuario normal
