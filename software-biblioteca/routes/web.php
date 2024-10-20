@@ -13,6 +13,7 @@ use App\Http\Controllers\PrestamoController;
 
 
 
+Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
 
 Route::get('/glibros', [GesLibroController::class, 'librosindex'])->name('libros.librosindex');
 Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.store');
@@ -20,7 +21,7 @@ Route::get('/glibros/{id}/edit', [GesLibroController::class, 'edit'])->name('lib
 Route::put('/glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');  
 Route::delete('/glibros/{id}', [GesLibroController::class, 'destroy'])->name('libros.destroy');  
 
-
+});
 
 
 

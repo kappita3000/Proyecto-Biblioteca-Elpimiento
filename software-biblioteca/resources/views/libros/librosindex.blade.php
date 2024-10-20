@@ -1,15 +1,27 @@
-@extends('layouts.aa')
+@extends('layouts.admin')
 
 @section('title', 'Gestión de Libros')
 
 @section('content')
+@php
+  $admin = Auth::guard('admin')->user();
+@endphp
+
+@if ($admin->rol === 'superadmin')
+
 <h1>Gestión de Libros</h1>
+
+@endif
 
 @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
 <!-- Formulario para crear o editar un libro -->  
+
+@if ($admin->rol === 'superadmin')
+
+
 <form action="{{ isset($libro) ? route('libros.update', $libro->id) : route('libros.store') }}" method="POST">
     @csrf
     @if (isset($libro))
@@ -101,6 +113,8 @@
     <button type="submit" class="btn btn-outline-success">{{ isset($libro) ? 'Actualizar Libro' : 'Crear Libro' }}</button>
 </form>
 
+@endif
+
 <hr>
 <div class="container"></div>
 <h2>Lista de Libros</h2>
@@ -113,7 +127,10 @@
                 <th>Autor</th>
                 <th>Género</th>
                 <th>Categoría</th>
+                @if ($admin->rol === 'superadmin')
                 <th>Acciones</th>
+                @endif
+                
             </tr>
         </thead>
         <tbody>
@@ -123,6 +140,8 @@
                 <td>{{ $libro->autor->nombre }}</td>
                 <td>{{ $libro->genero->nombre }}</td> 
                 <td>{{ $libro->Categoria->nombre }}</td>
+                @if ($admin->rol === 'superadmin')
+
                 <td>
                     <!-- Botón para abrir modal de editar -->
                     <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
@@ -139,6 +158,7 @@
                         Eliminar
                     </button>
                 </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

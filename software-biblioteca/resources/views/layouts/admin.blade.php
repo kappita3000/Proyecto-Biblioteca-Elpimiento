@@ -34,6 +34,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ route('prestamos.index') }}">Prestamos</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ route('libros.librosindex') }}">Gestionar Libros</a>
+        </li>
         
         @if ($admin->rol === 'superadmin')
           <li class="nav-item">
