@@ -22,7 +22,7 @@
 @endphp
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Biblioteca</a>
+    <a class="navbar-brand" href="#">Biblioteca Nuevo Horizonte</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,40 +40,34 @@
             <a class="nav-link active" aria-current="page" href="{{ route('newAdmin') }}">Crear moderador</a>
           </li>
         @endif
-        <li class="nav-item">
-          @if (Auth::guard('admin')->check())
-          <div class="user-info" style="
-              position: absolute; 
-              top: 10px;
-              right: 10px;
-              background-color: #f8f9fa;
-              padding: 10px;
-              border-radius: 5px;
-              box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          ">
-              @php
-                  $admin = Auth::guard('admin')->user();
-              @endphp
-  
-              @if ($admin->rol === 'superadmin')
-                  Bienvenido, Superadmin {{ $admin->nombre }}  |
-              @elseif ($admin->rol === 'moderador')
-                  Bienvenido, Moderador {{ $admin->nombre }}  |
-              @endif
-  
-              <!-- Botón para cerrar sesión -->
-              <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                  @csrf
-                  <button type="submit" class="btn btn-link">Cerrar sesión</button>
-              </form>
-                </div>
-            @endif
-        </li>
-        
       </ul>
+
+      <!-- Sección de usuario y cerrar sesión alineada a la derecha -->
+      @if (Auth::guard('admin')->check())
+        @php
+            $admin = Auth::guard('admin')->user();
+        @endphp
+        <div class="d-flex align-items-center">
+            <!-- Mensaje de bienvenida -->
+            <span class="navbar-text me-3">
+                @if ($admin->rol === 'superadmin')
+                    Bienvenido, Superadmin {{ $admin->nombre }}
+                @elseif ($admin->rol === 'moderador')
+                    Bienvenido, Moderador {{ $admin->nombre }}
+                @endif
+            </span>
+
+            <!-- Botón para cerrar sesión -->
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-link" style="text-decoration: none;">Cerrar sesión</button>
+            </form>
+        </div>
+      @endif
     </div>
   </div>
 </nav>
+
     <div class="container">
         @yield('content')
     </div>
