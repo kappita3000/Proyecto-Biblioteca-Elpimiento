@@ -27,6 +27,7 @@ Route::get('/glibros/{libro}/edit', [GesLibroController::class, 'edit'])->name('
 
 
 
+Route::get('/', [ReservaController::class, 'index'])->name('index');
 
 
 Route::get('/libros', [ReservaController::class, 'index'])->name('libros.index'); // Muestra todos los libros
