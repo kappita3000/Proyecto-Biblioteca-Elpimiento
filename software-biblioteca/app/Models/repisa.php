@@ -9,6 +9,9 @@ class Repisa extends Model
 {
     protected $table = 'repisas'; // Indicar que la tabla es 'autores'
     use HasFactory;
+    protected $fillable = [
+        'numero'
+    ];
     public function libros()
     {
         return $this->hasMany(Libro::class, 'id_repisa');

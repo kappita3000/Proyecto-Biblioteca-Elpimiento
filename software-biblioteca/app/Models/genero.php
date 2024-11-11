@@ -9,6 +9,9 @@ class Genero extends Model
 {
     protected $table = 'generos'; // Indicar que la tabla es 'autores'
     use HasFactory;
+    protected $fillable = [
+        'nombre'
+    ];
     public function libros()
     {
         return $this->hasMany(Libro::class, 'id_genero');

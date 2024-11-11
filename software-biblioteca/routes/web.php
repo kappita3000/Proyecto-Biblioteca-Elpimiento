@@ -10,7 +10,7 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PrestamoController;
-
+use App\Http\Controllers\GestionesController;
 
 
 Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
@@ -20,6 +20,20 @@ Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.stor
 Route::get('/glibros/{id}/edit', [GesLibroController::class, 'edit'])->name('libros.edit');
 Route::put('/glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');  
 Route::delete('/glibros/{id}', [GesLibroController::class, 'destroy'])->name('libros.destroy');  
+
+
+Route::get('gestiones', [GestionesController::class, 'index']);
+Route::post('gestiones/autor', [GestionesController::class, 'storeAutor']);
+Route::post('gestiones/genero', [GestionesController::class, 'storeGenero']);
+Route::post('gestiones/categoria', [GestionesController::class, 'storeCategoria']);
+Route::post('gestiones/repisa', [GestionesController::class, 'storeRepisa']);
+Route::post('gestiones/editorial', [GestionesController::class, 'storeEditorial']);
+Route::delete('gestiones/autor/{id}', [GestionesController::class, 'deleteAutor']);
+Route::delete('gestiones/genero/{id}', [GestionesController::class, 'deleteGenero']);
+Route::delete('gestiones/categoria/{id}', [GestionesController::class, 'deleteCategoria']);
+Route::delete('gestiones/repisa/{id}', [GestionesController::class, 'deleteRepisa']);
+Route::delete('gestiones/editorial/{id}', [GestionesController::class, 'deleteEditorial']);
+
 
 });
 
