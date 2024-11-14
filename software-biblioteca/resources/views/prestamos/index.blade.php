@@ -128,12 +128,12 @@
                                                 @endif
                                                 <div class="form-group">
                                                     <label for="fecha_devolucion">Fecha de Devolución</label>
-                                                    <input type="date" name="fecha_devolucion" class="form-control" required>
+                                                    <input type="date" name="fecha_devolucion" class="form-control" id="fecha_devolucion" required>
                                                 </div>
             
                                                 <div class="form-group">
                                                     <label for="devuelto">Devuelto</label>
-                                                    <select name="devuelto" class="form-control" required>
+                                                    <select name="devuelto" class="form-control" id="devuelto" required>
                                                         <option value="Si">Sí</option>
                                                         <option value="No">No</option>
                                                     </select>
@@ -203,7 +203,7 @@
                     <h3>Crear Préstamo</h3>
                     
                     <div>
-                        <label>Tipo de Usuario</label>
+                        <p>Tipo de Usuario</p>
                         <div>
                             <input type="radio" id="tipoUsuarioRegistrado" name="tipo_usuario" value="registrado" onclick="toggleForms()">
                             <label for="tipoUsuarioRegistrado">Registrado</label>
@@ -236,12 +236,12 @@
                     
                         <div class="form-group">
                             <label for="fecha_solicitud">Fecha Solicitud</label>
-                            <input type="date" name="fecha_solicitud" class="form-control" required>
+                            <input type="date" name="fecha_solicitud" class="form-control" id="fecha_solicitud" required>
                         </div>
                     
                         <div class="form-group">
                             <label for="fecha_prestamo">Fecha Préstamo</label>
-                            <input type="date" name="fecha_prestamo" class="form-control" required>
+                            <input type="date" name="fecha_prestamo" class="form-control" id="fecha_prestamo" required>
                         </div>
                     
                         <input type="hidden" name="tipo_usuario" value="Registrado">
@@ -252,17 +252,17 @@
                     
                         <div class="form-group">
                             <label for="nombreUsuario">Nombre</label>
-                            <input type="text" name="nombreUsuario" class="form-control" required>
+                            <input type="text" name="nombreUsuario" class="form-control" id="nombreUsuario" required>
                         </div>
                     
                         <div class="form-group">
                             <label for="apellidoUsuario">Apellido</label>
-                            <input type="text" name="apellidoUsuario" class="form-control" required>
+                            <input type="text" name="apellidoUsuario" class="form-control" id="apellidoUsuario" required>
                         </div>
                     
                         <div class="form-group">
                             <label for="correoUsuario">Correo</label>
-                            <input type="email" name="correoUsuario" class="form-control" required>
+                            <input type="email" name="correoUsuario" class="form-control" id="correoUsuario" required>
                         </div>
                     
                         <div class="form-group">
@@ -277,34 +277,19 @@
                     
                         <div class="form-group">
                             <label for="fecha_solicitud">Fecha Solicitud</label>
-                            <input type="date" name="fecha_solicitud" class="form-control" required>
+                            <input type="date" name="fecha_solicitud" class="form-control" id="fecha_solicitud" required>
                         </div>
                     
                         <div class="form-group">
                             <label for="fecha_prestamo">Fecha Préstamo</label>
-                            <input type="date" name="fecha_prestamo" class="form-control" required>
+                            <input type="date" name="fecha_prestamo" class="form-control" id="fecha_prestamo" required>
                         </div>
                     
                         <input type="hidden" name="tipo_usuario" value="No Registrado">
                         <button type="submit" class="btn btn-success">Crear Préstamo</button>
                     </form>
-                    <script>
-                        function toggleForms() {
-                            var registradoForm = document.getElementById('prestamoFormRegistrado');
-                            var noRegistradoForm = document.getElementById('prestamoFormNoRegistrado');
-                            
-                            if (document.getElementById("tipoUsuarioRegistrado").checked) {
-                                registradoForm.style.display = "block"; // Mostrar formulario de usuario registrado
-                                noRegistradoForm.style.display = "none"; // Ocultar formulario de usuario no registrado
-                            } else {
-                                registradoForm.style.display = "none"; // Ocultar formulario de usuario registrado
-                                noRegistradoForm.style.display = "block"; // Mostrar formulario de usuario no registrado
-                            }
-                        }
-                    </script>
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+                    <script src="{{ asset('js/prestamo.js') }}"></script>
+                   
                 </div>
             </div>
             

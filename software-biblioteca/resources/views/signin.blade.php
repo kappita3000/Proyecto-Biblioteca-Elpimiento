@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sing in</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-
-</head>
-<body>
+@extends('layouts.lib')
+<title>Crear cuenta</title>
+@section('content')
 
     
 <div class="container w-20 p-4">
@@ -69,70 +58,6 @@
 
 
 
-      <script>
-        // mover esto a un lugar seguro
-        // mover esto a un lugar seguro
-        // mover esto a un lugar seguro
-        // mover esto a un lugar seguro
-
-           // Función para alternar la visibilidad de la contraseña
-    document.getElementById('togglePassword1').addEventListener('click', function() {
-        const passwordField = document.getElementById('password');
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            this.textContent = 'Ocultar';
-        } else {
-            passwordField.type = 'password';
-            this.textContent = 'Mostrar';
-        }
-    });
-
-    document.getElementById('togglePassword2').addEventListener('click', function() {
-        const confirmPasswordField = document.getElementById('confirmPassword');
-        if (confirmPasswordField.type === 'password') {
-            confirmPasswordField.type = 'text';
-            this.textContent = 'Ocultar';
-        } else {
-            confirmPasswordField.type = 'password';
-            this.textContent = 'Mostrar';
-        }
-    });
-
-    // Función para validar que las contraseñas coincidan
-    document.getElementById('confirmPassword').addEventListener('input', validatePasswords);
-    document.getElementById('password').addEventListener('input', validatePasswords);
-
-    function validatePasswords() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const submitBtn = document.getElementById('submitBtn');
-        const passwordHelp = document.getElementById('passwordHelp');
-
-        if (password !== confirmPassword || password === '' || confirmPassword === '') {
-            passwordHelp.style.display = 'block';
-            submitBtn.disabled = true;
-        } else {
-            passwordHelp.style.display = 'none';
-            submitBtn.disabled = false;
-        }
-    }
-
-    // Evitar que el formulario se envíe si las contraseñas no coinciden
-    document.getElementById('registrationForm').addEventListener('submit', function(event) {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        
-        if (password !== confirmPassword) {
-            event.preventDefault(); // Evita que se envíe el formulario
-            alert('Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.');
-        }
-    });
-
-        // mover esto a un lugar seguro
-        // mover esto a un lugar seguro
-        // mover esto a un lugar seguro
-        // mover esto a un lugar seguro
-    </script>
+      <script src="{{ asset('js/signin.js') }}"></script>
 </div>
-</body>
-</html>
+@endsection
