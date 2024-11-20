@@ -215,23 +215,17 @@
                     <form action="{{ route('prestamos.store.registrado') }}" method="POST" id="prestamoFormRegistrado" style="display: none;">
                         @csrf
                         <div class="form-group">
-                            <label for="usuario_id">Seleccionar Usuario</label>
-                            <select name="usuario_id" id="usuario_id" class="form-control" required>
-                                <option value="">Seleccione un usuario</option>
-                                @foreach($usuarios as $usuario)
-                                    <option value="{{ $usuario->id }}">{{ $usuario->correo }}</option>
-                                @endforeach
-                            </select>
+                            <label for="usuario_search">Seleccionar Usuario</label>
+                            <input type="text" id="usuario_search" class="form-control" placeholder="Buscar usuario por correo, nombre o apellido" autocomplete="off" required>
+                            <input type="hidden" name="usuario_id" id="usuario_id">
+                            <div id="usuario_results" class="dropdown-menu"></div>
                         </div>
                     
                         <div class="form-group">
-                            <label for="libro_id">Seleccionar Libro</label>
-                            <select name="libro_id" id="libro_id" class="form-control" required>
-                                <option value="">Seleccione un libro</option>
-                                @foreach($libros as $libro)
-                                    <option value="{{ $libro->id }}">{{ $libro->titulo }}</option>
-                                @endforeach
-                            </select>
+                            <label for="libro_search">Seleccionar Libro</label>
+                            <input type="text" id="libro_search" class="form-control" placeholder="Buscar libro por título" autocomplete="off" required>
+                            <input type="hidden" name="libro_id" id="libro_id">
+                            <div id="libro_results" class="dropdown-menu"></div>
                         </div>
                     
                         <div class="form-group">
@@ -254,25 +248,20 @@
                             <label for="nombreUsuario">Nombre</label>
                             <input type="text" name="nombreUsuario" class="form-control" id="nombreUsuario" required>
                         </div>
-                    
                         <div class="form-group">
                             <label for="apellidoUsuario">Apellido</label>
                             <input type="text" name="apellidoUsuario" class="form-control" id="apellidoUsuario" required>
                         </div>
-                    
                         <div class="form-group">
                             <label for="correoUsuario">Correo</label>
                             <input type="email" name="correoUsuario" class="form-control" id="correoUsuario" required>
                         </div>
                     
                         <div class="form-group">
-                            <label for="libro_id">Seleccionar Libro</label>
-                            <select name="libro_id" id="libro_id" class="form-control" required>
-                                <option value="">Seleccione un libro</option>
-                                @foreach($libros as $libro)
-                                    <option value="{{ $libro->id }}">{{ $libro->titulo }}</option>
-                                @endforeach
-                            </select>
+                            <label for="libro_search_no_registrado">Seleccionar Libro</label>
+                            <input type="text" id="libro_search_no_registrado" class="form-control" placeholder="Buscar libro por título...">
+                            <div id="libro_results_no_registrado" class="dropdown-menu"></div>
+                            <input type="hidden" id="libro_id_no_registrado" name="libro_id">
                         </div>
                     
                         <div class="form-group">

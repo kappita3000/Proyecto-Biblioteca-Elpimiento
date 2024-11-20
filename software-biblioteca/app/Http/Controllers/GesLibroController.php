@@ -109,5 +109,12 @@ class GesLibroController extends Controller
             return redirect()->route('libros.librosindex')->with('success', 'Libro eliminado exitosamente.');
         }
 
-        
+        public function buscar(Request $request)
+        {
+            $query = $request->input('q');
+            $libros = GesLibro::where('titulo', 'like', "%$query%")
+                ->limit(10)
+                ->get(['id', 'titulo']); // Solo devuelve los campos necesarios
+            return response()->json($libros);
+        }
 }

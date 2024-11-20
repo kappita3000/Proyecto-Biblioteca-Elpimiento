@@ -5,10 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.addEventListener('keydown', function(event) {
-        // F12
-        if (event.key === "F12") {
-            event.preventDefault();
-        }
+
 
         // Ctrl + Shift + I
         if (event.ctrlKey && event.shiftKey && event.key === 'I') {
