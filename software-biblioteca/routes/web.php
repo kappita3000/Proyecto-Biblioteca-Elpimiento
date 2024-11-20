@@ -21,19 +21,28 @@ Route::get('/glibros/{id}/edit', [GesLibroController::class, 'edit'])->name('lib
 Route::put('/glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');  
 Route::delete('/glibros/{id}', [GesLibroController::class, 'destroy'])->name('libros.destroy');  
 
+Route::get('/gestiones/genero/tabla', [GestionesController::class, 'getGenerosTabla'])->name('gestiones.genero.tabla');
+Route::get('gestiones/genero/tabla', [GestionesController::class, 'tablaGeneros'])->name('gestiones.genero.tabla');
 
-Route::get('gestiones', [GestionesController::class, 'index']);
+
+Route::get('gestiones', [GestionesController::class, 'index'])->name('gestiones.gestiones');
 Route::post('gestiones/autor', [GestionesController::class, 'storeAutor']);
 Route::post('gestiones/genero', [GestionesController::class, 'storeGenero']);
 Route::post('gestiones/categoria', [GestionesController::class, 'storeCategoria']);
 Route::post('gestiones/repisa', [GestionesController::class, 'storeRepisa']);
 Route::post('gestiones/editorial', [GestionesController::class, 'storeEditorial']);
 Route::delete('gestiones/autor/{id}', [GestionesController::class, 'deleteAutor']);
-Route::delete('gestiones/genero/{id}', [GestionesController::class, 'deleteGenero']);
+
+Route::delete('/gestiones/genero/{id}', [GestionesController::class, 'deleteGenero'])->name('genero.delete');
+
 Route::delete('gestiones/categoria/{id}', [GestionesController::class, 'deleteCategoria']);
 Route::delete('gestiones/repisa/{id}', [GestionesController::class, 'deleteRepisa']);
 Route::delete('gestiones/editorial/{id}', [GestionesController::class, 'deleteEditorial']);
-
+Route::put('gestiones/autor/{id}', [GestionesController::class, 'updateAutor'])->name('gestiones.updateAutor');
+Route::put('gestiones/genero/{id}', [GestionesController::class, 'updateGenero'])->name('gestiones.updateGenero');
+Route::put('gestiones/categoria/{id}', [GestionesController::class, 'updateCategoria'])->name('gestiones.updateCategoria');
+Route::put('gestiones/repisa/{id}', [GestionesController::class, 'updateRepisa'])->name('gestiones.updateRepisa');
+Route::put('gestiones/editorial/{id}', [GestionesController::class, 'updateEditorial'])->name('gestiones.updateEditorial');
 
 });
 
