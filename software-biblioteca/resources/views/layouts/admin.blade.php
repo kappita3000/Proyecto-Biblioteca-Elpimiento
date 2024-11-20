@@ -74,6 +74,6 @@
     <div class="container">
         @yield('content')
     </div>
-
+<script src="{{ asset('js/global.js') }}"></script>
 </body>
 </html>

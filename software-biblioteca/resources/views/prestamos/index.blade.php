@@ -128,12 +128,12 @@
                                                 @endif
                                                 <div class="form-group">
                                                     <label for="fecha_devolucion">Fecha de Devolución</label>
-                                                    <input type="date" name="fecha_devolucion" class="form-control" required>
+                                                    <input type="date" name="fecha_devolucion" class="form-control" id="fecha_devolucion" required>
                                                 </div>
             
                                                 <div class="form-group">
                                                     <label for="devuelto">Devuelto</label>
-                                                    <select name="devuelto" class="form-control" required>
+                                                    <select name="devuelto" class="form-control" id="devuelto" required>
                                                         <option value="Si">Sí</option>
                                                         <option value="No">No</option>
                                                     </select>
@@ -203,7 +203,7 @@
                     <h3>Crear Préstamo</h3>
                     
                     <div>
-                        <label>Tipo de Usuario</label>
+                        <p>Tipo de Usuario</p>
                         <div>
                             <input type="radio" id="tipoUsuarioRegistrado" name="tipo_usuario" value="registrado" onclick="toggleForms()">
                             <label for="tipoUsuarioRegistrado">Registrado</label>
@@ -215,33 +215,27 @@
                     <form action="{{ route('prestamos.store.registrado') }}" method="POST" id="prestamoFormRegistrado" style="display: none;">
                         @csrf
                         <div class="form-group">
-                            <label for="usuario_id">Seleccionar Usuario</label>
-                            <select name="usuario_id" id="usuario_id" class="form-control" required>
-                                <option value="">Seleccione un usuario</option>
-                                @foreach($usuarios as $usuario)
-                                    <option value="{{ $usuario->id }}">{{ $usuario->correo }}</option>
-                                @endforeach
-                            </select>
+                            <label for="usuario_search">Seleccionar Usuario</label>
+                            <input type="text" id="usuario_search" class="form-control" placeholder="Buscar usuario por correo, nombre o apellido" autocomplete="off" required>
+                            <input type="hidden" name="usuario_id" id="usuario_id">
+                            <div id="usuario_results" class="dropdown-menu"></div>
                         </div>
                     
                         <div class="form-group">
-                            <label for="libro_id">Seleccionar Libro</label>
-                            <select name="libro_id" id="libro_id" class="form-control" required>
-                                <option value="">Seleccione un libro</option>
-                                @foreach($libros as $libro)
-                                    <option value="{{ $libro->id }}">{{ $libro->titulo }}</option>
-                                @endforeach
-                            </select>
+                            <label for="libro_search">Seleccionar Libro</label>
+                            <input type="text" id="libro_search" class="form-control" placeholder="Buscar libro por título" autocomplete="off" required>
+                            <input type="hidden" name="libro_id" id="libro_id">
+                            <div id="libro_results" class="dropdown-menu"></div>
                         </div>
                     
                         <div class="form-group">
                             <label for="fecha_solicitud">Fecha Solicitud</label>
-                            <input type="date" name="fecha_solicitud" class="form-control" required>
+                            <input type="date" name="fecha_solicitud" class="form-control" id="fecha_solicitud" required>
                         </div>
                     
                         <div class="form-group">
                             <label for="fecha_prestamo">Fecha Préstamo</label>
-                            <input type="date" name="fecha_prestamo" class="form-control" required>
+                            <input type="date" name="fecha_prestamo" class="form-control" id="fecha_prestamo" required>
                         </div>
                     
                         <input type="hidden" name="tipo_usuario" value="Registrado">
@@ -252,59 +246,39 @@
                     
                         <div class="form-group">
                             <label for="nombreUsuario">Nombre</label>
-                            <input type="text" name="nombreUsuario" class="form-control" required>
+                            <input type="text" name="nombreUsuario" class="form-control" id="nombreUsuario" required>
                         </div>
-                    
                         <div class="form-group">
                             <label for="apellidoUsuario">Apellido</label>
-                            <input type="text" name="apellidoUsuario" class="form-control" required>
+                            <input type="text" name="apellidoUsuario" class="form-control" id="apellidoUsuario" required>
                         </div>
-                    
                         <div class="form-group">
                             <label for="correoUsuario">Correo</label>
-                            <input type="email" name="correoUsuario" class="form-control" required>
+                            <input type="email" name="correoUsuario" class="form-control" id="correoUsuario" required>
                         </div>
                     
                         <div class="form-group">
-                            <label for="libro_id">Seleccionar Libro</label>
-                            <select name="libro_id" id="libro_id" class="form-control" required>
-                                <option value="">Seleccione un libro</option>
-                                @foreach($libros as $libro)
-                                    <option value="{{ $libro->id }}">{{ $libro->titulo }}</option>
-                                @endforeach
-                            </select>
+                            <label for="libro_search_no_registrado">Seleccionar Libro</label>
+                            <input type="text" id="libro_search_no_registrado" class="form-control" placeholder="Buscar libro por título...">
+                            <div id="libro_results_no_registrado" class="dropdown-menu"></div>
+                            <input type="hidden" id="libro_id_no_registrado" name="libro_id">
                         </div>
                     
                         <div class="form-group">
                             <label for="fecha_solicitud">Fecha Solicitud</label>
-                            <input type="date" name="fecha_solicitud" class="form-control" required>
+                            <input type="date" name="fecha_solicitud" class="form-control" id="fecha_solicitud" required>
                         </div>
                     
                         <div class="form-group">
                             <label for="fecha_prestamo">Fecha Préstamo</label>
-                            <input type="date" name="fecha_prestamo" class="form-control" required>
+                            <input type="date" name="fecha_prestamo" class="form-control" id="fecha_prestamo" required>
                         </div>
                     
                         <input type="hidden" name="tipo_usuario" value="No Registrado">
                         <button type="submit" class="btn btn-success">Crear Préstamo</button>
                     </form>
-                    <script>
-                        function toggleForms() {
-                            var registradoForm = document.getElementById('prestamoFormRegistrado');
-                            var noRegistradoForm = document.getElementById('prestamoFormNoRegistrado');
-                            
-                            if (document.getElementById("tipoUsuarioRegistrado").checked) {
-                                registradoForm.style.display = "block"; // Mostrar formulario de usuario registrado
-                                noRegistradoForm.style.display = "none"; // Ocultar formulario de usuario no registrado
-                            } else {
-                                registradoForm.style.display = "none"; // Ocultar formulario de usuario registrado
-                                noRegistradoForm.style.display = "block"; // Mostrar formulario de usuario no registrado
-                            }
-                        }
-                    </script>
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+                    <script src="{{ asset('js/prestamo.js') }}"></script>
+                   
                 </div>
             </div>
             

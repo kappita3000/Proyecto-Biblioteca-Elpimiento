@@ -112,4 +112,6 @@ Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], func
     Route::put('/prestamos/{id}/registrar-devolucion', [PrestamoController::class, 'registrarDevolucion'])->name('prestamos.registrarDevolucion');
     Route::post('/prestamos/store/registrado', [PrestamoController::class, 'storeRegistrado'])->name('prestamos.store.registrado');
     Route::post('/prestamos/store/no_registrado', [PrestamoController::class, 'storeNoRegistrado'])->name('prestamos.store.no_registrado');
+    Route::get('/buscar-libros', [GesLibroController::class, 'buscar'])->name('libros.buscar');
+    Route::get('/buscar-usuarios', [UsuarioController::class, 'buscar'])->name('usuarios.buscar');
 });

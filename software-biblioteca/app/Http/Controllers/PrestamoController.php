@@ -150,26 +150,22 @@ class PrestamoController extends Controller
 
     public function storeRegistrado(Request $request)
     {
-        // Debug: Verificar todos los datos recibidos
-
-    
         // Validar el formulario
         $validatedData = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id', // Asegúrate de que el usuario existe
-            'libro_id' => 'required|exists:libros,id', // Asegúrate de que el libro existe
+            'usuario_id' => 'required|exists:usuarios,id',
+            'libro_id' => 'required|exists:libros,id',
             'fecha_solicitud' => 'required|date',
             'fecha_prestamo' => 'required|date',
         ]);
-    
+
         // Crear el préstamo
-        $prestamo = Prestamo::create([
+        Prestamo::create([
             'id_usuario' => $validatedData['usuario_id'],
             'id_libro' => $validatedData['libro_id'],
             'fecha_solicitud' => $validatedData['fecha_solicitud'],
             'fecha_prestamo' => $validatedData['fecha_prestamo'],
         ]);
-    
-        // Redireccionar con un mensaje de éxito
+
         return redirect()->route('prestamos.index')->with('success', 'Préstamo creado correctamente para usuario registrado.');
     }
 
@@ -184,48 +180,48 @@ class PrestamoController extends Controller
             'fecha_solicitud' => 'required|date',
             'fecha_prestamo' => 'required|date',
         ]);
-    
+
         // Verificar si el correo ya está registrado
         $usuarioExistente = Usuario::where('correo', $validatedData['correoUsuario'])->first();
-    
+
         if ($usuarioExistente) {
-            // Si el usuario existe y su tipo es "No Registrado", actualizamos sus datos
             if ($usuarioExistente->tipo_usuario === 'No Registrado') {
-                $usuarioExistente->nombre = $validatedData['nombreUsuario'];
-                $usuarioExistente->apellido = $validatedData['apellidoUsuario'];
-                $usuarioExistente->solicitudes += 1; // Incrementar el número de solicitudes
-                $usuarioExistente->save(); // Guardar los cambios
-    
+                // Actualizar el usuario existente
+                $usuarioExistente->update([
+                    'nombre' => $validatedData['nombreUsuario'],
+                    'apellido' => $validatedData['apellidoUsuario'],
+                    'solicitudes' => $usuarioExistente->solicitudes + 1,
+                ]);
+
                 // Crear el préstamo
-                $prestamo = Prestamo::create([
+                Prestamo::create([
                     'id_usuario' => $usuarioExistente->id,
                     'id_libro' => $validatedData['libro_id'],
                     'fecha_solicitud' => $validatedData['fecha_solicitud'],
                     'fecha_prestamo' => $validatedData['fecha_prestamo'],
                 ]);
-    
+
                 return redirect()->route('prestamos.index')->with('success', 'Préstamo creado correctamente para el usuario no registrado.');
             } else {
-                // Si el usuario ya está registrado
-                return back()->withErrors(['correoUsuario' => 'Ya existe una cuenta con este correo registrado.']);
+                return back()->withErrors(['correoUsuario' => 'Ya existe una cuenta con este correo registrada. Por favor, inicie sesión.']);
             }
         } else {
-            // Si no existe, crear un nuevo usuario no registrado
+            // Crear un nuevo usuario no registrado
             $usuario = Usuario::create([
                 'nombre' => $validatedData['nombreUsuario'],
                 'apellido' => $validatedData['apellidoUsuario'],
                 'correo' => $validatedData['correoUsuario'],
                 'tipo_usuario' => 'No Registrado',
             ]);
-    
+
             // Crear el préstamo
-            $prestamo = Prestamo::create([
+            Prestamo::create([
                 'id_usuario' => $usuario->id,
-                'libro_id' => $validatedData['libro_id'],
+                'id_libro' => $validatedData['libro_id'],
                 'fecha_solicitud' => $validatedData['fecha_solicitud'],
                 'fecha_prestamo' => $validatedData['fecha_prestamo'],
             ]);
-    
+
             return redirect()->route('prestamos.index')->with('success', 'Préstamo creado correctamente para el nuevo usuario no registrado.');
         }
     }
