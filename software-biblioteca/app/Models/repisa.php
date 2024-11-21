@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Repisa extends Model
 {
-    protected $table = 'repisas'; // Indicar que la tabla es 'autores'
     use HasFactory;
-    public function libros()
-    {
-        return $this->hasMany(Libro::class, 'id_repisa');
-    }
+
+    // Definir el nombre de la tabla si no sigue la convención de Laravel (opcional)
+    protected $table = 'repisas';
+
+    // Definir los campos que se pueden rellenar
+    protected $fillable = ['numero'];
 }
+

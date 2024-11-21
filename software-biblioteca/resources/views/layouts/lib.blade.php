@@ -26,18 +26,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ route('index') }}">Inicio</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Categoria
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Poemas</a></li>
-            <li><a class="dropdown-item" href="#">Drama</a></li>
-            <li><a class="dropdown-item" href="#">Misterio</a></li>
-            <li><a class="dropdown-item" href="#">Literatura antigua</a></li>
-            <li><a class="dropdown-item" href="#">Ficcion</a></li>
-          </ul>
-        </li>
+        
         
       </ul>
       

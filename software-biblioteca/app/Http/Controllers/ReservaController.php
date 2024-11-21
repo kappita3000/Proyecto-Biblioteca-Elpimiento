@@ -1,20 +1,23 @@
 <?php
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Libro;
+use App\Models\genero;
 use App\Models\usuario;
 use App\Models\prestamo;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 
+
+
 class ReservaController extends Controller
 {
+
     // Mostrar todos los libros
     public function index()
     {
-        $libros = Libro::paginate(9);
+        $libros = Libro::paginate(12);
         $generos = \App\Models\Genero::all(); // Obtener todos los géneros
 
         return view('libros.index', compact('libros', 'generos'));
@@ -26,7 +29,9 @@ class ReservaController extends Controller
         $libro = Libro::findOrFail($id); // Obtiene el libro por ID
         return view('libros.show', compact('libro'));
     }
+
     
+
     public function search(Request $request)
     {
         $query = $request->input('query'); // Obtener el texto de la búsqueda
@@ -34,8 +39,11 @@ class ReservaController extends Controller
         // Filtrar los libros que coincidan con el título o partes del título
         $libros = Libro::where('titulo', 'like', "%$query%")->paginate(9);
         
-        // Retornar la vista con los libros encontrados
-        return view('libros.index', compact('libros'));
+        // Cargar todos los géneros para el formulario de filtros
+        $generos = Genero::all();
+    
+        // Retornar la vista con los libros encontrados y los géneros
+        return view('libros.index', compact('libros', 'generos'));
     }
     
     public function reservarLibro(Request $request)
@@ -68,14 +76,18 @@ class ReservaController extends Controller
                 return redirect()->back()->with('error', 'Ya existe una cuenta con este correo. Inicia sesión para continuar.');
             }
     
-            // Crear usuario como "No Registrado"
-            $usuario = Usuario::create([
-                'nombre' => $validatedData['nombreUsuario'],
-                'apellido' => $validatedData['apellidoUsuario'],
-                'correo' => $validatedData['correoUsuario'],
-                'tipo_usuario' => 'No Registrado',
-                'solicitudes' => 0,
-            ]);
+            // Generar una contraseña aleatoria de 5 dígitos
+        $contraseñaRandom = rand(10000, 99999);
+
+        // Crear usuario como "No Registrado"
+        $usuario = Usuario::create([
+            'nombre' => $validatedData['nombreUsuario'],
+            'apellido' => $validatedData['apellidoUsuario'],
+            'correo' => $validatedData['correoUsuario'],
+            'tipo_usuario' => 'No Registrado',
+            'solicitudes' => 0,
+            'contraseña' => bcrypt($contraseñaRandom), // Se guarda la contraseña encriptada
+        ]);
         }
     
         // Crear el registro del préstamo

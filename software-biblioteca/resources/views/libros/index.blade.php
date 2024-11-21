@@ -17,23 +17,83 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> <!-- Ruta al CSS -->
     <script src="{{ asset('js/script.js') }}" defer></script> <!-- Ruta al JS -->
     <style>
-   
+        
 
     </style>
 </head>
 <body>
-    <h3>Libros</h3>
+
+<br>
+    <!-- Carrousel de los últimos 3 libros agregados -->
+    <div id="latestBooksCarousel" class="carousel slide mb-5" data-bs-ride="carousel" style="width: 100%; max-width: 100%; overflow: hidden;">
+        <div class="carousel-inner">
+            @php
+                $ultimosLibros = \App\Models\Libro::latest()->with('autor', 'genero')->take(3)->get();
+            @endphp
+            @foreach($ultimosLibros as $index => $libro)
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    <div class="w-100 d-flex justify-content-center align-items-center" style="height: 400px; background-color: #f8f9fa;">
+                        <div class="text-center" style="width: 60%;">
+                            <h3>{{ $libro->titulo }}</h3>
+                            <p><strong>Género:</strong> {{ $libro->genero->nombre }}</p>
+                            <p><strong>Autor:</strong> {{ $libro->autor->nombre }}</p>
+                            <a href="{{ route('libros.show', $libro->id) }}" class="btn btn-info">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+    <script>
+        var myCarousel = document.querySelector('#latestBooksCarousel');
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 5000,
+            ride: 'carousel'
+        });
+    </script>
     
     
+    <form action="{{ route('libros.filtro') }}" method="GET" class="mb-4 d-flex align-items-end gap-3">
+        <!-- Filtro por autor -->
+        <div class="mb-3">
+            <label for="author_name" class="form-label fw-bold" style="font-size: 0.875rem;">Buscar por nombre del autor:</label>
+            <input type="text" name="author_name" id="author_name" class="form-control" style="width: 200px;" value="{{ request('author_name') }}" placeholder="Nombre del autor">
+        </div>
+        <!-- Filtro por genero -->
+        <div class="mb-3">
+            <label for="genre" class="form-label fw-bold">Género:</label>
+            <select name="genre" id="genre" class="form-select" style="width: 150px;">
+                <option value="">Todos</option>
+                @foreach($generos as $genero)
+                    <option value="{{ $genero->id }}" {{ request('genre') == $genero->id ? 'selected' : '' }}>{{ $genero->nombre }}</option>
+                @endforeach
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
     
+
+
     <!-- Mostrar los libros filtrados -->
+    
+    <h3>Libros</h3>
     <div class="row">
         @forelse($libros as $libro)
             <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card h-100 d-flex flex-row">
+                   
+                    <div class="card-body flex-grow-1">
                         <h5 class="card-title">{{ $libro->titulo }}</h5>
-                        <p class="card-text"><strong>Género:</strong> {{ $libro->genero->nombre }}</p>
+                        <p class="card-text"><strong>Género:</strong> {{ $libro->genero->nombre ?? 'Desconocido' }}</p>
                         <p class="card-text"><strong>Disponibilidad:</strong> 
                             @if($libro->disponible)
                                 <span class="badge bg-success">Disponible</span>
@@ -41,20 +101,25 @@
                                 <span class="badge bg-danger">No Disponible</span>
                             @endif
                         </p>
+                        
                         <a href="{{ route('libros.show', $libro->id) }}" class="btn btn-info">Ver más</a>
+                    </div>
+                    <div class="flex-shrink-0">
+                      
                     </div>
                 </div>
             </div>
         @empty
-            <p>No se encontraron libros con ese nombre.</p>
+            <p>No se encontraron libros.</p>
         @endforelse
     </div>
+<div class="d-flex justify-content-center mt-3">
+    {{ $libros->links('pagination::bootstrap-4') }}
+</div>
 
     
     
-    <div class="d-flex justify-content-center mt-3">
-        {{ $libros->links('pagination::bootstrap-4') }}
-    </div>
+    
 
             @if (Auth::guard('admin')->check())
                 <div class="user-info" style="
