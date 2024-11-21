@@ -47,8 +47,7 @@ Route::put('gestiones/editorial/{id}', [GestionesController::class, 'updateEdito
 });
 
 
-
-
+Route::get('/info', function () {return view('info');});
 
 
 

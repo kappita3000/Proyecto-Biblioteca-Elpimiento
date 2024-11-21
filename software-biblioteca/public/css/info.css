@@ -1,0 +1,113 @@
+/* Estilo general */
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Contenedor general */
+.container {
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+}
+.container2 {
+    padding: 0;
+    margin: 0 auto; /* Centra el contenido */
+    width: 100%;
+    
+}
+
+/* Sección del mapa */
+.map-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Mapa más ancho que el texto */
+    gap: 10px;
+    background-color: #e8f5e9;
+    padding: 20px;
+    height: 60vh;
+}
+
+.map-container {
+    height: 100%; /* Asegura que el mapa ocupe el 100% de su contenedor */
+    border-radius: 10px;
+}
+
+.map-text {
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección "Sobre nosotros" */
+.about-section {
+    background-color: #ffffff;
+    padding: 60px 0;
+    text-align: center;
+    margin: 0; /* Elimina márgenes */
+}
+.about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+.about-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: 0 auto; /* Centra las tarjetas */
+    max-width: 1200px; /* Define un ancho máximo */
+}
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+}
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+.card p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+.card button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.card button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .map-section {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+        gap: 15px;
+    }
+    .about-cards {
+        flex-direction: column; /* Apila las tarjetas */
+        gap: 15px;
+        padding: 0 10px;
+    }
+}

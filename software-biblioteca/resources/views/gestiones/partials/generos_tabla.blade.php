@@ -68,3 +68,92 @@
 </table>
 
 
+
+@if(session('activeTab'))
+    <script>
+        localStorage.setItem("activeTab", "{{ session('activeTab') }}");
+    </script>
+    @endif
+
+    <script>
+$(document).ready(function () {
+
+    // Función para actualizar la tabla de géneros
+function actualizarTablaGeneros() {
+    $.ajax({
+        url: '/gestiones/genero/tabla', // Ruta que devuelve la tabla actualizada
+        type: 'GET',
+        success: function (data) {
+            $('#tablaGeneros').html(data); // Reemplaza el contenido del contenedor de la tabla
+        },
+        error: function () {
+            alert('Ocurrió un error al intentar actualizar la tabla.');
+        }
+    });
+}
+
+
+    // Agregar género con AJAX
+    $('#formAgregarGenero').on('submit', function (e) {
+        e.preventDefault(); // Previene el envío estándar del formulario
+        const formData = $(this).serialize(); // Serializa los datos del formulario
+
+        $.ajax({
+            url: "{{ url('gestiones/genero') }}", // URL para guardar el género
+            type: "POST",
+            data: formData,
+            success: function (response) {
+                actualizarTablaGeneros(); // Actualiza la tabla
+                $('#formAgregarGenero')[0].reset(); // Resetea el formulario
+            },
+            error: function () {
+                alert('Ocurrió un error al agregar el género.');
+            }
+        });
+    });
+
+
+// Botón de Editar Género
+$(document).on('submit', '.formEditarGenero', function (event) {
+    event.preventDefault(); // Evita la recarga de la página
+    const form = $(this); // El formulario específico
+    const url = form.attr('action'); // URL del formulario
+
+    $.ajax({
+        url: url,
+        type: 'POST', // Laravel espera POST para spoofing PUT
+        data: form.serialize(), // Serializa los datos del formulario
+        success: function () {
+            $('.modal').modal('hide'); // Cierra el modal
+            actualizarTablaGeneros(); // Actualiza la tabla
+        },
+        error: function () {
+            alert('Ocurrió un error al editar el género.');
+        }
+    });
+});
+
+// Botón de Eliminar Género
+$(document).on('submit', 'form[action*="gestiones/genero"]', function (event) {
+    event.preventDefault(); // Evita la recarga de la página
+    const form = $(this); // El formulario actual
+    const url = form.attr('action'); // URL del formulario
+
+    $.ajax({
+        url: url,
+        type: 'POST', // Laravel espera POST para spoofing DELETE
+        data: form.serialize(), // Serializa los datos del formulario
+        success: function () {
+            $('.modal').modal('hide'); // Cierra el modal
+            actualizarTablaGeneros(); // Actualiza la tabla
+        },
+        error: function () {
+            alert('Ocurrió un error al eliminar el género.');
+        }
+    });
+});
+
+
+});
+
+    </script>
