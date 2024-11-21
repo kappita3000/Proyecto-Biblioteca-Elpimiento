@@ -10,15 +10,10 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PrestamoController;
-<<<<<<< HEAD
+use App\Http\Controllers\GestionesController;
 use App\Http\Controllers\FiltrosController;
 
-=======
-use App\Http\Controllers\GestionesController;
-
-
 Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
->>>>>>> 5a68b2e80d948c6cf724d2cfe8039102d4bbd9bb
 
 Route::get('/glibros', [GesLibroController::class, 'librosindex'])->name('libros.librosindex');
 Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.store');
