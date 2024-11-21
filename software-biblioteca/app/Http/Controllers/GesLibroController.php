@@ -35,60 +35,86 @@ class GesLibroController extends Controller
             $repisas = Repisa::all();
         
             // Pasar los datos a la vista para ser usados en los select
-            return view('libros.librosindex', compact('libro', 'autores', 'generos', 'categorias', 'repisas'));
+            return view('libros.librosindex', compact('libros', 'autores', 'generos', 'categorias', 'repisas'));
         }
         
 
 
-    public function store(Request $request)
-    {
-    // Validación de los datos
-    $request->validate([
-        'titulo' => 'required|string|max:255',
-        'autor' => 'required|string',  // Aquí usamos el nombre del autor, no el ID
-        'genero' => 'required|string',
-        'categoria' => 'required|string',
-        'id_repisa' => 'required|integer',
-        'cantidad' => 'required|integer|min:1',
-        'disponible' => 'boolean',
-    ]);
+        public function store(Request $request)
+        {
+            // Validar los datos de entrada
+            $request->validate([
+                'titulo' => 'required|max:255',
+                'id_autor' => 'required|exists:autores,id',
+                'id_genero' => 'required|exists:generos,id',
+                'id_categoria' => 'required|exists:categorias,id',
+                'id_repisa' => 'required|exists:repisas,id',
+                'cantidad' => 'required|integer|min:1',
+                'fecha_publicacion' => 'nullable|date',
+                'descripcion' => 'nullable|string',
+                'id_editorial' => 'nullable|integer|exists:editoriales,id',
+            ]);
+        
+            // Convertir el valor de 'disponible' a 1 o 0
+            $request->merge([
+                'disponible' => $request->has('disponible') ? 1 : 0,
+            ]);
+        
+            // Crear un nuevo libro con los datos del request
+            GesLibro::create($request->all());
+        
+            // Redirigir a la página de libros con un mensaje de éxito
+            return redirect()->route('libros.librosindex')->with('success', 'Libro creado exitosamente.');
+        }
+        
 
-    // Buscar el autor por nombre, o crearlo si no existe
-    $autor = Autor::firstOrCreate(['nombre' => $request->autor]);
+        public function update(Request $request, $id)
+        {
+            // Validar los datos de entrada
+            $request->validate([
+                'titulo' => 'required|max:255',
+                'id_autor' => 'required|exists:autores,id',
+                'id_genero' => 'required|exists:generos,id',
+                'id_categoria' => 'required|exists:categorias,id',
+                'id_repisa' => 'required|exists:repisas,id',
+                'cantidad' => 'required|integer|min:1',
+                'fecha_publicacion' => 'nullable|date',
+                'descripcion' => 'nullable|string',
+                'id_editorial' => 'nullable|integer|exists:editoriales,id',
+            ]);
+        
+            // Encuentra el libro por su ID
+            $libro = GesLibro::findOrFail($id);
+        
+            // Convertir el valor de 'disponible' a 1 o 0
+            $request->merge([
+                'disponible' => $request->has('disponible') ? 1 : 0,
+            ]);
+        
+            // Actualiza los datos del libro con los datos del request
+            $libro->update($request->all());
+        
+            // Redirigir a la página de libros con un mensaje de éxito
+            return redirect()->route('libros.librosindex')->with('success', 'Libro actualizado exitosamente.');
+        }
+        public function destroy($id)
+        {
+             // Encuentra el libro por su ID
+            $libro = GesLibro::findOrFail($id);
 
-    // Buscar el género por nombre, o crearlo si no existe
-    $genero = Genero::firstOrCreate(['nombre' => $request->genero]);
+            // Elimina el libro
+            $libro->delete();
 
-    // Buscar la categoría por nombre, o crearla si no existe
-    $categoria = Categoria::firstOrCreate(['nombre' => $request->categoria]);
+            // Redirige a la lista de libros con un mensaje de éxito
+            return redirect()->route('libros.librosindex')->with('success', 'Libro eliminado exitosamente.');
+        }
 
-    // Crear el libro con los IDs correspondientes
-    GesLibro::create([
-        'titulo' => $request->titulo,
-        'id_autor' => $request->autor,  // Aquí guardamos directamente el ID del autor
-        'id_genero' => $request->genero,
-        'id_categoria' => $request->categoria,
-        'id_repisa' => $request->id_repisa,
-        'cantidad' => $request->cantidad,
-        'disponible' => $request->disponible ?? 1,
-        'descripcion' => $request->descripcion,
-        'fecha_publicacion' => $request->fecha_publicacion,
-        'id_editorial' => $request->id_editorial,
-    ]);
-
-        return redirect()->route('libros.librosindex')->with('success', 'Libro creado exitosamente');
-    }
-
-    public function update(Request $request, $id)
-    {
-        $libro = GesLibro::findOrFail($id);
-        $libro->update($request->all());
-        return redirect()->route('libros.librosindex')->with('success', 'Libro actualizado con éxito.');
-    }
-    public function destroy($id)
-    {
-        $libro = GesLibro::findOrFail($id);
-        $libro->delete();
-        return redirect()->route('libros.librosindex')->with('success', 'Libro eliminado con éxito.');
-    }
+        public function buscar(Request $request)
+        {
+            $query = $request->input('q');
+            $libros = GesLibro::where('titulo', 'like', "%$query%")
+                ->limit(10)
+                ->get(['id', 'titulo']); // Solo devuelve los campos necesarios
+            return response()->json($libros);
+        }
 }

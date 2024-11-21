@@ -103,7 +103,7 @@
 
                  <!-- Tarjeta 4: Funciones Secundarias -->
                 <div class="col-md-4 mb-4">
-                    <a href="" class="card-link" style="text-decoration: none;">
+                    <a href="{{ route('gestiones.gestiones') }}" class="card-link" style="text-decoration: none;">
                         <div class="card text-center">
                             <div class="d-flex justify-content-center align-items-center" style="height: 300px;">
                                 <img src="{{ asset('img/secundarias.png') }}" alt="Secundarias" style="width: 250px; height: 250px; object-fit: contain;">

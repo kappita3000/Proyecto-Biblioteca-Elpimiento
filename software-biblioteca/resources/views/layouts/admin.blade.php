@@ -34,6 +34,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ route('prestamos.index') }}">Prestamos</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ route('libros.librosindex') }}">Gestionar Libros</a>
+        </li>
         
         @if ($admin->rol === 'superadmin')
           <li class="nav-item">
@@ -71,6 +74,6 @@
     <div class="container">
         @yield('content')
     </div>
-
+<script src="{{ asset('js/global.js') }}"></script>
 </body>
 </html>

@@ -10,19 +10,46 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PrestamoController;
+<<<<<<< HEAD
 use App\Http\Controllers\FiltrosController;
 
+=======
+use App\Http\Controllers\GestionesController;
+
+
+Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
+>>>>>>> 5a68b2e80d948c6cf724d2cfe8039102d4bbd9bb
 
 Route::get('/glibros', [GesLibroController::class, 'librosindex'])->name('libros.librosindex');
 Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.store');
-Route::put('glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');
+Route::get('/glibros/{id}/edit', [GesLibroController::class, 'edit'])->name('libros.edit');
+Route::put('/glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');  
+Route::delete('/glibros/{id}', [GesLibroController::class, 'destroy'])->name('libros.destroy');  
 
-Route::delete('/glibros/{libro}', [GesLibroController::class, 'destroy'])->name('libros.destroy');
-Route::get('/glibros/{libro}/edit', [GesLibroController::class, 'edit'])->name('libros.edit');
+Route::get('/gestiones/genero/tabla', [GestionesController::class, 'getGenerosTabla'])->name('gestiones.genero.tabla');
+Route::get('gestiones/genero/tabla', [GestionesController::class, 'tablaGeneros'])->name('gestiones.genero.tabla');
 
 
+Route::get('gestiones', [GestionesController::class, 'index'])->name('gestiones.gestiones');
+Route::post('gestiones/autor', [GestionesController::class, 'storeAutor']);
+Route::post('gestiones/genero', [GestionesController::class, 'storeGenero']);
+Route::post('gestiones/categoria', [GestionesController::class, 'storeCategoria']);
+Route::post('gestiones/repisa', [GestionesController::class, 'storeRepisa']);
+Route::post('gestiones/editorial', [GestionesController::class, 'storeEditorial']);
+Route::delete('gestiones/autor/{id}', [GestionesController::class, 'deleteAutor']);
 
+Route::delete('/gestiones/genero/{id}', [GestionesController::class, 'deleteGenero'])->name('genero.delete');
 
+Route::delete('gestiones/categoria/{id}', [GestionesController::class, 'deleteCategoria']);
+Route::delete('gestiones/repisa/{id}', [GestionesController::class, 'deleteRepisa']);
+Route::delete('gestiones/editorial/{id}', [GestionesController::class, 'deleteEditorial']);
+Route::put('gestiones/autor/{id}', [GestionesController::class, 'updateAutor'])->name('gestiones.updateAutor');
+Route::put('gestiones/genero/{id}', [GestionesController::class, 'updateGenero'])->name('gestiones.updateGenero');
+Route::put('gestiones/categoria/{id}', [GestionesController::class, 'updateCategoria'])->name('gestiones.updateCategoria');
+Route::put('gestiones/repisa/{id}', [GestionesController::class, 'updateRepisa'])->name('gestiones.updateRepisa');
+Route::put('gestiones/editorial/{id}', [GestionesController::class, 'updateEditorial'])->name('gestiones.updateEditorial');
+
+});
 
 
 
@@ -91,4 +118,6 @@ Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], func
     Route::put('/prestamos/{id}/registrar-devolucion', [PrestamoController::class, 'registrarDevolucion'])->name('prestamos.registrarDevolucion');
     Route::post('/prestamos/store/registrado', [PrestamoController::class, 'storeRegistrado'])->name('prestamos.store.registrado');
     Route::post('/prestamos/store/no_registrado', [PrestamoController::class, 'storeNoRegistrado'])->name('prestamos.store.no_registrado');
+    Route::get('/buscar-libros', [GesLibroController::class, 'buscar'])->name('libros.buscar');
+    Route::get('/buscar-usuarios', [UsuarioController::class, 'buscar'])->name('usuarios.buscar');
 });

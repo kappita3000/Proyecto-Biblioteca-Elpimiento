@@ -50,4 +50,19 @@ class UsuarioController extends Controller
         // Redirigir con un mensaje de éxito
         return redirect()->route('usuario')->with('success', 'Usuario creado correctamente');
     }
+
+    public function buscar(Request $request)
+    {
+        $query = $request->input('q');
+        $usuarios = Usuario::where('tipo_usuario', 'Registrado') // Filtrar solo usuarios registrados
+            ->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('correo', 'like', "%$query%")
+                    ->orWhere('nombre', 'like', "%$query%")
+                    ->orWhere('apellido', 'like', "%$query%");
+            })
+            ->limit(10)
+            ->get(['id', 'correo', 'nombre', 'apellido']); // Campos necesarios
+        
+        return response()->json($usuarios);
+    }
 }

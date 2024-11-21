@@ -7,6 +7,11 @@ class Categoria extends Model
 {
     protected $primaryKey = 'ID';
     protected $table = 'categorias';
+
+    protected $fillable = [
+        'nombre'
+    ];
+
     // Relación inversa con Libro
     public function libros()
     {

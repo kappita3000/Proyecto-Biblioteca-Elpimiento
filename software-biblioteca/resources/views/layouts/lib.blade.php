@@ -26,8 +26,17 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ route('index') }}">Inicio</a>
         </li>
+<<<<<<< HEAD
         
         
+=======
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Iniciar sesion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ route('signin') }}">Crear cuenta</a>
+        </li>
+>>>>>>> 5a68b2e80d948c6cf724d2cfe8039102d4bbd9bb
       </ul>
       
         <form class="d-flex" action="{{ route('libros.search') }}" method="GET">
@@ -40,6 +49,6 @@
     <div class="container">
         @yield('content')
     </div>
-
+<script src="{{ asset('js/global.js') }}"></script>
 </body>
 </html>
