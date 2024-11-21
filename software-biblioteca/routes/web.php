@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\GestionesController;
-
+use App\Http\Controllers\FiltrosController;
 
 Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
 
@@ -51,13 +51,14 @@ Route::get('/info', function () {return view('info');});
 
 
 
+Route::get('/', [ReservaController::class, 'index'])->name('index');
 
 
 Route::get('/libros', [ReservaController::class, 'index'])->name('libros.index'); // Muestra todos los libros
 Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.show'); // Muestra un libro específico
+Route::get('/filtro-libros', [FiltrosController::class, 'filtrarPorGenero'])->name('libros.filtro');
 
 Route::get('/buscar', [ReservaController::class, 'search'])->name('libros.search');
-
 Route::post('/reservar-libro', [ReservaController::class, 'reservar'])->name('reservar.libro');
 
 Route::post('/reservar-libro', [ReservaController::class, 'reservarLibro'])->name('reservar.libro');

@@ -120,28 +120,34 @@
         {{ session('error') }}
     </div>
 @endif
-        <div class="portada">
+<div class="portada">
+  <div class="container">
+      <div class="space-card">
+          <div class="card-body">
+              <h5 class="card-title">{{ $libro->titulo }}</h5>
+              <p class="card-text">{{ $libro->descripcion }}</p>
+              <p><strong>Autor:</strong> {{ $libro->autor ? $libro->autor->nombre : 'Desconocido' }}</p>
+              <p><strong>Editorial:</strong> {{ $libro->editorial ? $libro->editorial->nombre : 'Desconocida' }}</p>
+              <p><strong>Género:</strong> {{ $libro->genero ? $libro->genero->nombre : 'Desconocido' }}</p>
+              <p><strong>Categoría:</strong> {{ $libro->categoria ? $libro->categoria->nombre : 'Desconocida' }}</p>
+              <p><strong>Repisa:</strong> {{ $libro->repisa ? $libro->repisa->numero : 'Desconocida' }}</p>
+              <p><strong>Cantidad:</strong> {{ $libro->cantidad }}</p>
+              <p>
+                  <strong>Disponibilidad:</strong>
+                  @if($libro->disponible)
+                      <span class="text-success">Disponible</span>
+                  @else
+                      <span class="text-danger">No Disponible</span>
+                  @endif
+              </p>
+          </div>
+          <img src="{{ $libro->caratula }}" alt="Carátula del libro {{ $libro->titulo }}" class="card-img" onerror="this.onerror=null;this.src='{{ asset('img/placeholder.png') }}';">
 
-            <div class="container">
-                <div class="space-card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $libro->titulo }}</h5>
-                        <p class="card-text">{{ $libro->descripcion }}</p>
-                        <p><strong>Autor:</strong> {{ $libro->autor?->Nombre ?? 'Desconocido' }}</p>
-                        <p><strong>Editorial:</strong> {{ $libro->editorial?->nombre ?? 'Desconocida' }}</p>
-                        <p><strong>Género:</strong> {{ $libro->genero?->nombre ?? 'Desconocido' }} {{$libro->categoria?->nombre ?? 'Desconocido'}}</p>
-                        <p><strong>Repisa:</strong> {{ $libro->repisa?->nombre ?? 'Desconocida' }}</p>
-                        <p><strong>Cantidad:</strong> {{ $libro->cantidad }}</p>
-                        <p>
-                          <strong>Disponibilidad:</strong> 
-                          @if($libro->disponible)
-                              <span class="text-success">Disponible</span>
-                          @else
-                              <span class="text-danger">No Disponible</span>
-                          @endif
-                      </p>
-                    </div>
-                </div>
+      </div>
+      
+  </div>
+  
+</div>
 
 
         <!-- Botón para abrir el modal -->
