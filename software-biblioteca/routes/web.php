@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\GestionesController;
+use App\Http\Controllers\EstadisticasController;
 
 
 Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
@@ -114,4 +115,5 @@ Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], func
     Route::post('/prestamos/store/no_registrado', [PrestamoController::class, 'storeNoRegistrado'])->name('prestamos.store.no_registrado');
     Route::get('/buscar-libros', [GesLibroController::class, 'buscar'])->name('libros.buscar');
     Route::get('/buscar-usuarios', [UsuarioController::class, 'buscar'])->name('usuarios.buscar');
+    Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas.index');
 });

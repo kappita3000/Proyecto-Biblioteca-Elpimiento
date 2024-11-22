@@ -15,7 +15,8 @@ class PrestamoController extends Controller
     public function index()
     {
         // Solicitudes pendientes (sin fecha de préstamo)
-        $solicitudes = Prestamo::whereNull('fecha_prestamo')->get();
+        $solicitudes = Prestamo::whereNull('fecha_prestamo')->orderby('fecha_solicitud')
+                                                            ->get();
 
         // Préstamos activos (con fecha de préstamo, sin fecha de devolución)
         $prestamos = Prestamo::whereNotNull('fecha_prestamo')->whereNull('fecha_devolucion')
