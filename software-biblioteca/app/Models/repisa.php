@@ -14,5 +14,10 @@ class Repisa extends Model
 
     // Definir los campos que se pueden rellenar
     protected $fillable = ['numero'];
+
+    public function libros()
+    {
+        return $this->hasMany(Libro::class, 'id_repisa');
+    }
 }
 

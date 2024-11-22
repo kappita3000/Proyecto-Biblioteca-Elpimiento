@@ -41,5 +41,17 @@ class Libro extends Model
     }
 
     protected $table = 'libros';
-    protected $fillable = ['titulo', 'Cantidad', 'Disponible']; // Añade otros campos necesarios
-}
+    protected $fillable = [
+        'titulo',
+        'caratula',
+        'id_autor',
+        'id_genero',
+        'id_categoria',
+        'id_repisa',
+        'id_editorial',
+        'disponible',
+        'cantidad',
+        'descripcion',
+        'created_at',
+        'updated_at'
+    ];}
