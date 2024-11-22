@@ -21,6 +21,11 @@ Route::get('/glibros/{id}/edit', [GesLibroController::class, 'edit'])->name('lib
 Route::put('/glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');  
 Route::delete('/glibros/{id}', [GesLibroController::class, 'destroy'])->name('libros.destroy');  
 
+Route::get('/glibros/search', [GesLibroController::class, 'search'])->name('libros.search');
+
+
+
+
 Route::get('/gestiones/genero/tabla', [GestionesController::class, 'getGenerosTabla'])->name('gestiones.genero.tabla');
 Route::get('gestiones/genero/tabla', [GestionesController::class, 'tablaGeneros'])->name('gestiones.genero.tabla');
 
