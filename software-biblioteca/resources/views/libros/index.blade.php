@@ -21,7 +21,30 @@
         text-decoration: none; 
         outline: none;
         }
+        .book-cover {
+    width: 100%;
+    height: 400px;
+    object-fit: cover; /* Recortar la imagen para llenar el contenedor sin distorsionarse */
+    border-radius: 8px; /* Bordes redondeados para mejor apariencia */
+    margin-bottom: 15px; /* Espacio entre la imagen y el título */
+}
 
+.carousel-inner {
+    position: relative;
+    max-height: 500px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro para mayor contraste */
+    border-radius: 50%; /* Hacer los íconos de navegación redondos */
+    padding: 10px;
+}
+
+h3.text-primary {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
     </style>
 </head>
 <body>
@@ -29,36 +52,37 @@
 <br>
     <!-- Carrousel de los últimos 3 libros agregados -->
     <div id="latestBooksCarousel" class="carousel slide mb-5" data-bs-ride="carousel" style="width: 100%; max-width: 100%; overflow: hidden;">
-        <div class="carousel-inner">
-            @php
-                $ultimosLibros = \App\Models\Libro::latest()->with('autor', 'genero')->take(3)->get();
-            @endphp
-            @foreach($ultimosLibros as $index => $libro)
-                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                    <div class="w-100 d-flex justify-content-center align-items-center" style="height: 400px; background-color: #f8f9fa;">
-                        <div class="text-center" style="width: 60%;">
-                           <a href="{{ route('libros.show', $libro->id) }}" > <h3 >{{ $libro->titulo }}</h3 > </a >
-                            @if($libro->caratula && file_exists(public_path($libro->caratula)))
-                    <!-- Mostrar la imagen usando la ruta almacenada en la base de datos -->
-                    <img src="{{ asset($libro->caratula) }}" alt="Portada de {{ $libro->titulo }}" width="250" height="250">
-                @else
-                    <p>Portada no disponible</p>
-                @endif
-                           
-                        </div>
+    <div class="carousel-inner">
+        @php
+            $ultimosLibros = \App\Models\Libro::latest()->with('autor', 'genero')->take(3)->get();
+        @endphp
+        @foreach($ultimosLibros as $index => $libro)
+            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                <div class="w-100 d-flex justify-content-center align-items-center" style="height: 500px; background-color: #f8f9fa;">
+                    <div class="text-center" style="width: 100%; max-width: 300px;">
+                        <a href="{{ route('libros.show', $libro->id) }}">
+                            <h3 class="text-primary">{{ $libro->titulo }}</h3>
+                        </a>
+                        @if($libro->caratula && file_exists(public_path($libro->caratula)))
+                            <!-- Mostrar la imagen usando la ruta almacenada en la base de datos -->
+                            <img class="book-cover img-fluid rounded shadow" src="{{ asset($libro->caratula) }}" alt="Portada de {{ $libro->titulo }}">
+                        @else
+                            <p>Portada no disponible</p>
+                        @endif
                     </div>
                 </div>
-            @endforeach
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+            </div>
+        @endforeach
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
     
     <script>
         var myCarousel = document.querySelector('#latestBooksCarousel');
