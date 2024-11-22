@@ -63,16 +63,16 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 30px;
-    flex-wrap: wrap;
+    flex-wrap: initial;
     margin: 0 auto; /* Centra las tarjetas */
-    max-width: 1200px; /* Define un ancho máximo */
+    max-width: 1500px; /* Define un ancho máximo */
 }
 .card {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 30px;
-    width: 300px;
+    width: 500px;
     text-align: center;
 }
 .card h3 {

@@ -70,24 +70,34 @@
     
     
     <form action="{{ route('libros.filtro') }}" method="GET" class="mb-4 d-flex align-items-end gap-3">
-        <!-- Filtro por autor -->
-        <div class="mb-3">
-            <label for="author_name" class="form-label fw-bold" style="font-size: 0.875rem;">Buscar por nombre del autor:</label>
-            <input type="text" name="author_name" id="author_name" class="form-control" style="width: 200px;" value="{{ request('author_name') }}" placeholder="Nombre del autor">
-        </div>
-        <!-- Filtro por genero -->
-        <div class="mb-3">
-            <label for="genre" class="form-label fw-bold">Género:</label>
-            <select name="genre" id="genre" class="form-select" style="width: 150px;">
-                <option value="">Todos</option>
-                @foreach($generos as $genero)
-                    <option value="{{ $genero->id }}" {{ request('genre') == $genero->id ? 'selected' : '' }}>{{ $genero->nombre }}</option>
-                @endforeach
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Filtrar</button>
-    </form>
-    
+    <!-- Filtro por autor -->
+    <div class="mb-3">
+        <label for="author_name" class="form-label fw-bold">Buscar por nombre del autor:</label>
+        <input type="text" name="author_name" id="author_name" class="form-control" value="{{ request('author_name') }}" placeholder="Nombre del autor">
+    </div>
+    <!-- Filtro por género -->
+    <div class="mb-3">
+        <label for="genre" class="form-label fw-bold">Género:</label>
+        <select name="genre" id="genre" class="form-select">
+            <option value="">Todos</option>
+            @foreach($generos as $genero)
+                <option value="{{ $genero->id }}" {{ request('genre') == $genero->id ? 'selected' : '' }}>{{ $genero->nombre }}</option>
+            @endforeach
+        </select>
+    </div>
+    <!-- Filtro por categoría -->
+    <div class="mb-3">
+        <label for="category" class="form-label fw-bold">Categoría:</label>
+        <select name="category" id="category" class="form-select">
+            <option value="">Todas</option>
+            @foreach($categorias as $categoria)
+                <option value="{{ $categoria->id }}" {{ request('category') == $categoria->id ? 'selected' : '' }}>{{ $categoria->nombre }}</option>
+            @endforeach
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+
 
 
     <!-- Mostrar los libros filtrados -->
