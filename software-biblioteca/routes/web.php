@@ -13,6 +13,7 @@ use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\GestionesController;
 use App\Http\Controllers\FiltrosController;
 use App\Http\Controllers\PortadasController;
+use App\Http\Controllers\EstadisticasController;
 
 
 Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
@@ -22,6 +23,11 @@ Route::post('/glibros', [GesLibroController::class, 'store'])->name('libros.stor
 Route::get('/glibros/{id}/edit', [GesLibroController::class, 'edit'])->name('libros.edit');
 Route::put('/glibros/{id}', [GesLibroController::class, 'update'])->name('libros.update');  
 Route::delete('/glibros/{id}', [GesLibroController::class, 'destroy'])->name('libros.destroy');  
+
+Route::get('/glibros/search', [GesLibroController::class, 'search'])->name('libros.search');
+
+
+
 
 Route::get('/gestiones/genero/tabla', [GestionesController::class, 'getGenerosTabla'])->name('gestiones.genero.tabla');
 Route::get('gestiones/genero/tabla', [GestionesController::class, 'tablaGeneros'])->name('gestiones.genero.tabla');
@@ -46,28 +52,40 @@ Route::put('gestiones/categoria/{id}', [GestionesController::class, 'updateCateg
 Route::put('gestiones/repisa/{id}', [GestionesController::class, 'updateRepisa'])->name('gestiones.updateRepisa');
 Route::put('gestiones/editorial/{id}', [GestionesController::class, 'updateEditorial'])->name('gestiones.updateEditorial');
 
+
+
+Route::get('/autocomplete', [GesLibroController::class, 'autocomplete'])->name('autocomplete');
+
+Route::get('/search/autor', [GesLibroController::class, 'buscarAutor']);
+Route::get('/search/genero', [GesLibroController::class, 'buscarGenero']);
+Route::get('/search/categoria', [GesLibroController::class, 'buscarCategoria']);
+Route::get('/search/editorial', [GesLibroController::class, 'buscarEditorial']);
+Route::get('/search/repisa', [GesLibroController::class, 'buscarRepisa']);
+
+
 });
 
 
+Route::get('/info', function () {return view('info');});
 
 
 
 
 
+// Página principal - muestra los libros recientes
 Route::get('/', [ReservaController::class, 'index'])->name('index');
 
+// Mostrar todos los libros con filtros (manejado por FiltrosController)
+Route::get('/libros', [FiltrosController::class, 'filtrar'])->name('libros.filtro');
 
-Route::get('/libros', [ReservaController::class, 'index'])->name('libros.index'); // Muestra todos los libros
-Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.show'); // Muestra un libro específico
-Route::get('/filtro-libros', [FiltrosController::class, 'filtrarPorGenero'])->name('libros.filtro');
+// Mostrar un libro específico (por ID)
+Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.show');
+
+// Búsqueda de libros por palabra clave
 Route::get('/buscar', [ReservaController::class, 'search'])->name('libros.search');
+
+// Reservar un libro
 Route::post('/reservar-libro', [ReservaController::class, 'reservar'])->name('reservar.libro');
-
-Route::post('/reservar-libro', [ReservaController::class, 'reservarLibro'])->name('reservar.libro');
-Route::post('/reservar-libro', [ReservaController::class, 'reservarLibro'])->name('reservar.libro');
-
-
-
 
 
 
@@ -116,4 +134,5 @@ Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], func
     Route::post('/prestamos/store/no_registrado', [PrestamoController::class, 'storeNoRegistrado'])->name('prestamos.store.no_registrado');
     Route::get('/buscar-libros', [GesLibroController::class, 'buscar'])->name('libros.buscar');
     Route::get('/buscar-usuarios', [UsuarioController::class, 'buscar'])->name('usuarios.buscar');
+    Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas.index');
 });

@@ -5,6 +5,7 @@
     .tab-pane:not(.show) {
         display: none;
     }
+
 </style>
 <div class="container">
     @if ($errors->any())

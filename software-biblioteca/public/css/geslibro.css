@@ -1,0 +1,187 @@
+.dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none; /* Oculto por defecto */
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+
+
+/* Opciones seleccionadas activas */
+.dropdown-item.active {
+    background-color: #007bff; /* Fondo azul */
+    color: #fff; /* Texto blanco */
+}
+
+/* Estilo para cuadros específicos */
+#autor-suggestions {
+    min-width: 300px;
+}
+
+#genero-suggestions {
+    min-width: 280px;
+}
+
+#categoria-suggestions {
+    min-width: 350px;
+}
+
+#editorial-suggestions {
+    min-width: 300px;
+}
+
+/* Asegurar que el cuadro no se corte */
+body {
+    position: relative;
+}
+
+/* Ocultar el cuadro si no tiene sugerencias */
+.dropdown-menu:empty {
+    display: none;
+}
+
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 8px 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.pagination li.active a {
+    background-color: #007bff;
+    color: white;
+}
+
+
+    /* Establecer un ancho fijo para las columnas de la tabla */
+    .table th, .table td {
+        word-wrap: break-word; /* Permite que el texto largo se ajuste en varias líneas */
+    }
+
+    /* Fijar el tamaño de las columnas de autor, género, etc. */
+    .table .col-autor,
+    .table .col-genero,
+    .table .col-categoria,
+    .table .col-editorial {
+        width: 200px; /* Puedes ajustar el ancho según lo necesites */
+        white-space: normal; /* Permite que el texto se ajuste a varias líneas */
+    }
+
+    /* Deja que el título del libro se ajuste en varias líneas si es necesario */
+    .table .col-titulo {
+        width: 525px; /* Ancho flexible, ajustable según sea necesario */
+        white-space: normal; /* Permite que el texto se ajuste en varias líneas */
+        word-wrap: break-word; /* Evita que el texto se desborde fuera de la celda */
+    }
+
+
+
+
+    /* Si necesitas un poco de espacio entre los grupos de campos */
+.modal-body .row {
+    margin-bottom: 20px;
+  }
+  
+  /* Para ajustar el tamaño de los inputs y selects */
+  .modal-body .form-control, .modal-body .form-select {
+    font-size: 14px; /* Ajusta el tamaño del texto */
+    padding: 0.75rem; /* Ajusta el padding para un aspecto más uniforme */
+  }
+  
+  /* Para los checkbox y textarea */
+  .modal-body .form-check-input {
+    margin-top: 0.3rem;
+  }
+  
+  /* Para ajustar la altura del textarea */
+  .modal-body .form-control[name="descripcion"] {
+    min-height: 120px;
+  }
+
+  
+
+
+  /* Estilos para hacer que las sugerencias se alineen bien */
+#editBookModal .list-group {
+    position: absolute;
+    width: calc(100% - 20px);
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1050; /* Asegura que las sugerencias aparezcan encima del contenido */
+    margin-top: 5px;
+    padding: 0;
+  }
+  
+  #editBookModal .list-group-item {
+    cursor: pointer;
+  }
+  
+  #editBookModal .list-group-item:hover {
+    background-color: #f8f9fa;
+  }
+.custom-modal-width .modal-dialog {
+    max-width: 80% !important;
+    margin: auto;
+}
+
+@media (min-width: 992px) {
+    .custom-modal-width .modal-dialog {
+        max-width: 90%; /* Más ancho para pantallas grandes */
+    }
+}
+ 
+.modal-dialog {
+    max-width: 45% !important;
+    margin: auto !important;
+    margin-top: 30px !important;
+}
+
+.dropdown-menu {
+    z-index: 1050;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    overflow-y: auto;
+    max-height: 200px;
+    display: none;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}

@@ -59,7 +59,7 @@
             <div class="row mt-4 justify-content-center">
                 <!-- Tarjeta 1: Gestión de Usuarios -->
                 <div class="col-md-4 mb-4">
-                    <a href="" class="card-link" style="text-decoration: none;">
+                    <a href="{{ route('libros.librosindex') }}" class="card-link" style="text-decoration: none;">
                         <div class="card text-center">
                             <div class="d-flex justify-content-center align-items-center" style="height: 300px;">
                                 <img src="{{ asset('img/libros.png') }}" class="card-img-top" alt="Libros" style="width: 250px; height: 250px; object-fit: contain;">
@@ -95,6 +95,19 @@
                             </div>    
                             <div class="card-body">
                                 <h5 class="card-title" >Crear Moderador</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-4" style="text-decoration: none">
+                    <a href="{{ route('estadisticas.index') }}" class="card-link" style="text-decoration: none;">
+                        <div class="card text-center">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 300px;">
+                                <img src="{{ asset('img/estadisticas.png') }}" class="card-img-top" alt="Moderadores" style="width: 250px; height: 250px; object-fit: contain;">
+                            </div>    
+                            <div class="card-body">
+                                <h5 class="card-title" >Estadisticas</h5>
                             </div>
                         </div>
                     </a>
