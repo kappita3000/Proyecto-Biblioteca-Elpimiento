@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Libro extends Model
 {
-  
+    use HasFactory;
     public $timestamps = false;
     protected $primaryKey = 'id'; // Si la clave primaria es `ID`
 
@@ -41,5 +41,17 @@ class Libro extends Model
     }
 
     protected $table = 'libros';
-    protected $fillable = ['titulo', 'Cantidad', 'Disponible']; // Añade otros campos necesarios
-}
+    protected $fillable = [
+        'titulo',
+        'caratula',
+        'id_autor',
+        'id_genero',
+        'id_categoria',
+        'id_repisa',
+        'id_editorial',
+        'disponible',
+        'cantidad',
+        'descripcion',
+        'created_at',
+        'updated_at'
+    ];}
