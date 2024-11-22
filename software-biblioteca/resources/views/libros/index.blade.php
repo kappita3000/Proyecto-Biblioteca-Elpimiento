@@ -17,7 +17,10 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> <!-- Ruta al CSS -->
     <script src="{{ asset('js/script.js') }}" defer></script> <!-- Ruta al JS -->
     <style>
-        
+        a{
+        text-decoration: none; 
+        outline: none;
+        }
 
     </style>
 </head>
@@ -34,10 +37,14 @@
                 <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                     <div class="w-100 d-flex justify-content-center align-items-center" style="height: 400px; background-color: #f8f9fa;">
                         <div class="text-center" style="width: 60%;">
-                            <h3>{{ $libro->titulo }}</h3>
-                            <p><strong>Género:</strong> {{ $libro->genero->nombre }}</p>
-                            <p><strong>Autor:</strong> {{ $libro->autor->nombre }}</p>
-                            <a href="{{ route('libros.show', $libro->id) }}" class="btn btn-info">Ver más</a>
+                           <a href="{{ route('libros.show', $libro->id) }}" > <h3 >{{ $libro->titulo }}</h3 > </a >
+                            @if($libro->caratula && file_exists(public_path($libro->caratula)))
+                    <!-- Mostrar la imagen usando la ruta almacenada en la base de datos -->
+                    <img src="{{ asset($libro->caratula) }}" alt="Portada de {{ $libro->titulo }}" width="250" height="250">
+                @else
+                    <p>Portada no disponible</p>
+                @endif
+                           
                         </div>
                     </div>
                 </div>
@@ -84,14 +91,22 @@
 
 
     <!-- Mostrar los libros filtrados -->
-    
+  
     <h3>Libros</h3>
     <div class="row">
         @forelse($libros as $libro)
             <div class="col-md-4 mb-4">
                 <div class="card h-100 d-flex flex-row">
-                   
+                    <div class="col-md-4">
+                        @if($libro->caratula && file_exists(public_path($libro->caratula)))
+                    <!-- Mostrar la imagen usando la ruta almacenada en la base de datos -->
+                    <img src="{{ asset($libro->caratula) }}" alt="Portada de {{ $libro->titulo }}" width="100" height="200">
+                @else
+                    <p>Portada no disponible</p>
+                @endif
+                    </div>
                     <div class="card-body flex-grow-1">
+                        
                         <h5 class="card-title">{{ $libro->titulo }}</h5>
                         <p class="card-text"><strong>Género:</strong> {{ $libro->genero->nombre ?? 'Desconocido' }}</p>
                         <p class="card-text"><strong>Disponibilidad:</strong> 

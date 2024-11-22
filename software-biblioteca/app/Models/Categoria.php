@@ -5,14 +5,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categoria extends Model
 {
-    protected $primaryKey = 'ID';
-    protected $table = 'categorias';
+    protected $table = 'categorias'; // Nombre de la tabla
+    protected $primaryKey = 'id'; // Cambiar a 'id' para consistencia
+    protected $fillable = ['nombre'];
 
-    protected $fillable = [
-        'nombre'
-    ];
-
-    // Relación inversa con Libro
+    // Relación con libros
     public function libros()
     {
         return $this->hasMany(Libro::class, 'id_categoria');

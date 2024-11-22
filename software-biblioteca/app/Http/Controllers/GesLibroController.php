@@ -18,55 +18,56 @@ class GesLibroController extends Controller
         $generos = Genero::all();
         $categorias = Categoria::all();
         $repisas = Repisa::all();
-
-        $libros = GesLibro::with(['autor', 'genero', 'categoria', 'editorial'])->get();
-
-        return view('libros.librosindex', compact('libros', 'autores', 'generos', 'categorias', 'repisas'));
+        $editoriales = Editorial::all(); // Obtener todas las editoriales
+    
+        $libros = GesLibro::with(['autor', 'genero', 'categoria', 'editorial'])->paginate(20); // Cambia el 10 a la cantidad de libros por página que desees
+    
+        return view('libros.librosindex', compact('libros', 'autores', 'generos', 'categorias', 'repisas', 'editoriales'));
     }
 
     public function edit($id)
     {
         $libro = GesLibro::findOrFail($id);
-
+    
         $autores = Autor::all();
         $generos = Genero::all();
         $categorias = Categoria::all();
         $repisas = Repisa::all();
-
-        return view('libros.librosindex', compact('libros', 'autores', 'generos', 'categorias', 'repisas'));
+        $editoriales = Editorial::all(); // Obtener todas las editoriales
+    
+        return view('libros.librosindex', compact('libro', 'autores', 'generos', 'categorias', 'repisas', 'editoriales'));
     }
-
+    
     public function store(Request $request)
     {
+        // Validar los datos de entrada
         $request->validate([
             'titulo' => 'required|max:255',
             'id_autor' => 'required|exists:autores,id',
             'id_genero' => 'required|exists:generos,id',
             'id_categoria' => 'required|exists:categorias,id',
             'id_repisa' => 'required|exists:repisas,id',
+            'id_editorial' => 'required|exists:editoriales,id',
             'cantidad' => 'required|integer|min:1',
             'descripcion' => 'nullable|string',
-            'editorial' => 'required|string|max:255', // La editorial ahora es obligatoria
         ]);
-
-        // Buscar o crear la editorial
-        $editorial = Editorial::firstOrCreate(['nombre' => $request->editorial]);
-
+    
+        // Insertar libro con estado disponible por defecto
         GesLibro::create([
-            'titulo' => $request->titulo,
-            'id_autor' => $request->id_autor,
-            'id_genero' => $request->id_genero,
-            'id_categoria' => $request->id_categoria,
-            'id_repisa' => $request->id_repisa,
-            'id_editorial' => $editorial->id, // Asegurar que se guarde el ID de la editorial
-            'cantidad' => $request->cantidad,
-            'descripcion' => $request->descripcion,
-            'disponible' => true,
+            'titulo' => $request->input('titulo'),
+            'id_autor' => $request->input('id_autor'),
+            'id_genero' => $request->input('id_genero'),
+            'id_categoria' => $request->input('id_categoria'),
+            'id_repisa' => $request->input('id_repisa'),
+            'id_editorial' => $request->input('id_editorial'),
+            'cantidad' => $request->input('cantidad'),
+            'descripcion' => $request->input('descripcion'),
+            'disponible' => 1, // Por defecto, disponible
         ]);
-
+    
+        // Redirigir con mensaje de éxito
         return redirect()->route('libros.librosindex')->with('success', 'Libro creado exitosamente.');
     }
-
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -154,11 +155,115 @@ class GesLibroController extends Controller
 
 
 
-    
+    public function autocomplete(Request $request)
+{
+    $type = $request->get('type');
+    $query = $request->get('q');
+
+    $results = [];
+    switch ($type) {
+        case 'autor':
+            $results = Autor::where('nombre', 'like', "%$query%")->get(['id', 'nombre as text']);
+            break;
+        case 'genero':
+            $results = Genero::where('nombre', 'like', "%$query%")->get(['id', 'nombre as text']);
+            break;
+        case 'categoria':
+            $results = Categoria::where('nombre', 'like', "%$query%")->get(['id', 'nombre as text']);
+            break;
+        case 'editorial':
+            $results = Editorial::where('nombre', 'like', "%$query%")->get(['id', 'nombre as text']);
+            break;
+    }
+
+    return response()->json($results);
+}
+
+
+
+
+
+public function buscarAutores(Request $request)
+{
+    $query = $request->input('q');
+    $autores = Autor::where('nombre', 'like', "%$query%")->get();
+    return response()->json($autores);
+}
+
+
+// Método para obtener géneros por nombre
+public function buscarGeneros(Request $request)
+{
+    $query = $request->input('q');
+    $generos = Genero::where('nombre', 'like', "%$query%")->get();
+    return response()->json($generos);
+}
+
+// Método para obtener categorías por nombre
+public function buscarCategorias(Request $request)
+{
+    $query = $request->input('q');
+    $categorias = Categoria::where('nombre', 'like', "%$query%")->get();
+    return response()->json($categorias);
+}
+
+// Método para obtener editoriales por nombre
+public function buscarEditoriales(Request $request)
+{
+    $query = $request->input('q');
+    $editoriales = Editorial::where('nombre', 'like', "%$query%")->get();
+    return response()->json($editoriales);
+}
 
 
 
 
 
 
+
+
+    // Función para buscar autores para autocompletar
+    public function buscarAutor(Request $request)
+    {
+        $query = $request->input('q');
+        $autores = Autor::where('nombre', 'like', "%$query%")
+            ->get(['id', 'nombre']);
+        return response()->json($autores);
+    }
+
+    // Función para buscar géneros para autocompletar
+    public function buscarGenero(Request $request)
+    {
+        $query = $request->input('q');
+        $generos = Genero::where('nombre', 'like', "%$query%")
+            ->get(['id', 'nombre']);
+        return response()->json($generos);
+    }
+
+    // Función para buscar categorías para autocompletar
+    public function buscarCategoria(Request $request)
+    {
+        $query = $request->input('q');
+        $categorias = Categoria::where('nombre', 'like', "%$query%")
+            ->get(['id', 'nombre']);
+        return response()->json($categorias);
+    }
+
+    // Función para buscar editoriales para autocompletar
+    public function buscarEditorial(Request $request)
+    {
+        $query = $request->input('q');
+        $editoriales = Editorial::where('nombre', 'like', "%$query%")
+            ->get(['id', 'nombre']);
+        return response()->json($editoriales);
+    }
+
+    // Función para buscar repisas para autocompletar
+    public function buscarRepisa(Request $request)
+    {
+        $query = $request->input('q');
+        $repisas = Repisa::where('numero', 'like', "%$query%")
+            ->get(['id', 'numero']);
+        return response()->json($repisas);
+    }
 }

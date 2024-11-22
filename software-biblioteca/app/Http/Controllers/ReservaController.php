@@ -7,6 +7,10 @@ use App\Models\usuario;
 use App\Models\prestamo;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PortadasController;
+use Illuminate\Support\Facades\Storage;
+
+
 
 
 
@@ -24,9 +28,12 @@ class ReservaController extends Controller
     }
    
     // Mostrar un libro específico
+    
     public function show($id)
     {
         $libro = Libro::findOrFail($id); // Obtiene el libro por ID
+        
+
         return view('libros.show', compact('libro'));
     }
 

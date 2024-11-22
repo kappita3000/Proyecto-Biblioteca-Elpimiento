@@ -30,51 +30,55 @@
     <div class="row g-3">
         <div class="col">
             <label for="titulo" class="form-label">Título</label>
-            <input id="titulo" type="text" name="titulo" class="form-control" value="{{ $libro->titulo ?? old('titulo') }}" required>
+            <input id="titulo" type="text" name="titulo" class="form-control" value="{{ $libro->titulo ?? old('titulo') }}" placeholder="Nombre del libro" required>
         </div>
 
         <!-- Select para Autor -->
-        <div class="col">
-            <label for="autor" class="form-label">Autor</label>
-                <select id="autor" name="id_autor" class="form-control" required>
-                    @foreach($autores as $autor)
-                    <option value="{{ $autor->id }}" {{ isset($libro) && $libro->id_autor == $autor->id ? 'selected' : '' }}>
-                        {{ $autor->nombre }}
-                    </option>
-                    @endforeach
-                </select>
-        </div>
+<!-- Input para Autor con Autocompletado -->
+<div class="col" style="position: relative;">
+    <label for="autor" class="form-label">Autor</label>
+    <input type="text" id="autor" class="form-control" placeholder="Escribe el nombre del autor" required>
+    <input type="hidden" id="id_autor" name="id_autor" required>
+</div>
+
+<!-- Contenedor para sugerencias -->
+<div id="autor-suggestions" class="dropdown-menu" style="display: none; position: absolute;"></div>
+
     </div>
 <br>
     <div class="row g-3">
             <!-- Select para Género -->
-        <div class="col">
-            <label for="genero" class="form-label">Género</label>
-                <select id="genero" name="id_genero" class="form-control" required>
-                    @foreach($generos as $genero)
-                    <option value="{{ $genero->id }}" {{ isset($libro) && $libro->id_genero == $genero->id ? 'selected' : '' }}>
-                        {{ $genero->nombre }}
-                    </option>
-                    @endforeach
-                </select>
-        </div>
+            <div class="col">
+                <label for="genero" class="form-label">Género</label>
+                <input type="text" id="genero" class="form-control" placeholder="Escribe el género" required>
+                <input type="hidden" id="id_genero" name="id_genero" required>
+            </div>
+
+<div id="genero-suggestions" class="dropdown-menu" style="display: none; position: absolute;"></div>
 
             <!-- Select para Categoría -->
-        <div class="col">
-            <label for="categoria" class="form-label">Categoría</label>
-                <select id="categoria" name="id_categoria" class="form-control" required>
-                    @foreach($categorias as $categoria)
-                    <option value="{{ $categoria->id }}" {{ isset($libro) && $libro->id_categoria == $categoria->id ? 'selected' : '' }}>
-                        {{ $categoria->nombre }}
-                    </option>
-                    @endforeach
-                </select>
-        </div>
+  <div class="col">
+    <label for="categoria" class="form-label">Categoría</label>
+    <input type="text" id="categoria" class="form-control" placeholder="Escribe la categoría" required>
+    <input type="hidden" id="id_categoria" name="id_categoria" required>
+  </div>
+
+  <div id="categoria-suggestions" class="dropdown-menu" style="display: none; position: absolute;"></div>
+
+
+
+
+</div>
+
+
+
+
+<div class="row g-3" style=" padding-top: 20px;">
 
             <!-- Select para Repisa -->
-        <div class="col">
+            <div class="col">
             <label for="repisa" class="form-label">Repisa</label>
-                <select id="repisa" name="id_repisa" class="form-control" required>
+                <select id="repisa" name="id_repisa" class="form-control" placeholder="Elija la repisa" required>
                     @foreach($repisas as $repisa)
                     <option value="{{ $repisa->id }}" {{ isset($libro) && $libro->id_repisa == $repisa->id ? 'selected' : '' }}>
                         {{ $repisa->numero }}
@@ -83,27 +87,27 @@
                 </select>
         </div>
 
+
+<div class="col" >
+    <label for="editorial" class="form-label">Editorial</label>
+    <input type="text" id="editorial" class="form-control" placeholder="Escribe la editorial" required>
+    <input type="hidden" id="id_editorial" name="id_editorial" required>
 </div>
 
-    <div class="mb-3">
-        <label for="id_editorial" class="form-label">Editorial (opcional)</label>
-        <input id="id_editorial" type="number" name="id_editorial" class="form-control" value="{{ $libro->id_editorial ?? old('id_editorial') }}">
-    </div>
+<div id="editorial-suggestions" class="dropdown-menu" style="display: none; position: absolute;"></div>
 
-    <div class="mb-3">
-        <label for="fecha_publicacion" class="form-label">Fecha de Publicación</label>
-        <input id="fecha_publicacion"type="date" name="fecha_publicacion" class="form-control" value="{{ $libro->fecha_publicacion ?? old('fecha_publicacion') }}">
-    </div>
 
-    <div class="mb-3">
-        <label for="disponible" class="form-label">Disponible</label>
-        <input id="disponible" type="checkbox" name="disponible" class="form-check-input" value="1" {{ isset($libro) && $libro->disponible ? 'checked' : '' }}>
-    </div>
 
-    <div class="mb-3">
+
+    <div class="col" >
         <label for="cantidad" class="form-label">Cantidad</label>
-        <input id="cantidad" type="number" name="cantidad" class="form-control" value="{{ $libro->cantidad ?? old('cantidad') }}" required>
+        <input id="cantidad" type="number" name="cantidad" class="form-control" value="{{ $libro->cantidad ?? old('cantidad') }}" required min="1" required>
     </div>
+</div>
+
+
+
+
 
     <div class="mb-3">
         <label for="descripcion" class="form-label">Descripción</label>
@@ -123,10 +127,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Género</th>
-                <th>Categoría</th>
+            <th class="col-titulo">Título</th>
+            <th class="col-autor">Autor</th>
+            <th class="col-genero">Género</th>
+            <th class="col-categoria">Categoría</th>
                 @if ($admin->rol === 'superadmin')
                 <th>Acciones</th>
                 @endif
@@ -136,10 +140,10 @@
         <tbody>
             @foreach($libros as $libro)
             <tr>
-                <td>{{ $libro->titulo }}</td>
-                <td>{{ $libro->autor->nombre }}</td>
-                <td>{{ $libro->genero->nombre }}</td> 
-                <td>{{ $libro->Categoria->nombre }}</td>
+                <td class="col-titulo">{{ $libro->titulo }}</td>
+                <td class="col-autor">{{ $libro->autor->nombre }}</td>
+                <td class="col-genero">{{ $libro->genero->nombre }}</td>
+                <td class="col-categoria">{{ $libro->categoria->nombre }}</td>
                 @if ($admin->rol === 'superadmin')
 
                 <td>
@@ -163,11 +167,18 @@
             @endforeach
         </tbody>
     </table>
+
+
+    <!-- Paginación -->
+    <div class="d-flex justify-content-center" style="padding-top: 40px;">
+        {{ $libros->links('pagination::bootstrap-5') }}
+    </div>
+
 </div>
 
 
 <div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="editBookLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog custom-modal-width">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="editBookLabel">Editar Libro</h5>
@@ -179,77 +190,64 @@
         <div class="modal-body">
           <input type="hidden" id="editBookId" name="id">
           
-          <!-- Título -->
-          <div class="mb-3">
-            <label for="editTitulo" class="form-label">Título</label>
-            <input id="editTitulo" type="text" class="form-control" id="editTitulo" name="titulo" required>
+          <!-- Título y Autor en la misma línea -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="editTitulo" class="form-label">Título</label>
+              <input id="editTitulo" type="text" class="form-control" name="titulo" required>
+            </div>
+            <div class="col">
+              <label for="editAutor" class="form-label">Autor</label>
+              <input id="editAutor" type="text" class="form-control" name="id_autor" required>
+              <ul id="autorSuggestions" class="list-group" style="display: none;"></ul>
+            </div>
           </div>
 
-          <!-- Autor -->
-          <div class="mb-3">
-            <label for="editAutor" class="form-label">Autor</label>
-            <select id="editAutor" class="form-select" id="editAutor" name="id_autor" required>
-              <option value="" disabled>Seleccione un autor</option>
-              @foreach($autores as $autor)
-                <option value="{{ $autor->id }}">{{ $autor->nombre }}</option>
-              @endforeach
-            </select>
+          <!-- Género y Categoría en la misma línea -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="editGenero" class="form-label">Género</label>
+              <input id="editGenero" type="text" class="form-control" name="id_genero" required>
+              <ul id="generoSuggestions" class="list-group" style="display: none;"></ul>
+            </div>
+            <div class="col">
+              <label for="editCategoria" class="form-label">Categoría</label>
+              <input id="editCategoria" type="text" class="form-control" name="id_categoria" required>
+              <ul id="categoriaSuggestions" class="list-group" style="display: none;"></ul>
+            </div>
           </div>
 
-          <!-- Género -->
-          <div class="mb-3">
-            <label for="editGenero" class="form-label">Género</label>
-            <select id="editGenero" class="form-select" id="editGenero" name="id_genero" required>
-              <option value="" disabled>Seleccione un género</option>
-              @foreach($generos as $genero)
-                <option value="{{ $genero->id }}">{{ $genero->nombre }}</option>
-              @endforeach
-            </select>
+          <!-- Editorial y Repisa en la misma línea -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="editEditorial" class="form-label">Editorial</label>
+              <input id="editEditorial" type="text" class="form-control" name="id_editorial" required>
+              <ul id="editorialSuggestions" class="list-group" style="display: none;"></ul>
+            </div>
+            <div class="col">
+              <label for="editRepisa" class="form-label">Repisa</label>
+              <input id="editRepisa" type="text" class="form-control" name="id_repisa" required>
+              <ul id="repisaSuggestions" class="list-group" style="display: none;"></ul>
+            </div>
           </div>
 
-          <!-- Categoría -->
-          <div class="mb-3">
-            <label for="editCategoria" class="form-label">Categoría</label>
-            <select id="editCategoria" class="form-select" id="editCategoria" name="id_categoria" required>
-              <option value="" disabled>Seleccione una categoría</option>
-              @foreach($categorias as $categoria)
-                <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
-              @endforeach
-            </select>
-          </div>
-
-          <!-- Repisa -->
-          <div class="mb-3">
-            <label for="editRepisa" class="form-label">Repisa</label>
-            <select id="editRepisa" class="form-select" id="editRepisa" name="id_repisa" required>
-              <option value="" disabled>Seleccione una repisa</option>
-              @foreach($repisas as $repisa)
-                <option value="{{ $repisa->id }}">{{ $repisa->numero }}</option>
-              @endforeach
-            </select>
-          </div>
-          
-          <!-- Otros campos -->
+          <!-- Cantidad -->
           <div class="mb-3">
             <label for="editCantidad" class="form-label">Cantidad</label>
-            <input id="editCantidad" type="number" class="form-control" id="editCantidad" name="cantidad" required>
+            <input id="editCantidad" type="number" class="form-control" name="cantidad" required min="1">
           </div>
 
+          <!-- Disponible -->
           <div class="mb-3">
             <label for="editDisponible" class="form-label">Disponible</label>
-            <input id="editDisponible" type="checkbox" class="form-check-input" id="editDisponible" name="disponible">
+            <input id="editDisponible" type="checkbox" class="form-check-input" name="disponible">
           </div>
 
+          <!-- Descripción -->
           <div class="mb-3">
             <label for="editDescripcion" class="form-label">Descripción</label>
-            <textarea id="editDescripcion"class="form-control" id="editDescripcion" name="descripcion"></textarea>
+            <textarea id="editDescripcion" class="form-control" name="descripcion"></textarea>
           </div>
-
-          <div class="mb-3">
-            <label for="editFechaPublicacion" class="form-label">Fecha de Publicación</label>
-            <input id="editFechaPublicacion"type="date" class="form-control" id="editFechaPublicacion" name="fecha_publicacion">
-          </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -259,6 +257,7 @@
     </div>
   </div>
 </div>
+
 
 
 <!-- Modal para eliminar libro -->
@@ -285,6 +284,260 @@
 </div>
 
 <script src="{{ asset('js/Geslibros.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const inputs = [
+        { field: "autor", type: "autor" },
+        { field: "genero", type: "genero" },
+        { field: "categoria", type: "categoria" },
+        { field: "editorial", type: "editorial" },
+    ];
+
+    inputs.forEach((input) => {
+        const textInput = document.getElementById(input.field);
+        const hiddenInput = document.getElementById(`id_${input.field}`);
+        const suggestionsBox = document.getElementById(`${input.field}-suggestions`);
+
+        textInput.addEventListener("input", function () {
+            const query = this.value;
+
+            if (query.length > 1) {
+                // Hacer solicitud al backend
+                fetch(`/autocomplete?type=${input.type}&q=${query}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        suggestionsBox.innerHTML = ""; // Limpiar las sugerencias anteriores
+                        if (data.length > 0) {
+                            data.forEach((item) => {
+                                const suggestionItem = document.createElement("div");
+                                suggestionItem.className = "dropdown-item";
+                                suggestionItem.textContent = item.text;
+                                suggestionItem.dataset.id = item.id;
+
+                                suggestionItem.addEventListener("click", function () {
+                                    textInput.value = this.textContent;
+                                    hiddenInput.value = this.dataset.id;
+                                    suggestionsBox.style.display = "none"; // Ocultar sugerencias
+                                });
+
+                                suggestionsBox.appendChild(suggestionItem);
+                            });
+                            suggestionsBox.style.display = "block"; // Mostrar sugerencias
+                        } else {
+                            suggestionsBox.style.display = "none";
+                        }
+                    });
+            } else {
+                suggestionsBox.style.display = "none";
+            }
+        });
+
+        textInput.addEventListener("input", function () {
+    const query = this.value;
+
+    if (query.length > 1) {
+        // Ajustar el ancho y la posición del cuadro de sugerencias
+        suggestionsBox.style.width = `${textInput.offsetWidth}px`;
+        suggestionsBox.style.left = `${textInput.getBoundingClientRect().left + window.scrollX}px`;
+        suggestionsBox.style.top = `${textInput.getBoundingClientRect().bottom + window.scrollY}px`;
+
+        // Hacer solicitud al backend
+        fetch(`/autocomplete?type=${input.type}&q=${query}`)
+            .then((response) => response.json())
+            .then((data) => {
+                suggestionsBox.innerHTML = ""; // Limpiar las sugerencias anteriores
+                if (data.length > 0) {
+                    data.forEach((item) => {
+                        const suggestionItem = document.createElement("div");
+                        suggestionItem.className = "dropdown-item";
+                        suggestionItem.textContent = item.text;
+                        suggestionItem.dataset.id = item.id;
+
+                        suggestionItem.addEventListener("click", function () {
+                            textInput.value = this.textContent;
+                            hiddenInput.value = this.dataset.id;
+                            suggestionsBox.style.display = "none"; // Ocultar sugerencias
+                        });
+
+                        suggestionsBox.appendChild(suggestionItem);
+                    });
+                    suggestionsBox.style.display = "block"; // Mostrar sugerencias
+                } else {
+                    suggestionsBox.style.display = "none";
+                }
+            });
+    } else {
+        suggestionsBox.style.display = "none";
+    }
+});
+
+
+        // Ocultar sugerencias si se hace clic fuera
+        document.addEventListener("click", function (e) {
+            if (!suggestionsBox.contains(e.target) && e.target !== textInput) {
+                suggestionsBox.style.display = "none";
+            }
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+        // Detectar el cambio de página
+        const paginatorLinks = document.querySelectorAll('.pagination a');
+        
+        paginatorLinks.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const url = this.getAttribute('href');
+
+                // Obtener la posición del scroll
+                const scrollPosition = window.scrollY;
+
+                // Realizar la petición a la nueva página
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        // Actualizar el contenido de la tabla
+                        document.querySelector('table').innerHTML = new DOMParser().parseFromString(data, 'text/html').querySelector('table').innerHTML;
+                        
+                        // Mantener la posición de scroll
+                        window.scrollTo(0, scrollPosition);
+                    });
+            });
+        });
+    });
+
+
+// Función para mostrar las sugerencias
+function showSuggestions(inputId, suggestionsId, url, modelName) {
+  const input = document.getElementById(inputId);
+  const suggestions = document.getElementById(suggestionsId);
+  
+  input.addEventListener('input', function() {
+    const query = input.value;
+
+    if (query.length > 2) {
+      // Hacer la solicitud AJAX
+      fetch(`/search/${modelName}?q=${query}`)
+        .then(response => response.json())
+        .then(data => {
+          suggestions.innerHTML = '';
+          data.forEach(item => {
+            const suggestionItem = document.createElement('li');
+            suggestionItem.classList.add('list-group-item');
+            suggestionItem.textContent = item.nombre;
+            suggestionItem.onclick = () => {
+              input.value = item.nombre;
+              document.getElementById(inputId).value = item.id; // Asignar el ID correspondiente
+              suggestions.innerHTML = '';
+            };
+            suggestions.appendChild(suggestionItem);
+          });
+
+          // Mostrar las sugerencias
+          suggestions.style.display = data.length ? 'block' : 'none';
+        });
+    } else {
+      suggestions.style.display = 'none';
+    }
+  });
+}
+
+// Inicializa las sugerencias para Autor, Género, Categoría, y Editorial
+showSuggestions('editAutor', 'autorSuggestions', '/search/autor', 'autor');
+showSuggestions('editGenero', 'generoSuggestions', '/search/genero', 'genero');
+showSuggestions('editCategoria', 'categoriaSuggestions', '/search/categoria', 'categoria');
+showSuggestions('editEditorial', 'editorialSuggestions', '/search/editorial', 'editorial');
+showSuggestions('editRepisa', 'repisaSuggestions', '/search/repisa', 'repisa');
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("editBookModal");
+    const inputs = [
+        { field: "autor", suggestions: "autor-suggestions" },
+        { field: "genero", suggestions: "genero-suggestions" },
+        { field: "categoria", suggestions: "categoria-suggestions" },
+        { field: "editorial", suggestions: "editorial-suggestions" }
+    ];
+
+    // Función para ajustar tamaño y posición de las sugerencias
+    function adjustSuggestionsBox(input, suggestionsBox) {
+        const rect = input.getBoundingClientRect();
+        suggestionsBox.style.width = `${rect.width}px`;
+        suggestionsBox.style.position = "absolute";
+        suggestionsBox.style.left = `${rect.left + window.scrollX}px`;
+        suggestionsBox.style.top = `${rect.bottom + window.scrollY}px`;
+        suggestionsBox.style.zIndex = "1050"; // Asegura que se muestre sobre el modal
+    }
+
+    // Inicializa el autocompletado para cada input
+    inputs.forEach(({ field, suggestions }) => {
+        const input = document.getElementById(field);
+        const suggestionsBox = document.getElementById(suggestions);
+
+        // Ajustar ancho y posición al abrir el modal
+        modal.addEventListener("shown.bs.modal", function () {
+            adjustSuggestionsBox(input, suggestionsBox);
+        });
+
+        // Mostrar sugerencias dinámicamente al escribir
+        input.addEventListener("input", function () {
+            const query = this.value;
+
+            if (query.length > 1) {
+                adjustSuggestionsBox(input, suggestionsBox);
+
+                // Simulación de solicitud al backend
+                fetch(`/autocomplete?type=${field}&q=${query}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        suggestionsBox.innerHTML = ""; // Limpia las sugerencias anteriores
+                        if (data.length > 0) {
+                            data.forEach((item) => {
+                                const suggestionItem = document.createElement("div");
+                                suggestionItem.className = "dropdown-item";
+                                suggestionItem.textContent = item.text;
+                                suggestionItem.dataset.id = item.id;
+
+                                // Al hacer clic en una sugerencia
+                                suggestionItem.addEventListener("click", function () {
+                                    input.value = this.textContent;
+                                    document.getElementById(`id_${field}`).value = this.dataset.id;
+                                    suggestionsBox.style.display = "none"; // Oculta las sugerencias
+                                });
+
+                                suggestionsBox.appendChild(suggestionItem);
+                            });
+                            suggestionsBox.style.display = "block"; // Muestra sugerencias
+                        } else {
+                            suggestionsBox.style.display = "none";
+                        }
+                    });
+            } else {
+                suggestionsBox.style.display = "none"; // Oculta si el input tiene menos de 2 caracteres
+            }
+        });
+
+        // Ocultar sugerencias al hacer clic fuera
+        document.addEventListener("click", function (e) {
+            if (!suggestionsBox.contains(e.target) && e.target !== input) {
+                suggestionsBox.style.display = "none";
+            }
+        });
+
+        // Ajustar dinámicamente al redimensionar la ventana
+        window.addEventListener("resize", function () {
+            adjustSuggestionsBox(input, suggestionsBox);
+        });
+    });
+});
+
+
+</script>
+
 
 
 @else
