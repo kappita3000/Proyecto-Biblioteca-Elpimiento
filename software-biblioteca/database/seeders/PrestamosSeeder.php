@@ -17,9 +17,11 @@ class PrestamosSeeder extends Seeder
                 $fechaSolicitud = $fechaSolicitud->subDay();
             }
 
+            $idLibro = $this->getRandomLibroId();
+
             Prestamo::create([
                 'id_usuario' => rand(1, 30), // IDs de usuarios entre 1 y 30
-                'id_libro' => rand(1, 769), // IDs de libros entre 1 y 769
+                'id_libro' => $idLibro,
                 'fecha_solicitud' => $fechaSolicitud->format('Y-m-d'),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -38,9 +40,11 @@ class PrestamosSeeder extends Seeder
                 $fechaPrestamo = $fechaPrestamo->addDay();
             }
 
+            $idLibro = $this->getRandomLibroId();
+
             Prestamo::create([
                 'id_usuario' => rand(1, 30), // IDs de usuarios entre 1 y 30
-                'id_libro' => rand(1, 769), // IDs de libros entre 1 y 769
+                'id_libro' => $idLibro,
                 'fecha_solicitud' => $fechaSolicitud->format('Y-m-d'),
                 'fecha_prestamo' => $fechaPrestamo->format('Y-m-d'),
                 'created_at' => now(),
@@ -68,9 +72,11 @@ class PrestamosSeeder extends Seeder
             // Aseguramos que haya más préstamos devueltos correctamente
             $devuelto = rand(1, 10) <= 8 ? 'Si' : 'No'; // 80% de los préstamos serán devueltos correctamente
 
+            $idLibro = $this->getRandomLibroId();
+
             Prestamo::create([
                 'id_usuario' => rand(1, 30), // IDs de usuarios entre 1 y 30
-                'id_libro' => rand(1, 769), // IDs de libros entre 1 y 769
+                'id_libro' => $idLibro,
                 'fecha_solicitud' => $fechaSolicitud->format('Y-m-d'),
                 'fecha_prestamo' => $fechaPrestamo->format('Y-m-d'),
                 'fecha_devolucion' => $fechaDevolucion->format('Y-m-d'),
@@ -79,5 +85,16 @@ class PrestamosSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
+    }
+
+    private function getRandomLibroId()
+    {
+        // Excluir el ID 16 del rango de libros
+        $idLibro = rand(1, 796);
+        if ($idLibro >= 16) {
+            $idLibro += 1;
+        }
+
+        return $idLibro;
     }
 }

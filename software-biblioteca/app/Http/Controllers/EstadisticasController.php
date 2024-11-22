@@ -20,7 +20,7 @@ class EstadisticasController extends Controller
         $month = $request->input('month', null); // No hay mes por defecto
 
         // Total de préstamos activos (que no han sido devueltos) - Solo filtro por año
-        $totalPrestamosActivos = Prestamo::where('devuelto', 'No')
+        $totalPrestamosActivos = Prestamo::whereNull('devuelto')
             ->whereYear('fecha_prestamo', $year)
             ->count();
 
@@ -30,8 +30,7 @@ class EstadisticasController extends Controller
             ->count();
 
         // Devoluciones pendientes (que tienen fecha de devolución pero no se han devuelto) - Solo filtro por año
-        $devolucionesPendientes = Prestamo::whereNotNull('fecha_devolucion')
-            ->where('devuelto', 'No')
+        $devolucionesPendientes = Prestamo::where('devuelto', 'No')
             ->whereYear('fecha_devolucion', $year)
             ->count();
 
