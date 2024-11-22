@@ -47,6 +47,9 @@
         
         @if ($admin->rol === 'superadmin')
           <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('estadisticas.index') }}">Estadisticas</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ route('newAdmin') }}">Crear moderador</a>
           </li>
         @endif
