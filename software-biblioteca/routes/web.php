@@ -85,20 +85,19 @@ Route::delete('gestiones/editoriales/bulk-delete', [GestionesController::class, 
 });
 
 
-Route::get('/info', function () {return view('info');});
+Route::get('/', function () {return view('info');});
 Route::get('/categorias', [CateInicioController::class, 'index'])->name('categorias.index');
-
+Route::get('/inicio', function () {return view('info');});
 
 Route::get('/libros/filtrar', [FiltrosController::class, 'filtrarPorCategoria'])->name('filtrarPorCategoria');
 
 
-
+Route::get('/repertorio', [ReservaController::class, 'index'])->name('libros.index'); // Muestra todos los libros
 // Página principal - muestra los libros recientes
-Route::get('/', [ReservaController::class, 'index'])->name('index');
+Route::get('/repertorio2', [ReservaController::class, 'index'])->name('index');
 
 // Mostrar todos los libros con filtros (manejado por FiltrosController)
 Route::get('/libros', [FiltrosController::class, 'filtrarPorGenero'])->name('libros.filtro');
-Route::get('/lol', [ReservaController::class, 'index'])->name('libros.index'); // Muestra todos los libros
 
 // Mostrar un libro específico (por ID)
 Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.show');

@@ -2,26 +2,55 @@
 
 @section('content')
 
-<div style="background-color: #e8f5e9; padding: 20px;">
+<div style="background: transparent; padding: 20px;">
     
     <div class="container">
 
 <!-- Sección de últimos libros -->
-<div class="latest-books-section">
-    <h2 style="text-align: center; margin-bottom: 20px;">Novedades</h2>
-    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; margin-bottom: 40px;">
-        @foreach($ultimosLibros as $libro)
-        <div style="background-color: white; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center;">
-            <h3 style="font-size: 1rem;">{{ $libro->titulo }}</h3> <!-- Título del libro -->
-            <p style="font-size: 0.9rem; color: #555;">{{ Str::limit($libro->descripcion, 100) }}</p> <!-- Descripción breve -->
-            <a href="{{ route('libros.show', ['libro' => $libro->id]) }}"
-               style="display: inline-block; margin-top: 10px; padding: 8px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; font-size: 0.9rem;">
-                Ver Detalles
-            </a>
+        <!-- Carrousel de los últimos 5 libros agregados -->
+        <h4 class="titulo-carrusel">Últimos Libros</h4>
+        <div id="latestBooksCarousel" class="carousel slide mb-5" data-bs-ride="carousel"
+            style="width: 100%; max-width: 100%; overflow: hidden; ">
+            <div class="carousel-inner">
+                @php
+                    $ultimosLibros = \App\Models\Libro::latest()->with('autor', 'genero')->take(5)->get();
+                @endphp
+                @foreach ($ultimosLibros as $index => $libro)
+                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                        <div class="w-100 d-flex justify-content-center align-items-center"
+                            style="height: 500px; background: transparent; ">
+                            <div class="text-center" style="width: 100%; max-width: 300px;">
+                                <a href="{{ route('libros.show', $libro->id) }} ">
+                                    <h3 class="titulo-libro-carrusel">{{ $libro->titulo }}</h3>
+                                </a>
+                                @if ($libro->caratula && file_exists(public_path($libro->caratula)))
+                                    <!-- Mostrar la imagen usando la ruta almacenada en la base de datos -->
+                                    <img class="book-cover img-fluid rounded shadow" src="{{ asset($libro->caratula) }}"
+                                        alt="Portada de {{ $libro->titulo }}">
+                                @else
+                                    <img src="{{ asset('img/placeholder.png') }}" alt="Portada no disponible">
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#latestBooksCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        @endforeach
-    </div>
-</div>
+        <script>
+            var myCarousel = document.querySelector('#latestBooksCarousel');
+            var carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 4000,
+                ride: 'carousel'
+            });
+        </script>
 <!-- Fin de la sección de últimos libros -->
 
 <!-- Sección de categorías -->
@@ -49,7 +78,7 @@
         <div class="map-section">
             <div class="map-container" id="map"></div>
             <div class="map-text">
-                <p>Nos encontramos en la plaza de el pimiento</p>
+                <p>Nos encontramos en la plaza de el pimiento, este espacio publico esta abierto para todas las personas desde el dia lunes a viernes a partir de las 2PM hasta las 5PM, te esperamos con la mejor disposicion </p>
             </div>
         </div>
     </div>
@@ -78,6 +107,9 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfe4LVLV1Ah3E6avo8JHFo92kIjDjUKdY" async defer></script>
 <script>
+
+
+
     function initMap() {
         const ubicacion = { lat: -33.57346760204582, lng: -70.98180886814293 }; // Coordenadas de tu ubicación
 

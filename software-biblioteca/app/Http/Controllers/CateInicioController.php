@@ -16,11 +16,16 @@ class CateInicioController extends Controller
         $ultimosLibros = Libro::latest()->take(5)->get();
 
         // Retorna la vista con las categorías y los últimos libros
-        return view('index', compact('categorias', 'ultimosLibros'));
+        return view('info', compact('categorias', 'ultimosLibros'));
     }
-    public function show(Libro $libro)
+    public function showLibro($id)
     {
+        // Busca el libro por su ID
+        $libro = Libro::findOrFail($id);
+    
         // Retorna la vista con los detalles del libro
         return view('libros.show', compact('libro'));
     }
+
+    
 }

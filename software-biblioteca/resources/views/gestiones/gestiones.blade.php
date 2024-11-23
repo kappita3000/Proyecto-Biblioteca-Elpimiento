@@ -45,8 +45,6 @@
             <a class="nav-link" id="editoriales-tab" data-bs-toggle="tab" href="#editoriales" role="tab" aria-controls="editoriales" aria-selected="false">Editoriales</a>
         </li>
     </ul>
-    <th>#</th>
-<td>{{ $index + 1 }}</td>
 <!-- Pestaña de Autores -->
 <div class="tab-pane fade show active" id="autores" role="tabpanel" aria-labelledby="autores-tab">
     <form action="{{ url('gestiones/autor') }}" method="POST" class="mb-3">
@@ -149,15 +147,16 @@
                     <td><input type="checkbox" name="ids[]" value="{{ $categoria->id }}"></td>
                     <td>{{ $categoria->nombre }}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#editCategoriaModal-{{ $categoria->id }}">Editar</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteCategoriaModal-{{ $categoria->id }}">Eliminar</button>
-                    </td>
+                    <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#editCategoriasModal-{{ $categoria->id }}">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteCategoriaModal-{{ $categoria->id }}">Eliminar</button>
+           </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </form>
 </div>
+
 
 
 <!-- Pestaña de Repisas -->

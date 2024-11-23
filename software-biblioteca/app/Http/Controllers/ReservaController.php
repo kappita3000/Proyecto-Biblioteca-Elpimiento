@@ -106,7 +106,7 @@ class ReservaController extends Controller
             'updated_at' => now(),
         ]);
     
-        // Decrementar la cantidad del libro
+        
     
         // Si la cantidad llega a 0, marcar como no disponible
         if ($libro->cantidad <= 0) {
