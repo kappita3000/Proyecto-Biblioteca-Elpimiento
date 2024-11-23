@@ -71,12 +71,12 @@ Route::get('/info', function () {return view('info');});
 
 
 
-
+Route::get('/repertorio', [ReservaController::class, 'index'])->name('libros.index'); // Muestra todos los libros
 // Página principal - muestra los libros recientes
 Route::get('/', [ReservaController::class, 'index'])->name('index');
 
 // Mostrar todos los libros con filtros (manejado por FiltrosController)
-Route::get('/libros', [FiltrosController::class, 'filtrar'])->name('libros.filtro');
+Route::get('/libros', [FiltrosController::class, 'filtrarPorGenero'])->name('libros.filtro');
 
 // Mostrar un libro específico (por ID)
 Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.show');
@@ -85,7 +85,7 @@ Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.sho
 Route::get('/buscar', [ReservaController::class, 'search'])->name('libros.search');
 
 // Reservar un libro
-Route::post('/reservar-libro', [ReservaController::class, 'reservar'])->name('reservar.libro');
+Route::post('/reservar-libro', [ReservaController::class, 'reservarLibro'])->name('reservar.libro');
 
 
 

@@ -11,26 +11,7 @@ class FiltrosController extends Controller
 
 {
 
-    public function filtrarPorCategoria(Request $request)
-{
-    // Obtener todas las categorías para la vista
-    $categorias = Categoria::all();
-
-    // Inicializar la consulta de libros
-    $libros = Libro::query()->with('categoria', 'autor', 'genero');
-
-    // Aplicar filtro por categoría si está presente
-    if ($request->filled('category')) {
-        $libros->where('id_categoria', $request->input('category'));
-    }
-
-    // Obtener los resultados paginados
-    $libros = $libros->paginate(12);
-
-    // Retornar la vista con los libros filtrados y las categorías
-    return view('libros.index', compact('libros', 'categorias'));
-}
-
+    
     public function filtrarPorGenero(Request $request)
 {
   // Obtener todos los géneros, autores y categorías para el formulario de filtros
@@ -39,7 +20,11 @@ class FiltrosController extends Controller
   $categorias = Categoria::all();
 
   // Inicializar la consulta de libros
-  $libros = Libro::query()->with('autor', 'genero', 'categoria');
+  $libros = Libro::query()
+  ->join('autores', 'libros.id_autor', '=', 'autores.id')
+  ->select('libros.*', 'autores.nombre as autor_nombre',)
+  ->with('genero')
+  ->with('categoria');
 
   // Aplicar filtro por género si está presente
   if ($request->filled('genre')) {
@@ -70,7 +55,7 @@ class FiltrosController extends Controller
 }
 public function getUltimosLibros()
     {
-        return Libro::latest()->with('autor', 'genero')->take(3)->get();
+        return Libro::latest()->with('autor', 'genero')->take(5)->get();
     }
 
     // Mostrar la vista con el carrusel
