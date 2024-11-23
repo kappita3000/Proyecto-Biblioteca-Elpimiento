@@ -1,0 +1,373 @@
+
+label {
+    background-color: rgba(255, 255, 255, 0.85);
+    /* Fondo blanco con opacidad */
+    color: #333;
+    /* Texto gris oscuro */
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Sombra ligera */
+}
+
+/* Estilo para inputs y selects */
+input[type="text"],
+select {
+    background-color: rgba(255, 255, 255, 0.85);
+    /* Fondo blanco con opacidad */
+    color: #333;
+    /* Texto gris oscuro */
+    padding: 10px;
+    /* Espacio interno para una mejor apariencia */
+    border: 1px solid #ccc;
+    /* Borde gris claro */
+    border-radius: 4px;
+    /* Bordes suavemente redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Sombra para resaltar los elementos */
+    outline: none;
+    /* Quitar el borde azul que aparece al seleccionar */
+    transition: all 0.3s ease;
+    /* Transición suave para efectos al interactuar */
+}
+
+/* Estilo cuando se hace foco en el input o select */
+input[type="text"]:focus,
+select:focus {
+    border: 1px solid #007bff;
+    /* Cambiar el color del borde al obtener el foco */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    /* Aumentar la sombra y darle un toque azul */
+}
+
+label {
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Fondo blanco casi opaco */
+    color: #333;
+    /* Texto gris oscuro */
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    /* Borde ligero para darle más definición */
+}
+
+a {
+    color: #333 !important;
+    text-decoration: none;
+    outline: none;
+
+}
+
+.book-cover {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    /* Recortar la imagen para llenar el contenedor sin distorsionarse */
+    border-radius: 8px;
+    /* Bordes redondeados para mejor apariencia */
+    margin-bottom: 15px;
+    /* Espacio entre la imagen y el título */
+}
+
+.carousel-inner {
+    position: relative;
+    max-height: 500px;
+
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo oscuro para mayor contraste */
+    border-radius: 50%;
+    /* Hacer los íconos de navegación redondos */
+    padding: 10px;
+}
+
+h3.text-primary {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo general para las cards */
+.card {
+    background-color: #E8F5E9 !important;
+    /* Mantener el color púrpura de fondo */
+    border-radius: 12px;
+    /* Bordes redondeados para un aspecto más suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para dar una sensación de elevación */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Transición suave para la sombra y el movimiento */
+    overflow: hidden;
+    /* Evitar que el contenido se salga de los bordes redondeados */
+}
+
+/* Estilo al hacer hover sobre la card */
+.card:hover {
+    transform: translateY(-5px);
+    /* Elevar un poco la card al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Aumentar la sombra para destacar la card */
+}
+
+/* Estilo de la imagen */
+.card .col-md-4 img {
+    width: 100%;
+    /* Asegurar que la imagen ocupe todo el ancho del contenedor */
+    height: 100%;
+    /* Asegurar que la imagen ocupe todo el alto del contenedor */
+    object-fit: cover;
+    /* Recortar la imagen para llenar todo el contenedor sin distorsionarse */
+    border-radius: 8px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para resaltar la imagen */
+    transition: transform 0.3s ease-in-out;
+}
+
+.card .col-md-4 {
+    height: 100%;
+    /* El contenedor de la imagen debe ocupar todo el alto de la tarjeta */
+    padding: 10px;
+    /* Espacio alrededor de la imagen */
+    display: flex;
+    /* Utilizar flexbox */
+    justify-content: center;
+    /* Alinear horizontalmente */
+    align-items: center;
+    /* Alinear verticalmente */
+}
+
+/* Estilo del cuerpo de la card */
+.card-body {
+    padding: 20px;
+    /* Añadir relleno al contenido de la tarjeta */
+}
+
+/* Estilo del título */
+.card-title {
+    font-size: 1.5rem;
+    /* Tamaño del título para hacerlo más atractivo */
+    font-weight: bold;
+    /* Título en negrita */
+    color: #333;
+    /* Texto oscuro para un buen contraste con el fondo */
+    margin-bottom: 10px;
+    /* Espacio entre el título y el resto del contenido */
+}
+
+/* Estilo del texto de la card */
+.card-text {
+    font-size: 1rem;
+    /* Ajustar el tamaño de la fuente para mejor legibilidad */
+    color: #555;
+    /* Texto gris oscuro */
+    margin-bottom: 10px;
+    /* Espacio entre los párrafos */
+}
+
+/* Estilo de las badges */
+.badge {
+    font-size: 0.875rem;
+    /* Ajustar tamaño de las etiquetas de disponibilidad */
+    padding: 5px 10px;
+    /* Espacio interno para mejor apariencia */
+    border-radius: 8px;
+    /* Bordes redondeados */
+}
+
+/* Estilo del botón */
+.btn-info {
+    background-color: #d1d9a6 !important;
+    /* Mantener el color verde suave */
+    border-color: #d1d9a6 !important;
+    color: #fff;
+    /* Texto blanco para mejor contraste */
+    padding: 8px 16px;
+    /* Espacio alrededor del botón */
+    font-size: 1rem;
+    /* Ajustar el tamaño del texto */
+    border-radius: 6px;
+    /* Bordes redondeados */
+    transition: background-color 0.3s ease;
+    /* Efecto suave al cambiar el color de fondo */
+}
+
+/* Estilo al hacer hover sobre el botón */
+.btn-info:hover {
+    background-color: #b5be8a !important;
+    /* Color más oscuro al hacer hover */
+    border-color: #b5be8a !important;
+}
+
+/* Contenedor del paginador */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #E8F5E9;
+    /* Fondo suave */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+/* Estilo de los elementos del paginador */
+.page-item {
+    margin: 0 5px;
+    /* Espacio entre los elementos */
+}
+
+/* Enlaces del paginador */
+.page-link {
+    color: #333;
+    /* Texto oscuro */
+    padding: 10px 15px;
+    /* Añadir relleno interno */
+    border-radius: 8px;
+    /* Bordes redondeados */
+    border: 1px solid #ccc;
+    /* Borde ligero */
+    transition: all 0.3s ease;
+    /* Transición suave */
+    text-decoration: none;
+    /* Eliminar subrayado */
+}
+
+/* Hover y foco en los enlaces */
+.page-link:hover,
+.page-link:focus {
+    background-color: #d2bad8;
+    /* Fondo púrpura al hacer hover */
+    color: #fff;
+    /* Texto blanco para mejor contraste */
+    border: 1px solid #d2bad8;
+    /* Borde que coincida con el fondo */
+}
+
+/* Estilo de la página activa */
+.page-item.active .page-link {
+    background-color: #1e73be;
+    /* Color azul intenso para la página activa */
+    color: #fff;
+    /* Texto blanco para contraste */
+    border: 1px solid #1e73be;
+    /* Borde que coincida con el fondo */
+}
+
+/* Deshabilitar los botones (previo y siguiente) cuando no son válidos */
+.page-item.disabled .page-link {
+    color: #ccc;
+    /* Texto gris claro */
+    cursor: not-allowed;
+    /* Mostrar un cursor de prohibido */
+}
+
+/* Estilo del título de los libros */
+.libros-titulo {
+    font-size: 2.5rem;
+    /* Tamaño de fuente grande */
+    font-weight: bold;
+    /* Hacer el texto en negrita */
+    color: #333;
+    /* Color oscuro para un buen contraste */
+    text-align: center;
+    /* Centrar el texto */
+    margin-bottom: 30px;
+    /* Espacio inferior para separar del resto del contenido */
+    text-transform: uppercase;
+    /* Convertir el texto a mayúsculas */
+    position: relative;
+    /* Para permitir agregar elementos decorativos */
+}
+
+/* Línea decorativa debajo del título */
+.libros-titulo::after {
+    content: "";
+    width: 100px;
+    /* Ajustar el ancho de la línea */
+    height: 4px;
+    /* Ajustar el grosor de la línea */
+    background-color: #333;
+    /* Color de la línea decorativa (puede ser el mismo que los iconos) */
+    display: block;
+    margin: 10px auto 0;
+    /* Centramos la línea y añadimos algo de espacio */
+    border-radius: 4px;
+    /* Bordes redondeados para mejor apariencia */
+}
+
+/* Estilo del título del carrusel */
+.titulo-carrusel {
+    font-size: 2rem;
+    /* Tamaño de fuente más grande para destacarlo */
+    font-weight: bold;
+    /* Hacer el texto más visible */
+    color: #333;
+    /* Color a juego con el tema general */
+    text-align: center;
+    /* Centrar el texto para alinearlo con el carrusel */
+    margin-top: 20px;
+    /* Añadir espacio en la parte superior */
+    margin-bottom: 20px;
+    /* Añadir espacio en la parte inferior */
+    text-transform: capitalize;
+    /* Primeras letras en mayúsculas para un mejor estilo */
+    letter-spacing: 1.5px;
+    /* Añadir espacio entre las letras */
+}
+
+/* Línea decorativa debajo del título */
+.titulo-carrusel::after {
+    content: "";
+    width: 80px;
+    /* Ajustar el ancho de la línea */
+    height: 3px;
+    /* Ajustar el grosor de la línea */
+    background-color: #333;
+    /* Color de la línea decorativa */
+    display: block;
+    margin: 10px auto 0;
+    /* Centramos la línea */
+    border-radius: 3px;
+    /* Bordes redondeados para hacerla más suave */
+}
+
+/* Estilo del título del libro en el carrusel */
+.titulo-libro-carrusel {
+    font-size: 1.8rem;
+    /* Tamaño ligeramente más grande */
+    font-weight: bold;
+    /* Negrita para hacerlo más visible */
+    color: #4d4d4d;
+    /* Color gris oscuro para un buen contraste */
+    text-align: center;
+    /* Centrar el texto */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+    /* Añadir sombra de texto suave */
+    margin-top: 15px;
+    /* Espacio en la parte superior para separar del contenido superior */
+    letter-spacing: 1px;
+    /* Añadir espacio entre letras */
+    line-height: 1.3;
+    /* Altura de línea para mejor legibilidad */
+    transition: color 0.3s ease, transform 0.3s ease;
+    /* Transición suave */
+}
+
+/* Efecto al pasar el ratón sobre el título */
+.titulo-libro-carrusel:hover {
+    color: #1e73be;
+    /* Cambiar color para darle efecto al pasar el ratón */
+    transform: translateY(-2px);
+    /* Elevar el texto ligeramente */
+}

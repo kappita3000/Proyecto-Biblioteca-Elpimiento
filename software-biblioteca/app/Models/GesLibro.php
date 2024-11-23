@@ -13,7 +13,7 @@ class GesLibro extends Model
 
     protected $fillable = [
         'titulo', 'id_autor', 'id_genero', 'id_categoria', 'id_repisa', 
-        'id_editorial', 'fecha_publicacion', 'disponible', 'cantidad', 'descripcion'
+        'id_editorial', 'disponible', 'cantidad', 'descripcion'
     ];
         // Relación con el modelo Autor
     public function autor()
@@ -35,5 +35,9 @@ class GesLibro extends Model
     {
     return $this->belongsTo(Repisa::class, 'id_repisa');
     }
-
+    // Relación con la tabla de editoriales
+    public function editorial()
+    {
+        return $this->belongsTo(Editorial::class, 'id_editorial');
+    }
 }
