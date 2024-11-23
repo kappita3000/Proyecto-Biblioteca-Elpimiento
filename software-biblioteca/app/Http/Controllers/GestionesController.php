@@ -16,14 +16,17 @@ class GestionesController extends Controller
     // Mostrar la vista con los formularios
     public function index()
     {
-        $autores = Autor::all();
-        $generos = Genero::all();
-        $categorias = Categoria::all();
-        $repisas = Repisa::all();
-        $editoriales = Editorial::all();
+        // Paginación para cada modelo
+        $autores = Autor::paginate(10);
+        $generos = Genero::paginate(10);
+        $categorias = Categoria::paginate(10);
+        $repisas = Repisa::paginate(10);
+        $editoriales = Editorial::paginate(10);
 
+        // Retornamos la vista con los datos paginados
         return view('gestiones.gestiones', compact('autores', 'generos', 'categorias', 'repisas', 'editoriales'));
     }
+    
 
     // Crear autor
     public function storeAutor(Request $request)
@@ -32,12 +35,7 @@ class GestionesController extends Controller
     return redirect()->route('gestiones.gestiones')->with('success', 'Autor agregado con éxito')->with('activeTab', 'autores');
     }
 
-    // Crear género
-    public function storeGenero(Request $request)
-    {
-        Genero::create($request->all());
-     // return redirect()->route('gestiones.gestiones')->with('success', 'Género agregado con éxito')->with('activeTab', '#generos');
-    }
+
     
     // Crear categoría
     public function storeCategoria(Request $request)
@@ -62,18 +60,40 @@ class GestionesController extends Controller
 
 
 
+    public function storeGenero(Request $request)
+    {
+        Genero::create($request->all());
+    
+        return redirect()->route('gestiones.gestiones')
+            ->with('success', 'Género agregado con éxito')
+            ->with('activeTab', 'generos');
+    }
+    
+    public function updateGenero(Request $request, $id)
+    {
+        $request->validate(['nombre' => 'required|string|max:255']);
+    
+        $genero = Genero::findOrFail($id);
+        $genero->nombre = $request->input('nombre');
+        $genero->save();
+    
+        return redirect()->route('gestiones.gestiones')
+            ->with('success', 'Género actualizado con éxito')
+            ->with('activeTab', 'generos');
+    }
+    
+    public function deleteGenero($id)
+    {
+        $genero = Genero::findOrFail($id);
+        $genero->delete();
+    
+        return redirect()->route('gestiones.gestiones')
+            ->with('success', 'Género eliminado con éxito')
+            ->with('activeTab', 'generos');
+    }
+    
 
 
-    public function getGenerosTabla()
-    {
-        $generos = Genero::all();
-        return view('gestiones.partials.generos_tabla', compact('generos'))->render();
-    }
-    public function tablaGeneros()
-    {
-        $generos = Genero::all(); // Obtén los datos actualizados
-        return view('gestiones.partials.generos_tabla', compact('generos')); // Retorna la vista parcial
-    }
     
 
 
@@ -96,22 +116,6 @@ class GestionesController extends Controller
         // Redirige con éxito
         return redirect()->route('gestiones.gestiones')->with('success', 'Autor actualizado con éxito.')->with('activeTab', 'autores');
         
-    }
-    
-    public function updateGenero(Request $request, $id)
-    {
-        // Validación de los datos
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-        ]);
-    
-        // Encuentra el género a actualizar
-        $genero = Genero::findOrFail($id);
-        $genero->nombre = $request->input('nombre');
-        $genero->save();
-    
-        // Redirige con éxito
-    //return redirect()->route('gestiones.gestiones')->with('success', 'Género editado con éxito')->with('activeTab', '#generos');
     }
     
     public function updateCategoria(Request $request, $id)
@@ -187,15 +191,6 @@ class GestionesController extends Controller
         return back();
     }
 
-    // Eliminar género
-
-    public function deleteGenero($id)
-{
-    $genero = Genero::findOrFail($id);
-    $genero->delete();
-
-    return response()->json(['success' => true]);
-}
 
 
     // Eliminar categoría
@@ -218,5 +213,71 @@ class GestionesController extends Controller
         Editorial::find($id)->delete();
         return back();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    public function bulkDeleteAutores(Request $request)
+    {
+        $ids = $request->input('ids');
+        if ($ids) {
+            Autor::whereIn('id', $ids)->delete();
+            return redirect()->back()->with('success', 'Autores eliminados correctamente.');
+        }
+        return redirect()->back()->with('error', 'Selecciona al menos un autor para eliminar.');
+    }
+    
+    public function bulkDeleteGeneros(Request $request)
+    {
+        $ids = $request->input('ids');
+        if ($ids) {
+            Genero::whereIn('id', $ids)->delete();
+            return redirect()->back()->with('success', 'Géneros eliminados correctamente.');
+        }
+        return redirect()->back()->with('error', 'Selecciona al menos un género para eliminar.');
+    }
+    
+    public function bulkDeleteCategorias(Request $request)
+    {
+        $ids = $request->input('ids');
+        if ($ids) {
+            Categoria::whereIn('id', $ids)->delete();
+            return redirect()->back()->with('success', 'Categorías eliminadas correctamente.');
+        }
+        return redirect()->back()->with('error', 'Selecciona al menos una categoría para eliminar.');
+    }
+    
+    public function bulkDeleteRepisas(Request $request)
+    {
+        $ids = $request->input('ids');
+        if ($ids) {
+            Repisa::whereIn('id', $ids)->delete();
+            return redirect()->back()->with('success', 'Repisas eliminadas correctamente.');
+        }
+        return redirect()->back()->with('error', 'Selecciona al menos una repisa para eliminar.');
+    }
+    
+    public function bulkDeleteEditoriales(Request $request)
+    {
+        $ids = $request->input('ids');
+        if ($ids) {
+            Editorial::whereIn('id', $ids)->delete();
+            return redirect()->back()->with('success', 'Editoriales eliminadas correctamente.');
+        }
+        return redirect()->back()->with('error', 'Selecciona al menos una editorial para eliminar.');
+    }
+    
+    
+
+
+
 
 }

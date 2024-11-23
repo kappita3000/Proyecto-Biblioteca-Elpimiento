@@ -39,8 +39,13 @@ class FiltrosController extends Controller
   $categorias = Categoria::all();
 
   // Inicializar la consulta de libros
-  $libros = Libro::query()->with('autor', 'genero', 'categoria');
+        $libros = Libro::query()
+        ->join('autores', 'libros.id_autor', '=', 'autores.id')
+        ->select('libros.*', 'autores.nombre as autor_nombre',)
+        ->with('genero')
+        ->with('categoria');
 
+        
   // Aplicar filtro por género si está presente
   if ($request->filled('genre')) {
       $libros->where('id_genero', $request->input('genre'));

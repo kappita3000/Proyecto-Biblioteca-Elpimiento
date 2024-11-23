@@ -14,7 +14,7 @@ use App\Http\Controllers\GestionesController;
 use App\Http\Controllers\FiltrosController;
 use App\Http\Controllers\PortadasController;
 use App\Http\Controllers\EstadisticasController;
-
+use App\Http\Controllers\CateInicioController;
 
 Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
 
@@ -27,10 +27,12 @@ Route::delete('/glibros/{id}', [GesLibroController::class, 'destroy'])->name('li
 Route::get('/glibros/search', [GesLibroController::class, 'search'])->name('libros.search');
 
 
+Route::get('/gestiones', [GestionesController::class, 'index'])->name('gestiones.gestiones');
+Route::post('/gestiones/genero', [GestionesController::class, 'storeGenero']);
+Route::put('/gestiones/genero/{id}', [GestionesController::class, 'updateGenero']);
+Route::delete('/gestiones/genero/{id}', [GestionesController::class, 'deleteGenero']);
 
-
-Route::get('/gestiones/genero/tabla', [GestionesController::class, 'getGenerosTabla'])->name('gestiones.genero.tabla');
-Route::get('gestiones/genero/tabla', [GestionesController::class, 'tablaGeneros'])->name('gestiones.genero.tabla');
+// Agrega rutas para autores, categorías, repisas y editoriales
 
 
 Route::get('gestiones', [GestionesController::class, 'index'])->name('gestiones.gestiones');
@@ -63,12 +65,31 @@ Route::get('/search/editorial', [GesLibroController::class, 'buscarEditorial']);
 Route::get('/search/repisa', [GesLibroController::class, 'buscarRepisa']);
 
 
+
+// Rutas para eliminación masiva de Autores
+Route::delete('gestiones/autores/bulk-delete', [GestionesController::class, 'bulkDeleteAutores'])->name('autores.bulk-delete');
+
+// Rutas para eliminación masiva de Géneros
+Route::delete('gestiones/generos/bulk-delete', [GestionesController::class, 'bulkDeleteGeneros'])->name('generos.bulk-delete');
+
+// Rutas para eliminación masiva de Categorías
+Route::delete('gestiones/categorias/bulk-delete', [GestionesController::class, 'bulkDeleteCategorias'])->name('categorias.bulk-delete');
+
+// Rutas para eliminación masiva de Repisas
+Route::delete('gestiones/repisas/bulk-delete', [GestionesController::class, 'bulkDeleteRepisas'])->name('repisas.bulk-delete');
+
+// Rutas para eliminación masiva de Editoriales
+Route::delete('gestiones/editoriales/bulk-delete', [GestionesController::class, 'bulkDeleteEditoriales'])->name('editoriales.bulk-delete');
+
+
 });
 
 
 Route::get('/info', function () {return view('info');});
+Route::get('/categorias', [CateInicioController::class, 'index'])->name('categorias.index');
 
 
+Route::get('/libros/filtrar', [FiltrosController::class, 'filtrarPorCategoria'])->name('filtrarPorCategoria');
 
 
 
@@ -76,7 +97,8 @@ Route::get('/info', function () {return view('info');});
 Route::get('/', [ReservaController::class, 'index'])->name('index');
 
 // Mostrar todos los libros con filtros (manejado por FiltrosController)
-Route::get('/libros', [FiltrosController::class, 'filtrar'])->name('libros.filtro');
+Route::get('/libros', [FiltrosController::class, 'filtrarPorGenero'])->name('libros.filtro');
+Route::get('/lol', [ReservaController::class, 'index'])->name('libros.index'); // Muestra todos los libros
 
 // Mostrar un libro específico (por ID)
 Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.show');
@@ -85,7 +107,7 @@ Route::get('/libros/{id}', [ReservaController::class, 'show'])->name('libros.sho
 Route::get('/buscar', [ReservaController::class, 'search'])->name('libros.search');
 
 // Reservar un libro
-Route::post('/reservar-libro', [ReservaController::class, 'reservar'])->name('reservar.libro');
+Route::post('/reservar-libro', [ReservaController::class, 'reservarLibro'])->name('reservar.libro');
 
 
 

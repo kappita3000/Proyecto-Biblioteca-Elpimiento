@@ -107,7 +107,6 @@ class ReservaController extends Controller
         ]);
     
         // Decrementar la cantidad del libro
-        $libro->decrement('cantidad');
     
         // Si la cantidad llega a 0, marcar como no disponible
         if ($libro->cantidad <= 0) {

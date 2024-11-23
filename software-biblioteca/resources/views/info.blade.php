@@ -1,8 +1,50 @@
 @extends('layouts.aa')
 
 @section('content')
+
 <div style="background-color: #e8f5e9; padding: 20px;">
+    
     <div class="container">
+
+<!-- Sección de últimos libros -->
+<div class="latest-books-section">
+    <h2 style="text-align: center; margin-bottom: 20px;">Novedades</h2>
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; margin-bottom: 40px;">
+        @foreach($ultimosLibros as $libro)
+        <div style="background-color: white; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center;">
+            <h3 style="font-size: 1rem;">{{ $libro->titulo }}</h3> <!-- Título del libro -->
+            <p style="font-size: 0.9rem; color: #555;">{{ Str::limit($libro->descripcion, 100) }}</p> <!-- Descripción breve -->
+            <a href="{{ route('libros.show', ['libro' => $libro->id]) }}"
+               style="display: inline-block; margin-top: 10px; padding: 8px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; font-size: 0.9rem;">
+                Ver Detalles
+            </a>
+        </div>
+        @endforeach
+    </div>
+</div>
+<!-- Fin de la sección de últimos libros -->
+
+<!-- Sección de categorías -->
+<div class="categories-section">
+    <h2 style="text-align: center; margin-bottom: 20px;">Categorías</h2>
+    <div style="display: grid; height: 800px !important; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
+        @foreach($categorias as $categoria)
+        <div style="background-color: white; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center;">
+            <h3 style="display: center; padding-top: 30px;">{{ $categoria->nombre }}</h3>
+            <p>{{ $categoria->descripcion }}</p>
+            <a href="{{ route('filtrarPorCategoria', ['category' => $categoria->id]) }}"
+               style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; font-size: 0.9rem; transition: background-color 0.3s;">
+                Ver libros
+            </a>
+        </div>
+        @endforeach
+    </div>
+</div>
+<!-- Fin de la sección de categorías -->
+
+
+
+
         <!-- Sección del mapa -->
         <div class="map-section">
             <div class="map-container" id="map"></div>
