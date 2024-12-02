@@ -11,7 +11,27 @@ class FiltrosController extends Controller
 
 {
 
+    public function filtrarPorCategoria(Request $request)
+    {
+        // Obtener todas las categorías para la vista
+        $categorias = Categoria::all();
     
+        // Inicializar la consulta de libros
+        $libros = Libro::query()->with('categoria', 'autor', 'genero');
+    
+        // Aplicar filtro por categoría si está presente
+        if ($request->filled('category')) {
+            $libros->where('id_categoria', $request->input('category'));
+        }
+    
+        // Obtener los resultados paginados
+        $libros = $libros->paginate(12);
+    
+        // Retornar la vista con los libros filtrados y las categorías
+        return view('libros.index', compact('libros', 'categorias'));
+    }
+    
+
     public function filtrarPorGenero(Request $request)
 {
   // Obtener todos los géneros, autores y categorías para el formulario de filtros

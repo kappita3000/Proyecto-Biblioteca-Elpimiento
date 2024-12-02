@@ -54,6 +54,7 @@
 <!-- Fin de la sección de últimos libros -->
 
 <!-- Sección de categorías -->
+<!-- Sección de categorías -->
 <div class="categories-section">
     <h2 style="text-align: center; margin-bottom: 20px;">Categorías</h2>
     <div style="display: grid; height: 800px !important; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
