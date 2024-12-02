@@ -146,11 +146,11 @@ route::post('/newAdmin', [NewAdminController::class, 'store'])->name('newAdmin')
 
 Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], function () {
     Route::get('/prestamos', [PrestamoController::class, 'index'])->name('prestamos.index');
-    Route::post('/prestamos/{id}/aceptar', [PrestamoController::class, 'aceptar'])->name('prestamos.aceptar');
-    Route::delete('/prestamos/{id}/rechazar', [PrestamoController::class, 'rechazar'])->name('prestamos.rechazar');
+    Route::post('/prestamos/aceptar/{id}', [PrestamoController::class, 'aceptar'])->name('prestamos.aceptar');
+    Route::delete('/prestamos/rechazar/{id}', [PrestamoController::class, 'rechazar'])->name('prestamos.rechazar');
     Route::get('/prestamos/{id}/edit', [PrestamoController::class, 'edit'])->name('prestamos.edit');
     Route::put('/prestamos/{id}', [PrestamoController::class, 'update'])->name('prestamos.update');
-    Route::put('/prestamos/{id}/registrar-devolucion', [PrestamoController::class, 'registrarDevolucion'])->name('prestamos.registrarDevolucion');
+    Route::put('/prestamos/registrarDevolucion/{id}', [PrestamoController::class, 'registrarDevolucion'])->name('prestamos.registrarDevolucion');
     Route::post('/prestamos/store/registrado', [PrestamoController::class, 'storeRegistrado'])->name('prestamos.store.registrado');
     Route::post('/prestamos/store/no_registrado', [PrestamoController::class, 'storeNoRegistrado'])->name('prestamos.store.no_registrado');
     Route::get('/buscar-libros', [GesLibroController::class, 'buscar'])->name('libros.buscar');
