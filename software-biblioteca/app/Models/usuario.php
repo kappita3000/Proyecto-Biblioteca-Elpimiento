@@ -14,7 +14,7 @@ class Usuario extends Authenticatable
     protected $table = 'usuarios'; // Apunta a la tabla correcta
 
     protected $fillable = [
-        'nombre', 'apellido', 'correo', 'contraseña', 'tipo_usuario', 'solicitudes',
+        'nombre', 'apellido', 'correo', 'contraseña', 'tipo_usuario',
     ];
 
     // Indicar que la columna de la contraseña es 'contraseña'
