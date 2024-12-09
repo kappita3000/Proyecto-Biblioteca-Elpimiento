@@ -6,43 +6,42 @@ use App\Models\Prestamo;
 use App\Models\Usuario;
 use App\Models\Libro;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class PrestamoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Solicitudes pendientes (sin fecha de préstamo)
-        $solicitudes = Prestamo::whereNull('fecha_prestamo')->orderby('fecha_solicitud')->paginate(20);
+        $tab = $request->get('tab', 'solicitudes'); // Pestaña predeterminada: "solicitudes"
 
-        // Préstamos activos (con fecha de devolución, sin devuelto)
-        $prestamos = Prestamo::whereNotNull('fecha_devolucion')->whereNull('devuelto')->orderby('fecha_devolucion')->paginate(20);
+        // Filtrar datos según la pestaña activa
+        $solicitudes = Prestamo::whereNull('fecha_prestamo')
+                                ->whereNull('fecha_rechazo')
+                                ->orderby('fecha_solicitud')
+                                ->paginate(20);
 
-        // Préstamos completados (todos los campos rellenados con devuelto en 'Si')
-        $completados = Prestamo::whereNotNull('fecha_prestamo')
-                                ->whereNotNull('fecha_devolucion')
-                                ->where('devuelto', 'Si')
+        $prestamos = Prestamo::whereNotNull('fecha_devolucion')
+                                ->whereNull('devuelto')
+                                ->whereNull('fecha_rechazo')
                                 ->orderby('fecha_devolucion')
                                 ->paginate(20);
 
-        // Préstamos no devueltos (devuelto en 'No')
-        $noDevueltos = Prestamo::whereNotNull('fecha_prestamo')
-                                ->whereNotNull('fecha_devolucion')
-                                ->where('devuelto', 'No')
+        $completados = Prestamo::where('devuelto', 'Si')
                                 ->orderby('fecha_devolucion')
                                 ->paginate(20);
 
-        // Obtener todos los usuarios registrados para el select
-        $usuarios = Usuario::where('tipo_usuario', 'Registrado')->orderby('correo')->get();
+        $noDevueltos = Prestamo::where('devuelto', 'No')
+                                ->orderby('fecha_devolucion')
+                                ->paginate(20);
 
-        // Obtener todos los libros disponibles
-        $libros = Libro::all();
+        $rechazados = Prestamo::whereNotNull('fecha_rechazo')
+                                ->orderby('fecha_rechazo')
+                                ->paginate(20);
 
-        // Pasar todas las variables necesarias a la vista
-        return view('prestamos.index', compact('solicitudes', 'prestamos', 'completados', 'noDevueltos', 'usuarios', 'libros'));
+        return view('prestamos.index', compact('tab', 'solicitudes', 'prestamos', 'completados', 'noDevueltos', 'rechazados'));
     }
 
     public function store(Request $request)
@@ -82,7 +81,7 @@ class PrestamoController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Préstamo creado correctamente');
+        return redirect()->route('prestamos.index', ['tab' => 'prestamos'])->with('success', 'Préstamo creado correctamente');
     }
 
 
@@ -105,7 +104,7 @@ class PrestamoController extends Controller
             'devuelto' => $request->devolucion,
         ]);
 
-        return redirect()->route('prestamos.index')->with('success', 'Préstamo actualizado correctamente');
+        return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('success', 'Préstamo actualizado correctamente');
     }
 
     /**
@@ -141,18 +140,41 @@ class PrestamoController extends Controller
 
             $libro->save();
 
-            return redirect()->route('prestamos.index')->with('success', 'Solicitud aceptada correctamente.');
+            return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('success', 'Solicitud aceptada correctamente.');
         } else {
-            return redirect()->route('prestamos.index')->with('error', 'No hay copias disponibles para este libro.');
+            return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('error', 'No hay copias disponibles para este libro.');
         }
     }
 
-    public function rechazar($id)
+    public function rechazar(Request $request, $id)
     {
-        $prestamo = Prestamo::findOrFail($id);
-        $prestamo->delete();
+        // Validar el motivo del rechazo
+        $request->validate([
+            'motivo_rechazo' => 'required|string|max:255',
+        ]);
 
-        return redirect()->route('prestamos.index')->with('success', 'Solicitud rechazada correctamente.');
+        // Encontrar el préstamo
+        $prestamo = Prestamo::findOrFail($id);
+
+        // Registrar el rechazo
+        $prestamo->fecha_rechazo = now();
+        $prestamo->motivo_rechazo = $request->motivo_rechazo;
+        $prestamo->save();
+
+        // Enviar correo al usuario notificando el rechazo
+        $usuario = $prestamo->usuario;
+        $libro = $prestamo->libro;
+
+        Mail::send('emails.rechazo', [
+            'usuario' => $usuario,
+            'libro' => $libro,
+            'motivo' => $prestamo->motivo_rechazo,
+        ], function ($message) use ($usuario) {
+            $message->to($usuario->correo);
+            $message->subject('Notificación de rechazo de préstamo');
+        });
+
+        return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('success', 'Solicitud rechazada y registrada correctamente.');
     }
 
     public function registrarDevolucion(Request $request, $id)
@@ -192,7 +214,7 @@ class PrestamoController extends Controller
         $prestamo->save();
 
         // Redirigir con mensaje de éxito
-        return redirect()->route('prestamos.index')->with('success', 'Devolución registrada correctamente.');
+        return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('success', 'Devolución registrada correctamente.');
     }
 
 
@@ -211,7 +233,7 @@ class PrestamoController extends Controller
 
         // Comprobar si el libro está disponible
         if ($libro->disponible == 0) {
-            return redirect()->route('prestamos.index')->with('error', 'El libro seleccionado no está disponible para préstamo.');
+            return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('error', 'El libro seleccionado no está disponible para préstamo.');
         }
 
         // Comprobar si hay copias disponibles
@@ -236,9 +258,9 @@ class PrestamoController extends Controller
 
             $libro->save();
 
-            return redirect()->route('prestamos.index')->with('success', 'Préstamo creado correctamente para usuario registrado.');
+            return redirect()->route('prestamos.index', ['tab' => 'prestamos'])->with('success', 'Préstamo creado correctamente para usuario registrado.');
         } else {
-            return redirect()->route('prestamos.index')->with('error', 'No hay copias disponibles para este libro.');
+            return redirect()->route('prestamos.index', ['tab' => 'prestamos'])->with('error', 'No hay copias disponibles para este libro.');
         }
     }
 
@@ -259,7 +281,7 @@ class PrestamoController extends Controller
 
         // Verificar si el libro está disponible
         if ($libro->disponible == 0) {
-            return redirect()->back()->with('error', 'El libro seleccionado no está disponible para préstamo.');
+            return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('error', 'El libro seleccionado no está disponible para préstamo.');
         }
 
         // Buscar si el usuario ya está registrado como no registrado
@@ -299,7 +321,7 @@ class PrestamoController extends Controller
         }
         $libro->save();
 
-        return redirect()->route('prestamos.index')->with('success', 'Préstamo creado correctamente para usuario no registrado.');
+        return redirect()->route('prestamos.index', ['tab' => 'prestamos'])->with('success', 'Préstamo creado correctamente para usuario no registrado.');
     }
 
 }
