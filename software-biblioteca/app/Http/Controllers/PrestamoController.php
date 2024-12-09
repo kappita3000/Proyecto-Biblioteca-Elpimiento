@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use App\Models\Libro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\PrestamoAceptado;
 
 class PrestamoController extends Controller
 {
@@ -119,7 +120,7 @@ class PrestamoController extends Controller
     {
         // Encontrar el préstamo
         $prestamo = Prestamo::findOrFail($id);
-        
+
         // Obtener el libro correspondiente al préstamo
         $libro = $prestamo->libro;
 
@@ -140,11 +141,16 @@ class PrestamoController extends Controller
 
             $libro->save();
 
-            return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('success', 'Solicitud aceptada correctamente.');
+            // Enviar correo de confirmación al usuario
+            Mail::to($prestamo->usuario->correo)->send(new \App\Mail\PrestamoAceptado($prestamo));
+
+            return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('success', 'Solicitud aceptada correctamente y correo enviado.');
         } else {
             return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('error', 'No hay copias disponibles para este libro.');
         }
     }
+
+
 
     public function rechazar(Request $request, $id)
     {
@@ -213,9 +219,17 @@ class PrestamoController extends Controller
         // Guardar los cambios en el préstamo
         $prestamo->save();
 
+        // Enviar correo basado en el estado de devolución
+        if ($request->devuelto === 'Si') {
+            Mail::to($prestamo->usuario->correo)->send(new \App\Mail\PrestamoDevuelto($prestamo));
+        } else {
+            Mail::to($prestamo->usuario->correo)->send(new \App\Mail\PrestamoNoDevuelto($prestamo));
+        }
+
         // Redirigir con mensaje de éxito
         return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('success', 'Devolución registrada correctamente.');
     }
+
 
 
     public function storeRegistrado(Request $request)
@@ -228,18 +242,14 @@ class PrestamoController extends Controller
             'fecha_devolucion' => 'required|date|after_or_equal:fecha_prestamo',
         ]);
 
-        // Obtener el libro correspondiente al préstamo
         $libro = Libro::findOrFail($validatedData['libro_id']);
 
-        // Comprobar si el libro está disponible
         if ($libro->disponible == 0) {
             return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('error', 'El libro seleccionado no está disponible para préstamo.');
         }
 
-        // Comprobar si hay copias disponibles
         if ($libro->cantidad > $libro->copias_prestadas) {
-            // Crear el préstamo
-            Prestamo::create([
+            $prestamo = Prestamo::create([
                 'id_usuario' => $validatedData['usuario_id'],
                 'id_libro' => $validatedData['libro_id'],
                 'fecha_solicitud' => now()->format('Y-m-d'),
@@ -248,15 +258,17 @@ class PrestamoController extends Controller
                 'tipo_usuario' => 'Registrado',
             ]);
 
-            // Actualizar copias prestadas del libro
             $libro->copias_prestadas += 1;
 
-            // Si las copias prestadas igualan a la cantidad total, marcar como no disponible
             if ($libro->copias_prestadas == $libro->cantidad) {
                 $libro->disponible = 0;
             }
 
             $libro->save();
+
+            // Enviar correo al usuario registrado
+            $usuario = $prestamo->usuario;
+            Mail::to($usuario->correo)->send(new PrestamoAceptado($prestamo, $usuario, $libro));
 
             return redirect()->route('prestamos.index', ['tab' => 'prestamos'])->with('success', 'Préstamo creado correctamente para usuario registrado.');
         } else {
@@ -264,9 +276,10 @@ class PrestamoController extends Controller
         }
     }
 
+
+
     public function storeNoRegistrado(Request $request)
     {
-        // Validar el formulario
         $validatedData = $request->validate([
             'nombreUsuario' => 'required|string|max:255',
             'apellidoUsuario' => 'required|string|max:255',
@@ -276,36 +289,30 @@ class PrestamoController extends Controller
             'fecha_devolucion' => 'required|date|after_or_equal:fecha_prestamo',
         ]);
 
-        // Buscar el libro por ID
         $libro = Libro::findOrFail($validatedData['libro_id']);
 
-        // Verificar si el libro está disponible
         if ($libro->disponible == 0) {
             return redirect()->route('prestamos.index', ['tab' => 'solicitudes'])->with('error', 'El libro seleccionado no está disponible para préstamo.');
         }
 
-        // Buscar si el usuario ya está registrado como no registrado
         $usuario = Usuario::where('correo', $validatedData['correoUsuario'])->where('tipo_usuario', 'No Registrado')->first();
 
         if ($usuario) {
-            // Actualizar la información del usuario no registrado existente
             $usuario->update([
                 'nombre' => $validatedData['nombreUsuario'],
                 'apellido' => $validatedData['apellidoUsuario'],
             ]);
         } else {
-            // Crear un nuevo usuario no registrado
             $usuario = Usuario::create([
                 'nombre' => $validatedData['nombreUsuario'],
                 'apellido' => $validatedData['apellidoUsuario'],
                 'correo' => $validatedData['correoUsuario'],
                 'tipo_usuario' => 'No Registrado',
-                'contraseña' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT), // Contraseña aleatoria de 5 dígitos
+                'contraseña' => str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT),
             ]);
         }
 
-        // Crear el préstamo
-        Prestamo::create([
+        $prestamo = Prestamo::create([
             'id_usuario' => $usuario->id,
             'id_libro' => $validatedData['libro_id'],
             'fecha_solicitud' => now()->format('Y-m-d'),
@@ -314,15 +321,19 @@ class PrestamoController extends Controller
             'tipo_usuario' => 'No Registrado',
         ]);
 
-        // Actualizar las copias prestadas y la disponibilidad del libro
         $libro->copias_prestadas += 1;
         if ($libro->copias_prestadas == $libro->cantidad) {
-            $libro->disponible = 0; // Cambiar disponibilidad si todas las copias están prestadas
+            $libro->disponible = 0;
         }
         $libro->save();
 
+        // Enviar correo al usuario no registrado
+        Mail::to($usuario->correo)->send(new PrestamoAceptado($prestamo, $usuario, $libro));
+
         return redirect()->route('prestamos.index', ['tab' => 'prestamos'])->with('success', 'Préstamo creado correctamente para usuario no registrado.');
     }
+
+
 
 }
 
