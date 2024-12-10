@@ -4,14 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up(): void
+class CreateAutoresTable extends Migration
+{
+    public function up()
     {
         Schema::create('autores', function (Blueprint $table) {
-            $table->id(); // Autoincremental
+            $table->id();
             $table->string('nombre');
             $table->string('nacionalidad')->nullable();
-            $table->timestamps(); // created_at, updated_at
+            $table->timestamps();
         });
     }
 
@@ -19,4 +20,4 @@ return new class extends Migration {
     {
         Schema::dropIfExists('autores');
     }
-};
+}
