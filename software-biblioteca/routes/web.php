@@ -55,8 +55,8 @@ Route::put('gestiones/repisa/{id}', [GestionesController::class, 'updateRepisa']
 Route::put('gestiones/editorial/{id}', [GestionesController::class, 'updateEditorial'])->name('gestiones.updateEditorial');
 
 
-
 Route::get('/autocomplete', [GesLibroController::class, 'autocomplete'])->name('autocomplete');
+
 
 Route::get('/search/autor', [GesLibroController::class, 'buscarAutor']);
 Route::get('/search/genero', [GesLibroController::class, 'buscarGenero']);
