@@ -1,1 +1,74 @@
-function _0x19ee(_0x37cbdb,_0x2409b7){const _0x29668c=_0x2966();return _0x19ee=function(_0x19eea7,_0x6e62ed){_0x19eea7=_0x19eea7-0x15c;let _0x488ac6=_0x29668c[_0x19eea7];return _0x488ac6;},_0x19ee(_0x37cbdb,_0x2409b7);}(function(_0x551dc2,_0x2b5b85){const _0x2196b9=_0x19ee,_0x1088e9=_0x551dc2();while(!![]){try{const _0x1361f7=-parseInt(_0x2196b9(0x176))/0x1+-parseInt(_0x2196b9(0x16a))/0x2+-parseInt(_0x2196b9(0x173))/0x3*(-parseInt(_0x2196b9(0x178))/0x4)+parseInt(_0x2196b9(0x16c))/0x5+-parseInt(_0x2196b9(0x174))/0x6+-parseInt(_0x2196b9(0x16f))/0x7*(parseInt(_0x2196b9(0x170))/0x8)+parseInt(_0x2196b9(0x161))/0x9;if(_0x1361f7===_0x2b5b85)break;else _0x1088e9['push'](_0x1088e9['shift']());}catch(_0xeeffb1){_0x1088e9['push'](_0x1088e9['shift']());}}}(_0x2966,0x3aea6),document['addEventListener']('DOMContentLoaded',function(){const _0x5629a5=_0x19ee,_0x57a5a9=document['getElementById'](_0x5629a5(0x16d)),_0x5502f3=document[_0x5629a5(0x17a)](_0x5629a5(0x172)),_0xb6b83=document['getElementById'](_0x5629a5(0x164)),_0x5ccb3e=document[_0x5629a5(0x17a)](_0x5629a5(0x162)),_0x339661=document[_0x5629a5(0x17a)](_0x5629a5(0x15e)),_0x573437=document[_0x5629a5(0x17a)]('passwordHelp'),_0x499bdc=document['getElementById'](_0x5629a5(0x175));_0x57a5a9&&_0xb6b83&&_0x57a5a9['addEventListener'](_0x5629a5(0x15f),function(){const _0x337183=_0x5629a5;_0xb6b83[_0x337183(0x171)]===_0x337183(0x164)?(_0xb6b83['type']=_0x337183(0x168),this[_0x337183(0x165)]=_0x337183(0x163)):(_0xb6b83[_0x337183(0x171)]='password',this[_0x337183(0x165)]=_0x337183(0x179));});_0x5502f3&&_0x5ccb3e&&_0x5502f3[_0x5629a5(0x16b)](_0x5629a5(0x15f),function(){const _0x38ab39=_0x5629a5;_0x5ccb3e[_0x38ab39(0x171)]===_0x38ab39(0x164)?(_0x5ccb3e['type']=_0x38ab39(0x168),this['textContent']='Ocultar'):(_0x5ccb3e[_0x38ab39(0x171)]=_0x38ab39(0x164),this[_0x38ab39(0x165)]='Mostrar');});if(_0x5ccb3e&&_0xb6b83){_0x5ccb3e[_0x5629a5(0x16b)](_0x5629a5(0x160),_0xce93e),_0xb6b83['addEventListener'](_0x5629a5(0x160),_0xce93e);function _0xce93e(){const _0x37a1d1=_0x5629a5,_0x9cf531=_0xb6b83['value'],_0x499d62=_0x5ccb3e[_0x37a1d1(0x167)];_0x9cf531!==_0x499d62||_0x9cf531===''||_0x499d62===''?(_0x573437&&(_0x573437[_0x37a1d1(0x15d)][_0x37a1d1(0x166)]=_0x37a1d1(0x169)),_0x339661&&(_0x339661[_0x37a1d1(0x177)]=!![])):(_0x573437&&(_0x573437['style'][_0x37a1d1(0x166)]=_0x37a1d1(0x15c)),_0x339661&&(_0x339661[_0x37a1d1(0x177)]=![]));}}_0x499bdc&&_0x499bdc[_0x5629a5(0x16b)](_0x5629a5(0x16e),function(_0x354faa){const _0x4b58ff=_0x5629a5,_0x359c33=_0xb6b83?_0xb6b83[_0x4b58ff(0x167)]:'',_0x5c2f5c=_0x5ccb3e?_0x5ccb3e[_0x4b58ff(0x167)]:'';_0x359c33!==_0x5c2f5c&&(_0x354faa[_0x4b58ff(0x17b)](),alert('Las\x20contraseñas\x20no\x20coinciden.\x20Por\x20favor,\x20verifica\x20e\x20intenta\x20nuevamente.'));});}));function _0x2966(){const _0x335b6e=['15fIXuSx','551928JkkqKW','registrationForm','170103znDepH','disabled','104536UspkfB','Mostrar','getElementById','preventDefault','none','style','submitBtn','click','input','4769307UxuQrZ','confirmPassword','Ocultar','password','textContent','display','value','text','block','522994YAuZYy','addEventListener','716570sKpzHg','togglePassword1','submit','7wzvMPd','312008OVbYsC','type','togglePassword2'];_0x2966=function(){return _0x335b6e;};return _0x2966();}
+document.addEventListener('DOMContentLoaded', function() {
+    // Alternar visibilidad de la contraseña
+    const togglePassword1 = document.getElementById('togglePassword1');
+    const togglePassword2 = document.getElementById('togglePassword2');
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirmPassword');
+    const submitBtn = document.getElementById('submitBtn');
+    const passwordHelp = document.getElementById('passwordHelp');
+    const registrationForm = document.getElementById('registrationForm');
+
+    if (togglePassword1 && passwordField) {
+        togglePassword1.addEventListener('click', function() {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                this.textContent = 'Ocultar';
+            } else {
+                passwordField.type = 'password';
+                this.textContent = 'Mostrar';
+            }
+        });
+    }
+
+    if (togglePassword2 && confirmPasswordField) {
+        togglePassword2.addEventListener('click', function() {
+            if (confirmPasswordField.type === 'password') {
+                confirmPasswordField.type = 'text';
+                this.textContent = 'Ocultar';
+            } else {
+                confirmPasswordField.type = 'password';
+                this.textContent = 'Mostrar';
+            }
+        });
+    }
+
+    // Validar que las contraseñas coincidan
+    if (confirmPasswordField && passwordField) {
+        confirmPasswordField.addEventListener('input', validatePasswords);
+        passwordField.addEventListener('input', validatePasswords);
+
+        function validatePasswords() {
+            const password = passwordField.value;
+            const confirmPassword = confirmPasswordField.value;
+
+            if (password !== confirmPassword || password === '' || confirmPassword === '') {
+                if (passwordHelp) {
+                    passwordHelp.style.display = 'block';
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                }
+            } else {
+                if (passwordHelp) {
+                    passwordHelp.style.display = 'none';
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                }
+            }
+        }
+    }
+
+    // Evitar que el formulario se envíe si las contraseñas no coinciden
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', function(event) {
+            const password = passwordField ? passwordField.value : '';
+            const confirmPassword = confirmPasswordField ? confirmPasswordField.value : '';
+
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Evita que se envíe el formulario
+                alert('Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.');
+            }
+        });
+    }
+});

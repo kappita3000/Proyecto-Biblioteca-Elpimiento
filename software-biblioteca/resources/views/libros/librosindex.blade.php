@@ -15,7 +15,7 @@
 @endif
 
 <!-- Formulario para Crear/Editar un Libro -->
-<h1>Gestión de Libros</h1>
+
 
 <form action="{{ route('libros.store') }}" method="POST">
     @csrf

@@ -1,1 +1,100 @@
-function _0x3fe4(_0x2d5d9c,_0x31d020){const _0x53ee30=_0x53ee();return _0x3fe4=function(_0x3fe46b,_0xe11c04){_0x3fe46b=_0x3fe46b-0x159;let _0x19b3c1=_0x53ee30[_0x3fe46b];return _0x19b3c1;},_0x3fe4(_0x2d5d9c,_0x31d020);}function _0x53ee(){const _0x83bf4f=['type','emailError','8227100eeqSGI','display','test','3094512RigHxT','confirmPassword','Por\x20favor,\x20ingresa\x20un\x20correo\x20válido.\x20Solo\x20se\x20permiten\x20dominios\x20como\x20gmail,\x20hotmail,\x20outlook,\x20yahoo,\x20icloud\x20y\x20protonmail','addEventListener','753006DmIakc','text','password','confirmPasswordError','7788786ZUHFQr','input','1035633PTpcSG','none','togglePassword1','Debe\x20tener\x20al\x20menos\x208\x20caracteres,\x20incluir\x20una\x20letra\x20mayúscula,\x20una\x20minúscula,\x20un\x20número\x20y\x20un\x20símbolo\x20permitido:\x20@$!%*?&-_.','Mostrar','getElementById','trim','submitBtn','togglePassword2','style','5509688uRVdqj','value','7UfKBBw','385842fFIpUE','click','textContent','passwordError','Las\x20contraseñas\x20no\x20coinciden.','disabled','Ocultar'];_0x53ee=function(){return _0x83bf4f;};return _0x53ee();}(function(_0x42d904,_0x33022b){const _0x4e8d9c=_0x3fe4,_0x4dd2e9=_0x42d904();while(!![]){try{const _0x4fa952=parseInt(_0x4e8d9c(0x173))/0x1+parseInt(_0x4e8d9c(0x163))/0x2+-parseInt(_0x4e8d9c(0x179))/0x3+-parseInt(_0x4e8d9c(0x16f))/0x4+parseInt(_0x4e8d9c(0x16c))/0x5+parseInt(_0x4e8d9c(0x177))/0x6*(-parseInt(_0x4e8d9c(0x162))/0x7)+parseInt(_0x4e8d9c(0x160))/0x8;if(_0x4fa952===_0x33022b)break;else _0x4dd2e9['push'](_0x4dd2e9['shift']());}catch(_0x4e3743){_0x4dd2e9['push'](_0x4dd2e9['shift']());}}}(_0x53ee,0xd2b70),document['addEventListener']('DOMContentLoaded',function(){const _0x45515c=_0x3fe4,_0x2f549f=document[_0x45515c(0x15b)]('correo'),_0x1c2f52=document['getElementById'](_0x45515c(0x16b)),_0x46c260=document[_0x45515c(0x15b)](_0x45515c(0x175)),_0x391a69=document[_0x45515c(0x15b)](_0x45515c(0x170)),_0x396023=document[_0x45515c(0x15b)](_0x45515c(0x166)),_0x41574e=document[_0x45515c(0x15b)](_0x45515c(0x176)),_0x516f32=document[_0x45515c(0x15b)](_0x45515c(0x15d)),_0xe8ab28=document[_0x45515c(0x15b)](_0x45515c(0x17b)),_0x58ace7=document['getElementById'](_0x45515c(0x15e));_0xe8ab28&&_0x46c260&&_0xe8ab28[_0x45515c(0x172)]('click',function(){const _0x52ad05=_0x45515c;_0x46c260[_0x52ad05(0x16a)]=_0x46c260['type']===_0x52ad05(0x175)?_0x52ad05(0x174):_0x52ad05(0x175),this['textContent']=this[_0x52ad05(0x165)]==='Mostrar'?'Ocultar':_0x52ad05(0x15a);});_0x58ace7&&_0x391a69&&_0x58ace7[_0x45515c(0x172)](_0x45515c(0x164),function(){const _0x1a2e2e=_0x45515c;_0x391a69[_0x1a2e2e(0x16a)]=_0x391a69[_0x1a2e2e(0x16a)]==='password'?_0x1a2e2e(0x174):'password',this[_0x1a2e2e(0x165)]=this[_0x1a2e2e(0x165)]==='Mostrar'?_0x1a2e2e(0x169):'Mostrar';});function _0x28a2c5(){const _0x11d41a=_0x45515c,_0x477cc7=/^[^\s@]+@(gmail\.com|gmail\.[a-z]{2,3}|hotmail\.com|hotmail\.[a-z]{2,3}|outlook\.com|yahoo\.com|yahoo\.[a-z]{2,3}|icloud\.com|protonmail\.com)$/i;!_0x477cc7[_0x11d41a(0x16e)](_0x2f549f['value']['trim']())?(_0x1c2f52['style']['display']='block',_0x1c2f52[_0x11d41a(0x165)]=_0x11d41a(0x171)):_0x1c2f52['style'][_0x11d41a(0x16d)]=_0x11d41a(0x17a);}function _0x243591(){const _0x1f0ae4=_0x45515c,_0x1bcc05=_0x46c260[_0x1f0ae4(0x161)][_0x1f0ae4(0x15c)](),_0x92fa05=/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&_\-])[A-Za-z\d@$!%*?&_\-]{8,}$/;!_0x92fa05[_0x1f0ae4(0x16e)](_0x1bcc05)?(_0x396023[_0x1f0ae4(0x15f)][_0x1f0ae4(0x16d)]='block',_0x396023['textContent']=_0x1f0ae4(0x159)):_0x396023[_0x1f0ae4(0x15f)][_0x1f0ae4(0x16d)]=_0x1f0ae4(0x17a);}function _0x5b84ca(){const _0x2766ee=_0x45515c,_0x1d30f3=_0x46c260[_0x2766ee(0x161)]['trim'](),_0x1de8c9=_0x391a69[_0x2766ee(0x161)][_0x2766ee(0x15c)]();_0x1d30f3!==_0x1de8c9?(_0x41574e[_0x2766ee(0x15f)][_0x2766ee(0x16d)]='block',_0x41574e[_0x2766ee(0x165)]=_0x2766ee(0x167)):_0x41574e['style'][_0x2766ee(0x16d)]=_0x2766ee(0x17a);}function _0x1e954e(){const _0x11aabc=_0x45515c,_0x14479b=_0x1c2f52['style'][_0x11aabc(0x16d)]==='none',_0x8eede3=_0x396023[_0x11aabc(0x15f)][_0x11aabc(0x16d)]==='none',_0x335ede=_0x41574e[_0x11aabc(0x15f)][_0x11aabc(0x16d)]===_0x11aabc(0x17a);_0x516f32[_0x11aabc(0x168)]=!(_0x14479b&&_0x8eede3&&_0x335ede);}_0x2f549f[_0x45515c(0x172)](_0x45515c(0x178),function(){_0x28a2c5(),_0x1e954e();}),_0x46c260['addEventListener'](_0x45515c(0x178),function(){_0x243591(),_0x5b84ca(),_0x1e954e();}),_0x391a69[_0x45515c(0x172)]('input',function(){_0x5b84ca(),_0x1e954e();});}));
+// validacion correo: copiar de aqui
+document.addEventListener('DOMContentLoaded', function () {
+    const emailField = document.getElementById('correo');
+    const emailError = document.getElementById('emailError');
+
+    // hasta aqui
+
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirmPassword');
+    const passwordError = document.getElementById('passwordError');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+    const submitBtn = document.getElementById('submitBtn');
+    const togglePassword1 = document.getElementById('togglePassword1');
+    const togglePassword2 = document.getElementById('togglePassword2');
+
+    // Alternar visibilidad de contraseñas
+    if (togglePassword1 && passwordField) {
+        togglePassword1.addEventListener('click', function () {
+            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+            this.textContent = this.textContent === 'Mostrar' ? 'Ocultar' : 'Mostrar';
+        });
+    }
+
+    if (togglePassword2 && confirmPasswordField) {
+        togglePassword2.addEventListener('click', function () {
+            confirmPasswordField.type = confirmPasswordField.type === 'password' ? 'text' : 'password';
+            this.textContent = this.textContent === 'Mostrar' ? 'Ocultar' : 'Mostrar';
+        });
+    }
+
+    // y de aqui
+    // Validar correo con dominios específicos y TLDs válidos
+    function validateEmail() {
+        const emailPattern = /^[^\s@]+@(gmail\.com|gmail\.[a-z]{2,3}|hotmail\.com|hotmail\.[a-z]{2,3}|outlook\.com|yahoo\.com|yahoo\.[a-z]{2,3}|icloud\.com|protonmail\.com)$/i;
+        if (!emailPattern.test(emailField.value.trim())) {
+            emailError.style.display = 'block';
+            emailError.textContent =
+                'Por favor, ingresa un correo válido. Solo se permiten dominios como gmail, hotmail, outlook, yahoo, icloud y protonmail';
+        } else {
+            emailError.style.display = 'none';
+        }
+    }
+    // Hasta aqui
+
+
+    // Validar contraseña con mensaje actualizado
+    function validatePassword() {
+        const password = passwordField.value.trim();
+        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&_\-])[A-Za-z\d@$!%*?&_\-]{8,}$/;
+
+        if (!passwordPattern.test(password)) {
+            passwordError.style.display = 'block';
+            passwordError.textContent =
+                'Debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula, un número y un símbolo permitido: @$!%*?&-_.';
+        } else {
+            passwordError.style.display = 'none';
+        }
+    }
+
+    // Validar confirmación de contraseña
+    function validateConfirmPassword() {
+        const password = passwordField.value.trim();
+        const confirmPassword = confirmPasswordField.value.trim();
+
+        if (password !== confirmPassword) {
+            confirmPasswordError.style.display = 'block';
+            confirmPasswordError.textContent = 'Las contraseñas no coinciden.';
+        } else {
+            confirmPasswordError.style.display = 'none';
+        }
+    }
+
+    // Habilitar/deshabilitar el botón de envío
+    function toggleSubmitButton() {
+        const isEmailValid = emailError.style.display === 'none';
+        const isPasswordValid = passwordError.style.display === 'none';
+        const isConfirmPasswordValid = confirmPasswordError.style.display === 'none';
+
+        submitBtn.disabled = !(isEmailValid && isPasswordValid && isConfirmPasswordValid);
+    }
+
+    // y de aqui
+    // Eventos para validaciones específicas
+    emailField.addEventListener('input', function () {
+        validateEmail();
+        toggleSubmitButton();
+    });
+    // Hasta aqui
+
+    passwordField.addEventListener('input', function () {
+        validatePassword();
+        validateConfirmPassword();
+        toggleSubmitButton();
+    });
+
+    confirmPasswordField.addEventListener('input', function () {
+        validateConfirmPassword();
+        toggleSubmitButton();
+    });
+});

@@ -1,1 +1,23 @@
-var _0x540ff0=_0x5264;function _0x5264(_0x246b85,_0x3b9577){var _0x544b3b=_0x544b();return _0x5264=function(_0x52647a,_0x3843c0){_0x52647a=_0x52647a-0x1c5;var _0x4acb1f=_0x544b3b[_0x52647a];return _0x4acb1f;},_0x5264(_0x246b85,_0x3b9577);}(function(_0x5aded1,_0x4459d6){var _0x1f56e2=_0x5264,_0x4d0a82=_0x5aded1();while(!![]){try{var _0x5f0f9a=parseInt(_0x1f56e2(0x1cb))/0x1+-parseInt(_0x1f56e2(0x1ce))/0x2*(parseInt(_0x1f56e2(0x1c9))/0x3)+-parseInt(_0x1f56e2(0x1c7))/0x4*(parseInt(_0x1f56e2(0x1c5))/0x5)+parseInt(_0x1f56e2(0x1d3))/0x6+-parseInt(_0x1f56e2(0x1d6))/0x7*(-parseInt(_0x1f56e2(0x1cf))/0x8)+parseInt(_0x1f56e2(0x1ca))/0x9+parseInt(_0x1f56e2(0x1d2))/0xa;if(_0x5f0f9a===_0x4459d6)break;else _0x4d0a82['push'](_0x4d0a82['shift']());}catch(_0x334d64){_0x4d0a82['push'](_0x4d0a82['shift']());}}}(_0x544b,0x4d9fe),document[_0x540ff0(0x1d1)](_0x540ff0(0x1d5),function(){var _0x3cd8cb=_0x540ff0;document[_0x3cd8cb(0x1d1)](_0x3cd8cb(0x1d4),function(_0x25b852){var _0x5646ca=_0x3cd8cb;_0x25b852[_0x5646ca(0x1cd)]();}),document[_0x3cd8cb(0x1d1)](_0x3cd8cb(0x1c8),function(_0x4e7716){var _0x38ae7d=_0x3cd8cb;_0x4e7716[_0x38ae7d(0x1d0)]===_0x38ae7d(0x1c6)&&_0x4e7716['preventDefault'](),_0x4e7716[_0x38ae7d(0x1cc)]&&_0x4e7716['shiftKey']&&_0x4e7716[_0x38ae7d(0x1d0)]==='I'&&_0x4e7716['preventDefault'](),_0x4e7716[_0x38ae7d(0x1cc)]&&_0x4e7716[_0x38ae7d(0x1d0)]==='u'&&_0x4e7716['preventDefault']();});}));function _0x544b(){var _0x3515a0=['74118ThJast','contextmenu','DOMContentLoaded','294aRyjky','487805xiWfIJ','F12','12sNvrZJ','keydown','1707vYAyEC','210501maMAVM','487164VjmCcR','ctrlKey','preventDefault','652bmrIWF','29208QhNDPj','key','addEventListener','1198790MTQjWk'];_0x544b=function(){return _0x3515a0;};return _0x544b();}
+document.addEventListener('DOMContentLoaded', function() {
+    // Desactivar clic derecho
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(event) {
+        // Ctrl + Shift + I
+        if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+            event.preventDefault();
+        }
+
+        // Ctrl + U
+        if (event.ctrlKey && event.key === 'u') {
+            event.preventDefault();
+        }
+
+        // F12
+        if (event.key === 'F12') {
+            event.preventDefault();
+        }
+    });
+});

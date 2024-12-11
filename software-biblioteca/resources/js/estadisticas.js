@@ -1,1 +1,160 @@
-function _0x4d74(_0x57319e,_0x509a07){var _0x13bb65=_0x13bb();return _0x4d74=function(_0x4d7438,_0x1cab7d){_0x4d7438=_0x4d7438-0x12e;var _0x1c95d6=_0x13bb65[_0x4d7438];return _0x1c95d6;},_0x4d74(_0x57319e,_0x509a07);}function _0x13bb(){var _0x5c972d=['rgba(54,\x20162,\x20235,\x200.6)','label','5078604chsnWL','prestamosPorDiaLabels','rgba(255,\x2099,\x20132,\x200.6)','prestamosPorMesLabels','prestamosPorMesChart','bar','librosMasPrestadosChart','getContext','substr','pie','No\x20Registrados','prestamosPorDiaChart','tasaDeDevolucionesData','prestamosPorGeneroChart','...','32610432nuBNne','top','Préstamos','addEventListener','6511415XbQHfG','getElementById','prestamosPorGeneroLabels','640104niStWL','tasaDeDevolucionesChart','DOMContentLoaded','prestamosPorTipoUsuarioChart','rgba(255,\x20206,\x2086,\x200.6)','No\x20Devuelto','rgba(75,\x20192,\x20192,\x201)','4406610mLpajJ','prestamosPorDiaData','Veces\x20Prestado','1304402sZnfhc','librosMasPrestadosLabels','6fJsIUI','Devuelto','max','1925924BLxtQf','rgba(75,\x20192,\x20192,\x200.6)','line'];_0x13bb=function(){return _0x5c972d;};return _0x13bb();}var _0x1b5d68=_0x4d74;(function(_0x2aacdf,_0x436337){var _0x52422d=_0x4d74,_0x4302c8=_0x2aacdf();while(!![]){try{var _0x2f4730=-parseInt(_0x52422d(0x152))/0x1+-parseInt(_0x52422d(0x148))/0x2+-parseInt(_0x52422d(0x14f))/0x3+-parseInt(_0x52422d(0x132))/0x4+-parseInt(_0x52422d(0x145))/0x5*(-parseInt(_0x52422d(0x154))/0x6)+-parseInt(_0x52422d(0x157))/0x7+parseInt(_0x52422d(0x141))/0x8;if(_0x2f4730===_0x436337)break;else _0x4302c8['push'](_0x4302c8['shift']());}catch(_0x1b99e7){_0x4302c8['push'](_0x4302c8['shift']());}}}(_0x13bb,0xb4c80),document[_0x1b5d68(0x144)](_0x1b5d68(0x14a),function(){var _0x8a146c=_0x1b5d68,_0x353435=document[_0x8a146c(0x146)](_0x8a146c(0x138))['getContext']('2d'),_0xffa097=window[_0x8a146c(0x153)]||[],_0xb2e591=window['librosMasPrestadosData']||[],_0x397df8=new Chart(_0x353435,{'type':'bar','data':{'labels':_0xffa097,'datasets':[{'label':_0x8a146c(0x151),'data':_0xb2e591,'backgroundColor':_0x8a146c(0x130)}]},'options':{'responsive':!![],'maintainAspectRatio':!![],'scales':{'x':{'beginAtZero':!![],'ticks':{'maxRotation':0x2d,'minRotation':0x2d,'callback':function(_0x38e89b,_0x1815dc,_0x1b72a2){var _0x310584=_0x8a146c;let _0x5d8575=_0xffa097[_0x1815dc];return _0x5d8575['length']>0xf?_0x5d8575[_0x310584(0x13a)](0x0,0xf)+_0x310584(0x140):_0x5d8575;}}},'y':{'beginAtZero':!![],'max':Math[_0x8a146c(0x156)](..._0xb2e591)+0x1}},'plugins':{'tooltip':{'callbacks':{'title':function(_0x29e630){var _0xa5e0ba=_0x8a146c;return _0x29e630[0x0][_0xa5e0ba(0x131)];}}},'legend':{'display':!![],'position':_0x8a146c(0x142)}}}}),_0x4ca70c=document[_0x8a146c(0x146)](_0x8a146c(0x136))[_0x8a146c(0x139)]('2d'),_0xe3f797=window[_0x8a146c(0x135)]||[],_0x10d0cf=window['prestamosPorMesData']||[],_0x5dbd66=new Chart(_0x4ca70c,{'type':_0x8a146c(0x12f),'data':{'labels':_0xe3f797,'datasets':[{'label':_0x8a146c(0x143),'data':_0x10d0cf,'borderColor':_0x8a146c(0x14e),'borderWidth':0x2,'fill':![]}]}}),_0x412095=document['getElementById'](_0x8a146c(0x149))[_0x8a146c(0x139)]('2d'),_0x607efc=window[_0x8a146c(0x13e)]||[0x0,0x0],_0x4106fb=new Chart(_0x412095,{'type':_0x8a146c(0x13b),'data':{'labels':[_0x8a146c(0x155),_0x8a146c(0x14d)],'datasets':[{'data':_0x607efc,'backgroundColor':[_0x8a146c(0x12e),_0x8a146c(0x134)]}]}}),_0x4b4fff=document[_0x8a146c(0x146)](_0x8a146c(0x13f))[_0x8a146c(0x139)]('2d'),_0xaaca16=window[_0x8a146c(0x147)]||[],_0x37c833=window['prestamosPorGeneroData']||[],_0x35f7ae=new Chart(_0x4b4fff,{'type':_0x8a146c(0x137),'data':{'labels':_0xaaca16,'datasets':[{'label':_0x8a146c(0x143),'data':_0x37c833,'backgroundColor':'rgba(153,\x20102,\x20255,\x200.6)'}]}}),_0x1a7ea8=document['getElementById'](_0x8a146c(0x14b))[_0x8a146c(0x139)]('2d'),_0x332f1b=window['prestamosPorTipoUsuarioData']||[0x0,0x0],_0x15a4e2=new Chart(_0x1a7ea8,{'type':_0x8a146c(0x137),'data':{'labels':['Registrados',_0x8a146c(0x13c)],'datasets':[{'label':_0x8a146c(0x143),'data':_0x332f1b,'backgroundColor':['rgba(54,\x20162,\x20235,\x200.6)',_0x8a146c(0x14c)]}]}}),_0x413a3b=document[_0x8a146c(0x146)](_0x8a146c(0x13d))['getContext']('2d'),_0x3ff0fd=window[_0x8a146c(0x133)]||[],_0x32086c=window[_0x8a146c(0x150)]||[],_0x174ae3=new Chart(_0x413a3b,{'type':'bar','data':{'labels':_0x3ff0fd,'datasets':[{'label':_0x8a146c(0x143),'data':_0x32086c,'backgroundColor':'rgba(255,\x20159,\x2064,\x200.6)'}]},'options':{'scales':{'y':{'beginAtZero':!![],'suggestedMax':Math[_0x8a146c(0x156)](..._0x32086c)+0x5}}}});}));
+document.addEventListener('DOMContentLoaded', function() {
+    // Libros Más Prestados
+    var ctxLibrosMasPrestados = document.getElementById('librosMasPrestadosChart').getContext('2d');
+    var librosMasPrestadosLabels = window.librosMasPrestadosLabels || [];
+    var librosMasPrestadosData = window.librosMasPrestadosData || [];
+
+    var librosMasPrestadosChart = new Chart(ctxLibrosMasPrestados, {
+        type: 'bar',
+        data: {
+            labels: librosMasPrestadosLabels,
+            datasets: [{
+                label: 'Veces Prestado',
+                data: librosMasPrestadosData,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 45,
+                        callback: function(value, index, values) {
+                            let label = librosMasPrestadosLabels[index];
+                            return label.length > 15 ? label.substr(0, 15) + '...' : label;
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    max: Math.max(...librosMasPrestadosData) + 1
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(context) {
+                            return context[0].label;
+                        }
+                    }
+                },
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+
+    // Préstamos por Mes
+    var ctxPrestamosPorMes = document.getElementById('prestamosPorMesChart').getContext('2d');
+    var prestamosPorMesLabels = window.prestamosPorMesLabels || [];
+    var prestamosPorMesData = window.prestamosPorMesData || [];
+    var prestamosPorMesChart = new Chart(ctxPrestamosPorMes, {
+        type: 'line',
+        data: {
+            labels: prestamosPorMesLabels,
+            datasets: [{
+                label: 'Préstamos',
+                data: prestamosPorMesData,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false,
+            }]
+        }
+    });
+
+    // Tasa de Devoluciones
+    var ctxTasaDeDevoluciones = document.getElementById('tasaDeDevolucionesChart').getContext('2d');
+    var tasaDeDevolucionesData = window.tasaDeDevolucionesData || [0, 0];
+    var tasaDeDevolucionesChart = new Chart(ctxTasaDeDevoluciones, {
+        type: 'pie',
+        data: {
+            labels: ['Devuelto', 'No Devuelto'],
+            datasets: [{
+                data: tasaDeDevolucionesData,
+                backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+            }]
+        }
+    });
+
+    // Distribución de Préstamos por Género
+    var ctxPrestamosPorGenero = document.getElementById('prestamosPorGeneroChart').getContext('2d');
+    var prestamosPorGeneroLabels = window.prestamosPorGeneroLabels || [];
+    var prestamosPorGeneroData = window.prestamosPorGeneroData || [];
+    var prestamosPorGeneroChart = new Chart(ctxPrestamosPorGenero, {
+        type: 'bar',
+        data: {
+            labels: prestamosPorGeneroLabels,
+            datasets: [{
+                label: 'Préstamos',
+                data: prestamosPorGeneroData,
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+            }]
+        }
+    });
+
+    // Préstamos por Usuarios Registrados vs No Registrados
+    var ctxPrestamosPorTipoUsuario = document.getElementById('prestamosPorTipoUsuarioChart').getContext('2d');
+    var prestamosPorTipoUsuarioData = window.prestamosPorTipoUsuarioData || [0, 0];
+    var prestamosPorTipoUsuarioChart = new Chart(ctxPrestamosPorTipoUsuario, {
+        type: 'bar',
+        data: {
+            labels: ['Registrados', 'No Registrados'],
+            datasets: [{
+                label: 'Préstamos',
+                data: prestamosPorTipoUsuarioData,
+                backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
+            }]
+        }
+    });
+
+    // Préstamos por Día de la Semana
+    var ctxPrestamosPorDia = document.getElementById('prestamosPorDiaChart').getContext('2d');
+    var prestamosPorDiaLabels = window.prestamosPorDiaLabels || [];
+    var prestamosPorDiaData = window.prestamosPorDiaData || [];
+    var prestamosPorDiaChart = new Chart(ctxPrestamosPorDia, {
+        type: 'bar',
+        data: {
+            labels: prestamosPorDiaLabels,
+            datasets: [{
+                label: 'Préstamos',
+                data: prestamosPorDiaData,
+                backgroundColor: 'rgba(255, 159, 64, 0.6)',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: Math.max(...prestamosPorDiaData) + 5
+                }
+            }
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tarjetas clicables
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function () {
+                const target = this.getAttribute('data-bs-target');
+                fetchDashboardData(target);
+            });
+        });
+    
+        // Función para cargar datos del modal
+        async function fetchDashboardData(modalId) {
+            const response = await fetch('/dashboard-data');
+            const data = await response.json();
+    
+            const modalContent = document.querySelector(`${modalId}Content`);
+            modalContent.innerHTML = Object.keys(data)
+                .map(item => `<li>${item}: ${data[item]}</li>`)
+                .join('');
+        }
+    });
+});
