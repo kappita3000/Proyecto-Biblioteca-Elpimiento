@@ -1,68 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const registradoRadio = document.getElementById('registrado');
-    const noRegistradoRadio = document.getElementById('noRegistrado');
-
-    const prestamoFormRegistrado = document.getElementById('prestamoFormRegistrado');
-    const prestamoFormNoRegistrado = document.getElementById('prestamoFormNoRegistrado');
-
-    // Verificación de existencia de elementos antes de usarlos
-    if (registradoRadio && noRegistradoRadio && prestamoFormRegistrado && prestamoFormNoRegistrado) {
-        
-        registradoRadio.addEventListener('change', function () {
-            if (registradoRadio.checked) {
-                // Mostrar el formulario de usuario registrado
-                prestamoFormRegistrado.style.display = 'block';
-                prestamoFormNoRegistrado.style.display = 'none';
-
-                // Deshabilitar los campos del formulario no registrado
-                prestamoFormNoRegistrado.querySelectorAll('input, select').forEach(input => {
-                    input.disabled = true;
-                });
-
-                // Habilitar campos del formulario registrado
-                prestamoFormRegistrado.querySelectorAll('input, select').forEach(input => {
-                    input.disabled = false;
-                });
-            }
-        });
-
-        noRegistradoRadio.addEventListener('change', function () {
-            if (noRegistradoRadio.checked) {
-                // Mostrar el formulario de usuario no registrado
-                prestamoFormRegistrado.style.display = 'none';
-                prestamoFormNoRegistrado.style.display = 'block';
-
-                // Deshabilitar los campos del formulario registrado
-                prestamoFormRegistrado.querySelectorAll('input, select').forEach(input => {
-                    input.disabled = true;
-                });
-
-                // Habilitar campos del formulario no registrado
-                prestamoFormNoRegistrado.querySelectorAll('input, select').forEach(input => {
-                    input.disabled = false;
-                });
-            }
-        });
-    }
-});
-
 document.addEventListener("DOMContentLoaded", function () {
-    // Variables de búsqueda para Usuarios Registrados
-    const usuarioSearch = document.getElementById("usuario_search");
-    const usuarioResults = document.getElementById("usuario_results");
-    const usuarioIdInput = document.getElementById("usuario_id");
-
-    // Variables de búsqueda para Usuarios No Registrados
-    const libroSearchNoRegistrado = document.getElementById("libro_search_no_registrado");
-    const libroResultsNoRegistrado = document.getElementById("libro_results_no_registrado");
-    const libroIdInputNoRegistrado = document.getElementById("libro_id_no_registrado");
-
-    // Variables de búsqueda para Libros en Usuarios Registrados
-    const libroSearch = document.getElementById("libro_search");
-    const libroResults = document.getElementById("libro_results");
-    const libroIdInput = document.getElementById("libro_id");
-
-    // Función de búsqueda dinámica
+    // Función para manejar búsquedas dinámicas
     async function buscar(query, url, resultsDiv, hiddenInput, inputField) {
         if (query.length < 2) {
             resultsDiv.innerHTML = "";
@@ -97,74 +34,86 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Eventos de búsqueda
-    if (usuarioSearch) {
-        usuarioSearch.addEventListener("input", (e) => {
-            buscar(e.target.value, "/buscar-usuarios", usuarioResults, usuarioIdInput, usuarioSearch);
-        });
+    // Función para registrar los eventos de búsqueda
+    function registrarBusqueda(inputId, url, resultsId, hiddenInputId) {
+        const inputField = document.getElementById(inputId);
+        const resultsDiv = document.getElementById(resultsId);
+        const hiddenInput = document.getElementById(hiddenInputId);
+
+        if (inputField && resultsDiv && hiddenInput) {
+            inputField.addEventListener("input", (e) => {
+                buscar(e.target.value, url, resultsDiv, hiddenInput, inputField);
+            });
+        }
     }
 
-    if (libroSearch) {
-        libroSearch.addEventListener("input", (e) => {
-            buscar(e.target.value, "/buscar-libros", libroResults, libroIdInput, libroSearch);
-        });
-    }
-
-    if (libroSearchNoRegistrado) {
-        libroSearchNoRegistrado.addEventListener("input", (e) => {
-            buscar(e.target.value, "/buscar-libros", libroResultsNoRegistrado, libroIdInputNoRegistrado, libroSearchNoRegistrado);
-        });
-    }
+    // Registrar búsquedas
+    registrarBusqueda("usuario_search", "/buscar-usuarios", "usuario_results", "usuario_id");
+    registrarBusqueda("libro_search", "/buscar-libros", "libro_results", "libro_id");
+    registrarBusqueda("libro_search_no_registrado", "/buscar-libros", "libro_results_no_registrado", "libro_id_no_registrado");
 
     // Ocultar resultados al hacer clic fuera del campo de búsqueda
     document.addEventListener("click", function (event) {
-        if (usuarioSearch && !usuarioSearch.contains(event.target) && !usuarioResults.contains(event.target)) {
-            usuarioResults.style.display = "none";
-        }
-        if (libroSearch && !libroSearch.contains(event.target) && !libroResults.contains(event.target)) {
-            libroResults.style.display = "none";
-        }
-        if (libroSearchNoRegistrado && !libroSearchNoRegistrado.contains(event.target) && !libroResultsNoRegistrado.contains(event.target)) {
-            libroResultsNoRegistrado.style.display = "none";
-        }
-    });
-});
+        const elementosBusqueda = [
+            { search: "usuario_search", results: "usuario_results" },
+            { search: "libro_search", results: "libro_results" },
+            { search: "libro_search_no_registrado", results: "libro_results_no_registrado" },
+        ];
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Recuperar la pestaña activa del LocalStorage al cargar la página
-    const activeTab = localStorage.getItem('activeTab');
-    if (activeTab) {
-        const tabElement = document.querySelector(`[data-bs-target="${activeTab}"], [href="${activeTab}"]`);
-        if (tabElement) {
-            new bootstrap.Tab(tabElement).show();
-        }
-    }
-
-    // Escuchar el evento para guardar la pestaña activa cuando se cambia
-    const tabButtons = document.querySelectorAll('button[data-bs-toggle="tab"], a[data-bs-toggle="tab"]');
-    tabButtons.forEach(tabButton => {
-        tabButton.addEventListener('shown.bs.tab', function (event) {
-            const activeTabId = event.target.getAttribute('data-bs-target') || event.target.getAttribute('href');
-            localStorage.setItem('activeTab', activeTabId);
+        elementosBusqueda.forEach(({ search, results }) => {
+            const searchElement = document.getElementById(search);
+            const resultsElement = document.getElementById(results);
+            if (searchElement && resultsElement && !searchElement.contains(event.target) && !resultsElement.contains(event.target)) {
+                resultsElement.style.display = "none";
+            }
         });
     });
-});
 
-
-
-function toggleForms() {
-    var registradoForm = document.getElementById('prestamoFormRegistrado');
-    var noRegistradoForm = document.getElementById('prestamoFormNoRegistrado');
+    document.addEventListener('DOMContentLoaded', function () {
+        const registradoTab = document.querySelector('[href="#usuarioRegistrado"]');
+        const noRegistradoTab = document.querySelector('[href="#usuarioNoRegistrado"]');
+        const prestamoFormRegistrado = document.getElementById('prestamoFormRegistrado');
+        const prestamoFormNoRegistrado = document.getElementById('prestamoFormNoRegistrado');
     
-    if (document.getElementById("tipoUsuarioRegistrado").checked) {
-        registradoForm.style.display = "block"; // Mostrar formulario de usuario registrado
-        noRegistradoForm.style.display = "none"; // Ocultar formulario de usuario no registrado
-    } else {
-        registradoForm.style.display = "none"; // Ocultar formulario de usuario registrado
-        noRegistradoForm.style.display = "block"; // Mostrar formulario de usuario no registrado
-    }
-}
+        if (registradoTab && noRegistradoTab && prestamoFormRegistrado && prestamoFormNoRegistrado) {
+            registradoTab.addEventListener('click', function () {
+                prestamoFormRegistrado.style.display = 'block';
+                prestamoFormNoRegistrado.style.display = 'none';
+            });
+    
+            noRegistradoTab.addEventListener('click', function () {
+                prestamoFormRegistrado.style.display = 'none';
+                prestamoFormNoRegistrado.style.display = 'block';
+            });
+        }
+    });
 
-src="https://code.jquery.com/jquery-3.6.0.min.js"
-src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get('tab') || 'solicitudes'; // Si no hay pestaña activa en la URL, usa 'solicitudes'
+        const tabElement = document.querySelector(`[href="#${activeTab}"]`);
+    
+        if (tabElement) {
+            // Mostrar la pestaña activa
+            new bootstrap.Tab(tabElement).show();
+        } else {
+            // Si no se encuentra una pestaña activa, activa la primera pestaña
+            const firstTab = document.querySelector('#prestamosTabs .nav-link');
+            if (firstTab) {
+                new bootstrap.Tab(firstTab).show();
+            }
+        }
+    
+        // Guardar la pestaña activa al cambiar
+        document.querySelectorAll('#prestamosTabs .nav-link').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function (event) {
+                const activeTabId = event.target.getAttribute('href').substring(1); // Captura el ID de la pestaña activa
+                urlParams.set('tab', activeTabId);
+                const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+                history.replaceState(null, '', newUrl); // Actualiza la URL sin recargar la página
+            });
+        });
+    });
+
+});

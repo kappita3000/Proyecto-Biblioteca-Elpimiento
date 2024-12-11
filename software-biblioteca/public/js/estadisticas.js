@@ -136,4 +136,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tarjetas clicables
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function () {
+                const target = this.getAttribute('data-bs-target');
+                fetchDashboardData(target);
+            });
+        });
+    
+        // Función para cargar datos del modal
+        async function fetchDashboardData(modalId) {
+            const response = await fetch('/dashboard-data');
+            const data = await response.json();
+    
+            const modalContent = document.querySelector(`${modalId}Content`);
+            modalContent.innerHTML = Object.keys(data)
+                .map(item => `<li>${item}: ${data[item]}</li>`)
+                .join('');
+        }
+    });
 });

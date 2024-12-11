@@ -98,15 +98,25 @@ class UsuarioController extends Controller
     public function buscar(Request $request)
     {
         $query = $request->input('q');
-        $usuarios = Usuario::where('tipo_usuario', 'Registrado') // Filtrar solo usuarios registrados
-            ->where(function ($queryBuilder) use ($query) {
-                $queryBuilder->where('correo', 'like', "%$query%")
-                    ->orWhere('nombre', 'like', "%$query%")
-                    ->orWhere('apellido', 'like', "%$query%");
-            })
-            ->limit(10)
-            ->get(['id', 'correo', 'nombre', 'apellido']); // Campos necesarios
-        
+        $usuarios = [];
+
+        if ($query) {
+            // Divide el query en palabras (nombre y apellido)
+            $keywords = explode(' ', $query);
+
+            // Construir la consulta
+            $usuarios = Usuario::query()
+                ->when(count($keywords) > 1, function ($q) use ($keywords) {
+                    $q->where('nombre', 'like', '%' . $keywords[0] . '%')
+                    ->where('apellido', 'like', '%' . $keywords[1] . '%');
+                }, function ($q) use ($query) {
+                    $q->where('nombre', 'like', '%' . $query . '%')
+                    ->orWhere('apellido', 'like', '%' . $query . '%')
+                    ->orWhere('correo', 'like', '%' . $query . '%');
+                })
+                ->get();
+        }
+
         return response()->json($usuarios);
     }
 }
