@@ -240,11 +240,11 @@
         
 
         {{-- Formulario de Filtro --}}
-        <form action="{{ route('estadisticas.index') }}" method="GET" class="mb-4">
+        <form method="GET" action="{{ route('estadisticas.index') }}" class="mb-4">
             <div class="row g-3 align-items-end">
                 <div class="col-md-3">
-                    <label for="year" class="form-label">Año:</label>
-                    <select name="year" id="year" class="form-select">
+                    <label for="yearFilter" class="form-label">Año:</label>
+                    <select name="year" id="yearFilter" class="form-select">
                         @foreach ($years as $yearOption)
                             <option value="{{ $yearOption }}" {{ request('year', date('Y')) == $yearOption ? 'selected' : '' }}>
                                 {{ $yearOption }}
@@ -253,8 +253,8 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="month" class="form-label">Mes:</label>
-                    <select name="month" id="month" class="form-select">
+                    <label for="monthFilter" class="form-label">Mes:</label>
+                    <select name="month" id="monthFilter" class="form-select">
                         <option value="">Todos</option>
                         @foreach ([
                             1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
@@ -266,10 +266,12 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                    <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
                 </div>
             </div>
         </form>
+        
+        
 
         {{-- Gráficos --}}
         <div class="row">

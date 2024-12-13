@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PortadasController;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\ReservaLibroNotification;
+use Illuminate\Support\Facades\Mail;
 
 
 
@@ -79,7 +81,6 @@ class ReservaController extends Controller
         $usuarioExistente = Usuario::where('correo', $validatedData['correoUsuario'])->first();
 
         if ($usuarioExistente && $usuarioExistente->tipo_usuario !== 'No Registrado') {
-            // Si el correo ya está registrado y es de un usuario registrado, mostrar mensaje de error
             return redirect()->back()->with('error', 'Ya existe una cuenta con este correo. Inicia sesión para continuar.');
         }
 
@@ -101,11 +102,12 @@ class ReservaController extends Controller
     $prestamo = Prestamo::create([
         'id_usuario' => $usuario->id,
         'id_libro' => $validatedData['id_libro'],
+        'titulo_libro' => $libro->titulo,
+        'editorial_libro' => $libro->editorial->nombre ?? 'Sin editorial',
         'fecha_solicitud' => $validatedData['fecha_recoLibro'],
         'created_at' => now(),
         'updated_at' => now(),
     ]);
-
 
     // Si la cantidad llega a 0, marcar como no disponible
     if ($libro->cantidad <= 0) {
@@ -113,9 +115,16 @@ class ReservaController extends Controller
         $libro->save();
     }
 
+    // Obtener el nombre del solicitante (ya sea autenticado o no registrado)
+    $nombreCompleto = $usuario->nombre . ' ' . $usuario->apellido;
+
+    // Enviar correo al solicitante
+    Mail::to($usuario->correo)->send(new ReservaLibroNotification($libro, $prestamo, $nombreCompleto));
+
     // Redireccionar con mensaje de éxito
-    return redirect()->back()->with('success', 'El libro ha sido reservado correctamente.');
+    return redirect()->back()->with('success', 'El libro ha sido reservado correctamente. Se ha enviado un correo de confirmación al solicitante.');
 }
+
     
 
 

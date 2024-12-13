@@ -107,7 +107,7 @@
                         @endauth
                         @guest
                             <!-- Si el usuario no está autenticado, mostramos un formulario para ingresar sus datos -->
-                            <form action="{{ route('reservar.libro') }}" method="POST">
+                            <form action="{{ route('reservar.libro') }}" method="POST" id="prestamoForm">
                                 @csrf
                                 <input type="hidden" name="id_libro" value="{{ $libro->id }}">
                                 <div class="mb-3">
@@ -115,28 +115,30 @@
                                     <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario"
                                         placeholder="Ingresa tu nombre" required>
                                 </div>
-
+                            
                                 <div class="mb-3">
                                     <label for="apellidoUsuario" class="form-label">Apellido</label>
                                     <input type="text" class="form-control" id="apellidoUsuario" name="apellidoUsuario"
                                         placeholder="Ingresa tu apellido" required>
                                 </div>
-
+                            
                                 <div class="mb-3">
                                     <label for="correoUsuario" class="form-label">Correo electrónico</label>
                                     <input type="email" class="form-control" id="correoUsuario" name="correoUsuario"
                                         placeholder="Ingresa tu correo electrónico" required>
+                                    <div id="emailError" class="text-danger" style="display: none;"></div>
                                 </div>
-                                <!-- Campo oculto para el tipo de usuario no registrado -->
+                            
                                 <input type="hidden" name="tipo_usuario" value="No Registrado">
+                            
                                 <div class="mb-3">
-                                    <label for="fechaRecojo" class="form-label">Fecha de recojo</label>
-                                    <input type="date" class="form-control" id="fechaRecojo" name="fecha_recoLibro"
-                                        required>
+                                    <label for="fechaRecojo" class="form-label">Fecha de recojida</label>
+                                    <input type="date" class="form-control" id="fechaRecojo" name="fecha_recoLibro" required>
                                 </div>
-
-                                <button type="submit" class="btn btn-primary">Reservar</button>
+                            
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Reservar</button>
                             </form>
+                            <script src="{{ asset('js/solicitud.js') }}"></script>
                         @endguest
 
                     </div>

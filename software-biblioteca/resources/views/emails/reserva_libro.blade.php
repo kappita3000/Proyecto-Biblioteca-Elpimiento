@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libro Devuelto</title>
+    <title>Confirmación de Reserva</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +18,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            color: #28a745;
+            color: #007bff;
         }
         p {
             font-size: 16px;
@@ -43,25 +43,20 @@
 </head>
 <body>
     <div class="container">
-        <h1>¡Gracias por devolver el libro!</h1>
-        <p>Hola {{ $prestamo->usuario->nombre }},</p>
-        <p>Se ha registrado la devolución del libro <strong>
-            @if($prestamo->libro)
-                {{ $prestamo->libro->titulo }}
-            @else
-                {{ $prestamo->titulo_libro ?? 'No disponible' }}
-            @endif
-        </strong>.</p>
+        <h1>Confirmación de Reserva</h1>
+        <p>Hola {{ $nombreSolicitante }},</p>
+        <p>Tu reserva para el libro <strong>{{ $tituloLibro }}</strong> ha sido confirmada.</p>
 
         <div class="details">
-            <h2>Detalles del Préstamo</h2>
+            <h2>Detalles de la Reserva</h2>
             <ul>
-                <li><strong>Fecha de Préstamo:</strong> {{ \Carbon\Carbon::parse($prestamo->fecha_prestamo)->format('d/m/Y') }}</li>
-                <li><strong>Fecha de Devolución:</strong> {{ \Carbon\Carbon::parse($prestamo->fecha_devolucion)->format('d/m/Y') }}</li>
+                <li><strong>Libro:</strong> {{ $tituloLibro }}</li>
+                <li><strong>Fecha de Recojo:</strong> {{ $fechaRecojo }}</li>
             </ul>
         </div>
 
-        <p>Gracias por utilizar nuestros servicios. ¡Esperamos verte pronto!</p>
+        <p>Si la solicitud es rechazada antes de esa fecha, te notificaremos.</p>
+        <p>Gracias por utilizar nuestros servicios.</p>
 
         <div class="footer">
             <p>Saludos,<br>La administración de la Biblioteca Nuevo Horizonte</p>

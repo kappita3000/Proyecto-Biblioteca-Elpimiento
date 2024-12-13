@@ -148,12 +148,11 @@ Route::group(['middleware' => ['auth:admin', 'role:superadmin,moderador']], func
     Route::get('/prestamos', [PrestamoController::class, 'index'])->name('prestamos.index');
     Route::post('/prestamos/aceptar/{id}', [PrestamoController::class, 'aceptar'])->name('prestamos.aceptar');
     Route::post('/prestamos/rechazar/{id}', [PrestamoController::class, 'rechazar'])->name('prestamos.rechazar');
-    Route::get('/prestamos/{id}/edit', [PrestamoController::class, 'edit'])->name('prestamos.edit');
-    Route::put('/prestamos/{id}', [PrestamoController::class, 'update'])->name('prestamos.update');
     Route::put('/prestamos/registrarDevolucion/{id}', [PrestamoController::class, 'registrarDevolucion'])->name('prestamos.registrarDevolucion');
     Route::post('/prestamos/store/registrado', [PrestamoController::class, 'storeRegistrado'])->name('prestamos.store.registrado');
     Route::post('/prestamos/store/no_registrado', [PrestamoController::class, 'storeNoRegistrado'])->name('prestamos.store.no_registrado');
     Route::get('/buscar-libros', [GesLibroController::class, 'buscar'])->name('libros.buscar');
     Route::get('/buscar-usuarios', [UsuarioController::class, 'buscar'])->name('usuarios.buscar');
     Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas.index');
+    Route::put('/prestamos/registrarDevolucionNo/{id}', [PrestamoController::class, 'registrarDevolucionNo'])->name('prestamos.registrarDevolucionNo');
 });

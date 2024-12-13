@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notificación de Rechazo de Préstamo</title>
 </head>
 <body>
-    <h2>Hola {{ $usuario->nombre }} {{ $usuario->apellido }},</h2>
-
-    <p>Lamentamos informarte que tu solicitud de préstamo para el libro <strong>"{{ $libro->titulo }}"</strong> ha sido rechazada.</p>
+    <h2>Hola {{ $usuario->nombre }} {{ $usuario->apellido }}</h2>
+    <p>
+        Lamentamos informarte que tu solicitud de préstamo
+        @if ($prestamo->titulo_libro && $prestamo->editorial_libro)
+            para el libro <strong>"{{ $prestamo->titulo_libro }}"</strong> ({{ $prestamo->editorial_libro }})
+        @else
+            para un libro cuya información no está disponible
+        @endif
+        ha sido rechazada.
+    </p>
 
     <p><strong>Motivo del rechazo:</strong></p>
     <blockquote style="color: #d9534f; font-style: italic;">
-        {{ $motivo }}
+        {{ $prestamo->motivo_rechazo }}
     </blockquote>
 
-    <p>Si tienes alguna pregunta o deseas más información, no dudes en ponerte en contacto con nosotros.</p>
-
-    <p>Gracias por tu comprensión.</p>
-
-    <p>Atentamente,</p>
-    <p><strong>Equipo de la Biblioteca</strong></p>
+    <p>Gracias por utilizar nuestros servicios.</p>
 </body>
 </html>

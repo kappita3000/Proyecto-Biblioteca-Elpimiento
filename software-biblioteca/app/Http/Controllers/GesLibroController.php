@@ -9,6 +9,7 @@ use App\Models\Autor;
 use App\Models\Genero;
 use App\Models\Repisa;
 use App\Models\Editorial;
+use App\Models\Prestamo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -155,18 +156,32 @@ class GesLibroController extends Controller
     public function destroy($id)
     {
         $libro = GesLibro::findOrFail($id);
+
+        // Actualizar préstamos para que id_libro sea NULL antes de eliminar el libro
+        Prestamo::where('id_libro', $id)->update(['id_libro' => null]);
+
+        // Eliminar el libro
         $libro->delete();
 
-        return redirect()->route('libros.librosindex')->with('success', 'Libro eliminado exitosamente.');
+        return redirect()->route('libros.librosindex')->with('success', 'Libro eliminado exitosamente y referencias actualizadas.');
     }
 
     // Búsqueda de libros
     public function buscar(Request $request)
     {
-        $query = $request->input('q');
-        $libros = GesLibro::where('titulo', 'like', "%$query%")
-            ->limit(10)
-            ->get(['id', 'titulo']);
+        $query = $request->get('q', '');
+        $libros = Geslibro::where('titulo', 'like', "%$query%")
+            ->with('editorial') // Asegúrate de que la relación 'editorial' esté definida en el modelo Libro
+            ->select('id', 'titulo', 'id_editorial') // Selecciona los campos necesarios
+            ->get()
+            ->map(function ($libro) {
+                return [
+                    'id' => $libro->id,
+                    'titulo' => $libro->titulo,
+                    'editorial' => $libro->editorial ? $libro->editorial->nombre : 'Sin editorial',
+                ];
+            });
+
         return response()->json($libros);
     }
 

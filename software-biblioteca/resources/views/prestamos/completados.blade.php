@@ -17,13 +17,13 @@
         @foreach ($completados as $index => $prestamo)
             <tr>
                 <td>{{ ($completados->currentPage() - 1) * $completados->perPage() + $loop->iteration }}</td>
-                <td>{{ $prestamo->libro->titulo }}</td>
-                <td>{{ $prestamo->libro->editorial->nombre }}</td>
+                <td>{{ $prestamo->titulo_libro }}</td>
+                <td>{{ $prestamo->editorial_libro }}</td>
                 <td>{{ $prestamo->usuario->nombre }} {{ $prestamo->usuario->apellido }}</td>
                 <td>{{ $prestamo->usuario->correo }}</td>
                 <td>{{ $prestamo->usuario->tipo_usuario }}</td>
-                <td>{{ $prestamo->fecha_prestamo }}</td>
-                <td>{{ $prestamo->fecha_devolucion }}</td>
+                <td>{{ \Carbon\Carbon::parse($prestamo->fecha_prestamo)->format('d-m-Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($prestamo->fecha_devolucion)->format('d-m-Y') }}</td>
                 <td>{{ $prestamo->devuelto }}</td>
             </tr>
         @endforeach

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         const response = await fetch(url + "?q=" + query);
         const data = await response.json();
-
+    
         // Renderizar resultados
         resultsDiv.innerHTML = data
             .map((item) => {
@@ -17,12 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     return `<div class="dropdown-item" data-id="${item.id}">${item.correo} (${item.nombre} ${item.apellido})</div>`;
                 } else {
                     // Datos de libros
-                    return `<div class="dropdown-item" data-id="${item.id}">${item.titulo}</div>`;
+                    return `<div class="dropdown-item" data-id="${item.id}">${item.titulo} (${item.editorial})</div>`;
                 }
             })
             .join("");
         resultsDiv.style.display = "block";
-
+    
         // Manejar selección de resultados
         resultsDiv.querySelectorAll(".dropdown-item").forEach((item) => {
             item.addEventListener("click", () => {
@@ -112,6 +112,54 @@ document.addEventListener("DOMContentLoaded", function () {
                 urlParams.set('tab', activeTabId);
                 const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
                 history.replaceState(null, '', newUrl); // Actualiza la URL sin recargar la página
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Capturar elementos del DOM
+        const yearFilter = document.getElementById("yearFilter");
+        const monthFilter = document.getElementById("monthFilter");
+        const prestamosTabs = document.getElementById("prestamosTabs");
+    
+        // Redirigir al cambiar los filtros
+        function applyFilters() {
+            const selectedYear = yearFilter.value;
+            const selectedMonth = monthFilter.value;
+    
+            // Obtener la pestaña activa
+            const activeTab = prestamosTabs.querySelector(".nav-link.active").getAttribute("href").substring(1);
+    
+            // Construir URL con parámetros
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set("year", selectedYear);
+            urlParams.set("month", selectedMonth);
+            urlParams.set("tab", activeTab);
+    
+            // Redirigir con los nuevos filtros
+            const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+            window.location.href = newUrl;
+        }
+    
+        // Evento para el select de año
+        if (yearFilter) {
+            yearFilter.addEventListener("change", applyFilters);
+        }
+    
+        // Evento para el select de mes
+        if (monthFilter) {
+            monthFilter.addEventListener("change", applyFilters);
+        }
+    
+        // Guardar la pestaña activa en la URL
+        document.querySelectorAll("#prestamosTabs .nav-link").forEach((tab) => {
+            tab.addEventListener("shown.bs.tab", function (event) {
+                const activeTabId = event.target.getAttribute("href").substring(1); // Captura el ID de la pestaña activa
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set("tab", activeTabId);
+    
+                const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+                history.replaceState(null, "", newUrl); // Actualiza la URL sin recargar la página
             });
         });
     });

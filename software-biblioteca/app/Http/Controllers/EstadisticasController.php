@@ -11,13 +11,29 @@ class EstadisticasController extends Controller
 {
     public function index(Request $request)
     {
-        $years = Prestamo::select(DB::raw('YEAR(fecha_prestamo) as year'))
-            ->groupBy('year')
+        // Obtener todos los años únicos de la tabla Prestamos
+        $years = Prestamo::selectRaw('YEAR(fecha_solicitud) as year')
+            ->whereNotNull('fecha_solicitud')
+            ->union(
+                Prestamo::selectRaw('YEAR(fecha_prestamo) as year')
+                    ->whereNotNull('fecha_prestamo')
+            )
+            ->union(
+                Prestamo::selectRaw('YEAR(fecha_devolucion) as year')
+                    ->whereNotNull('fecha_devolucion')
+            )
+            ->union(
+                Prestamo::selectRaw('YEAR(fecha_rechazo) as year')
+                    ->whereNotNull('fecha_rechazo')
+            )
             ->orderBy('year', 'desc')
             ->pluck('year');
 
-        $year = $request->input('year', date('Y')); // Año actual por defecto
-        $month = $request->input('month', null);   // Mes filtrado (opcional)
+        // Selecciona el año actual si está en la lista, de lo contrario selecciona el más reciente
+        $currentYear = in_array(date('Y'), $years->toArray()) ? date('Y') : $years->first();
+
+        $year = $request->input('year', $currentYear);
+        $month = $request->input('month', null); // Mes filtrado (opcional)
 
         // Nuevas consultas para modals y tarjetas
         $usuariosPrestamosActivos = Prestamo::whereNull('devuelto')
@@ -112,9 +128,8 @@ class EstadisticasController extends Controller
             ->count();
 
         $prestamosRechazados = Prestamo::whereNotNull('fecha_rechazo')
-        ->whereYear('fecha_rechazo', $year)
-        ->count();
-
+            ->whereYear('fecha_rechazo', $year)
+            ->count();
 
         $librosMasPrestados = Prestamo::select('id_libro', DB::raw('COUNT(*) as count'))
             ->whereYear('fecha_prestamo', $year)
@@ -214,13 +229,12 @@ class EstadisticasController extends Controller
             $prestamosPorDiaData[$dia] = $prestamo->count;
         }
 
-        
-
         $prestamosPorDiaLabels = $diasSemana;
 
         return view('estadisticas', compact(
             'years',
             'year',
+            'month',
             'usuariosPrestamosActivos',
             'usuariosSolicitudesPendientes',
             'usuariosDevolucionesPendientes',
@@ -241,7 +255,7 @@ class EstadisticasController extends Controller
             'prestamosPorTipoUsuarioData',
             'prestamosPorDiaLabels',
             'prestamosPorDiaData'
-            
         ));
     }
+
 }

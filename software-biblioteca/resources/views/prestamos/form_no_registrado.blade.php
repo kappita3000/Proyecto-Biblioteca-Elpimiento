@@ -19,7 +19,7 @@
     <!-- Campo para buscar libro -->
     <div class="form-group">
         <label for="libro_search_no_registrado">Seleccionar Libro</label>
-        <input type="text" id="libro_search_no_registrado" class="form-control" placeholder="Buscar libro por título..." autocomplete="off">
+        <input type="text" id="libro_search_no_registrado" class="form-control" placeholder="Buscar libro por título" autocomplete="off">
         <div id="libro_results_no_registrado" class="dropdown-menu"></div>
         <input type="hidden" id="libro_id_no_registrado" name="libro_id">
     </div>

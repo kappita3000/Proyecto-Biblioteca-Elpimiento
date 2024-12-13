@@ -58,7 +58,7 @@
         <p>Gracias por utilizar nuestros servicios. ¡Esperamos que disfrutes de la lectura!</p>
 
         <div class="footer">
-            <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
+            <p>Saludos,<br>La admnistracion de la Biblioteca Nuevo Horizonte</p>
         </div>
     </div>
 </body>
